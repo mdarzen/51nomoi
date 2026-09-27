@@ -1,0 +1,16 @@
+{
+  "name": "51 Νομοί Pro",
+  "short_name": "51 Νομοί",
+  "description": "Ανάλυση παραστατικών ανά εμπορικό τομέα και νομό — 51 Νομοί Pro.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#eef2f2",
+  "theme_color": "#0f6e8c",
+  "icons": [
+    { "src": "app_icon_192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "app_icon_512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "app_icon_180.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}
