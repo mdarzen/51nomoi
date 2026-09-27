@@ -904,8 +904,465 @@ function cellDateRaw(v) {
   return (v instanceof Date) ? v : null;
 }
 
-function parseWorkbookFromRows(rowsArr) {
-  var headerRow = rowsArr[0] || [];
+/* ---------- Χαμηλής μνήμης ανάγνωση .xlsx (για κινητά) ----------
+   Ο κλασικός δρόμος (XLSX.read + sheet_to_json) φορτώνει ΟΛΟ το φύλλο στη μνήμη ταυτόχρονα — για
+   αρχεία ~40MB / 200.000 γραμμών αυτό ξεπερνά τα 2GB, και στο iPhone η σελίδα "σκοτώνεται" και
+   ξαναφορτώνει με τα δεδομένα δείγματος. Εδώ το φύλλο αποσυμπιέζεται και διαβάζεται σταδιακά
+   (streaming), γραμμή-γραμμή, κρατώντας μόνο τις στήλες που χρειαζόμαστε. Οι τιμές των κελιών
+   βγαίνουν με τους ΙΔΙΟΥΣ κανόνες με το SheetJS 0.18.5 (cellDates, raw, defval:null), ώστε τα
+   αποτελέσματα να είναι ίδια. Για οτιδήποτε ασυνήθιστο (zip64, κρυπτογράφηση, ημερομηνίες 1904,
+   τύπος κελιού "d", κ.λπ.) πετάει FallbackError και ο worker γυρίζει στον κλασικό δρόμο. */
+
+function xlsxFallbackError(msg) { var e = new Error(msg); e.xlsxFallback = true; return e; }
+
+function zU16(b, o) { return b[o] | (b[o + 1] << 8); }
+function zU32(b, o) { return (b[o] | (b[o + 1] << 8) | (b[o + 2] << 16) | (b[o + 3] << 24)) >>> 0; }
+function blobBytes(blob) { return blob.arrayBuffer().then(function (ab) { return new Uint8Array(ab); }); }
+
+function zipIndex(file) {
+  var tailLen = Math.min(file.size, 65557);
+  return blobBytes(file.slice(file.size - tailLen)).then(function (tail) {
+    var eocd = -1;
+    for (var i = tail.length - 22; i >= 0; i--) { if (zU32(tail, i) === 0x06054b50) { eocd = i; break; } }
+    if (eocd < 0) throw xlsxFallbackError("not a zip");
+    var count = zU16(tail, eocd + 10), cdSize = zU32(tail, eocd + 12), cdOff = zU32(tail, eocd + 16);
+    if (count === 0xFFFF || cdSize === 0xFFFFFFFF || cdOff === 0xFFFFFFFF) throw xlsxFallbackError("zip64");
+    return blobBytes(file.slice(cdOff, cdOff + cdSize)).then(function (cd) {
+      var entries = {}, p = 0, dec = new TextDecoder("utf-8");
+      for (var n = 0; n < count; n++) {
+        if (p + 46 > cd.length || zU32(cd, p) !== 0x02014b50) throw xlsxFallbackError("bad central directory");
+        var flags = zU16(cd, p + 8), method = zU16(cd, p + 10);
+        var csize = zU32(cd, p + 20), nlen = zU16(cd, p + 28), xlen = zU16(cd, p + 30), clen = zU16(cd, p + 32);
+        var lho = zU32(cd, p + 42);
+        var name = dec.decode(cd.subarray(p + 46, p + 46 + nlen)).replace(/\\/g, "/").replace(/^\/+/, "");
+        entries[name.toLowerCase()] = { name: name, method: method, csize: csize, lho: lho, encrypted: !!(flags & 1) };
+        p += 46 + nlen + xlen + clen;
+      }
+      return entries;
+    });
+  });
+}
+
+function zipEntryStream(file, entry) {
+  if (entry.encrypted) return Promise.reject(xlsxFallbackError("encrypted entry"));
+  return blobBytes(file.slice(entry.lho, entry.lho + 30)).then(function (h) {
+    if (zU32(h, 0) !== 0x04034b50) throw xlsxFallbackError("bad local header");
+    var start = entry.lho + 30 + zU16(h, 26) + zU16(h, 28);
+    var raw = file.slice(start, start + entry.csize).stream();
+    if (entry.method === 0) return raw;
+    if (entry.method !== 8) throw xlsxFallbackError("unsupported zip method");
+    var ds;
+    try { ds = new DecompressionStream("deflate-raw"); } catch (e) { throw xlsxFallbackError("no deflate-raw"); }
+    return raw.pipeThrough(ds);
+  });
+}
+
+function streamToText(stream, onText) {
+  var reader = stream.getReader(), dec = new TextDecoder("utf-8");
+  function pump() {
+    return reader.read().then(function (r) {
+      if (r.done) { var last = dec.decode(); if (last) onText(last); return; }
+      var t = dec.decode(r.value, { stream: true });
+      if (t) onText(t);
+      return pump();
+    });
+  }
+  return pump();
+}
+
+function zipEntryText(file, entry) {
+  var parts = [];
+  return zipEntryStream(file, entry)
+    .then(function (s) { return streamToText(s, function (t) { parts.push(t); }); })
+    .then(function () { return parts.join(""); });
+}
+
+/* --- ίδιοι κανόνες με το SheetJS 0.18.5 --- */
+
+// unescapexml (Gr): οντότητες XML, μετά _xHHHH_, με υποστήριξη CDATA.
+var XLSX_XML_ENT = { "&quot;": '"', "&apos;": "'", "&gt;": ">", "&lt;": "<", "&amp;": "&" };
+function xlsxUnescape(text) {
+  var s = text + "", i = s.indexOf("<![CDATA[");
+  if (i === -1) {
+    return s.replace(/&(?:quot|apos|gt|lt|amp|#x?([\da-fA-F]+));/gi, function (m, num) {
+      return XLSX_XML_ENT[m] || String.fromCharCode(parseInt(num, m.indexOf("x") > -1 ? 16 : 10)) || m;
+    }).replace(/_x([\da-fA-F]{4})_/gi, function (m, h) { return String.fromCharCode(parseInt(h, 16)); });
+  }
+  var j = s.indexOf("]]>");
+  return xlsxUnescape(s.slice(0, i)) + s.slice(i + 9, j) + xlsxUnescape(s.slice(j + 3));
+}
+
+// parse_si (Zn): επιστρέφει το κείμενο ενός <si> / <is>, ή undefined αν δεν αναγνωρίζεται.
+function xlsxSiText(e) {
+  if (!e) return "";
+  if (/^\s*<(?:\w+:)?t[^>]*>/.test(e)) {
+    return xlsxUnescape(e.slice(e.indexOf(">") + 1).split(/<\/(?:\w+:)?t>/)[0] || "");
+  }
+  if (/<(?:\w+:)?r>/.test(e)) {
+    var out = "", m, re = /<(?:\w+:)?t[^>]*>([^<]*)<\/(?:\w+:)?t>/g;
+    var cleaned = e.replace(/<(?:\w+:)?rPh.*?>([\s\S]*?)<\/(?:\w+:)?rPh>/g, "");
+    while ((m = re.exec(cleaned)) !== null) out += m[1];
+    return xlsxUnescape(out);
+  }
+  return undefined;
+}
+
+function xlsxParseSST(xml) {
+  if (/<(?:\w+:)?si\/>|<(?:\w+:)?si\s[^>]*>/.test(xml)) throw xlsxFallbackError("unusual <si>");
+  var body = xml.match(/<(?:\w+:)?sst[^>]*>([\s\S]*)<\/(?:\w+:)?sst>/);
+  if (!body) return [];
+  var chunks = body[1].replace(/<(?:\w+:)?(?:si|sstItem)>/g, "").split(/<\/(?:\w+:)?(?:si|sstItem)>/);
+  var out = new Array(chunks.length);
+  for (var i = 0; i < chunks.length; i++) out[i] = xlsxSiText(chunks[i].trim());
+  return out;
+}
+
+function xlsxAttrs(tag) {
+  var a = {}, m, re = /([\w:.-]+)\s*=\s*(?:"([^"]*)"|'([^']*)')/g;
+  while ((m = re.exec(tag)) !== null) {
+    var k = m[1], c = k.lastIndexOf(":");
+    if (c > -1 && k.slice(0, c) !== "xml") k = k.slice(c + 1);
+    a[k] = m[2] !== undefined ? m[2] : m[3];
+  }
+  return a;
+}
+
+// Ενσωματωμένοι πίνακες μορφών του SheetJS (X και οι προεπιλογές je) + is_date (Ne).
+var XLSX_FMT_BUILTIN = {0:"General",1:"0",2:"0.00",3:"#,##0",4:"#,##0.00",9:"0%",10:"0.00%",11:"0.00E+00",12:"# ?/?",13:"# ??/??",14:"m/d/yy",15:"d-mmm-yy",16:"d-mmm",17:"mmm-yy",18:"h:mm AM/PM",19:"h:mm:ss AM/PM",20:"h:mm",21:"h:mm:ss",22:"m/d/yy h:mm",37:"#,##0 ;(#,##0)",38:"#,##0 ;[Red](#,##0)",39:"#,##0.00;(#,##0.00)",40:"#,##0.00;[Red](#,##0.00)",45:"mm:ss",46:"[h]:mm:ss",47:"mmss.0",48:"##0.0E+0",49:"@",56:'"上午/下午 "hh"時"mm"分"ss"秒 "'};
+var XLSX_FMT_DEFAULTS = {5:'"$"#,##0_);\\("$"#,##0\\)',6:'"$"#,##0_);[Red]\\("$"#,##0\\)',7:'"$"#,##0.00_);\\("$"#,##0.00\\)',8:'"$"#,##0.00_);[Red]\\("$"#,##0.00\\)',23:"General",24:"General",25:"General",26:"General",27:"m/d/yy",28:"m/d/yy",29:"m/d/yy",30:"m/d/yy",31:"m/d/yy",32:"h:mm:ss",33:"h:mm:ss",34:"h:mm:ss",35:"h:mm:ss",36:"m/d/yy",41:'_(* #,##0_);_(* (#,##0);_(* "-"_);_(@_)',42:'_("$"* #,##0_);_("$"* (#,##0);_("$"* "-"_);_(@_)',43:'_(* #,##0.00_);_(* (#,##0.00);_(* "-"??_);_(@_)',44:'_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)',50:"m/d/yy",51:"m/d/yy",52:"m/d/yy",53:"m/d/yy",54:"m/d/yy",55:"m/d/yy",56:"m/d/yy",57:"m/d/yy",58:"m/d/yy",59:"0",60:"0.00",61:"#,##0",62:"#,##0.00",63:'"$"#,##0_);\\("$"#,##0\\)',64:'"$"#,##0_);[Red]\\("$"#,##0\\)',65:'"$"#,##0.00_);\\("$"#,##0.00\\)',66:'"$"#,##0.00_);[Red]\\("$"#,##0.00\\)',67:"0%",68:"0.00%",69:"# ?/?",70:"# ??/??",71:"m/d/yy",72:"m/d/yy",73:"d-mmm-yy",74:"d-mmm",75:"mmm-yy",76:"h:mm",77:"h:mm:ss",78:"m/d/yy h:mm",79:"mm:ss",80:"[h]:mm:ss",81:"mmss.0"};
+
+function xlsxIsGeneral(e, r) {
+  return e.length >= 7 + r && (e.charCodeAt(r) | 32) === 103 && (e.charCodeAt(r + 1) | 32) === 101 &&
+    (e.charCodeAt(r + 2) | 32) === 110 && (e.charCodeAt(r + 3) | 32) === 101 && (e.charCodeAt(r + 4) | 32) === 114 &&
+    (e.charCodeAt(r + 5) | 32) === 97 && (e.charCodeAt(r + 6) | 32) === 108;
+}
+function xlsxFmtIsDate(e) {
+  var r = 0, t = "", a = "";
+  while (r < e.length) {
+    switch (t = e.charAt(r)) {
+      case "G": if (xlsxIsGeneral(e, r)) r += 6; r++; break;
+      case '"': for (; e.charCodeAt(++r) !== 34 && r < e.length;) {} ++r; break;
+      case "\\": r += 2; break;
+      case "_": r += 2; break;
+      case "@": ++r; break;
+      case "B": case "b":
+        if (e.charAt(r + 1) === "1" || e.charAt(r + 1) === "2") return true;
+        /* falls through */
+      case "M": case "D": case "Y": case "H": case "S": case "E":
+      case "m": case "d": case "y": case "h": case "s": case "e": case "g": return true;
+      case "A": case "a": case "上":
+        if (e.substr(r, 3).toUpperCase() === "A/P") return true;
+        if (e.substr(r, 5).toUpperCase() === "AM/PM") return true;
+        if (e.substr(r, 5).toUpperCase() === "上午/下午") return true;
+        ++r; break;
+      case "[":
+        a = t;
+        while (e.charAt(r++) !== "]" && r < e.length) a += e.charAt(r);
+        if (a.match(/\[[HhMmSsชนท]*\]/)) return true;
+        break;
+      case ".": case "0": case "#":
+        while (r < e.length && ("0#?.,E+-%".indexOf(t = e.charAt(++r)) > -1 || t == "\\" && e.charAt(r + 1) == "-" && "0#".indexOf(e.charAt(r + 2)) > -1)) {}
+        break;
+      case "?": while (e.charAt(++r) === t) {} break;
+      case "*": ++r; if (e.charAt(r) == " " || e.charAt(r) == "*") ++r; break;
+      case "(": case ")": ++r; break;
+      case "1": case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9":
+        while (r < e.length && "0123456789".indexOf(e.charAt(++r)) > -1) {}
+        break;
+      case " ": ++r; break;
+      default: ++r; break;
+    }
+  }
+  return false;
+}
+
+// numdate (fr) του SheetJS — ίδιος υπολογισμός, ίδια ζώνη ώρας.
+var XLSX_BASEDATE = new Date(1899, 11, 30, 0, 0, 0);
+var XLSX_NOW = new Date();
+var XLSX_DNTHRESH = XLSX_BASEDATE.getTime() + (XLSX_NOW.getTimezoneOffset() - XLSX_BASEDATE.getTimezoneOffset()) * 60000;
+var XLSX_NOWOFF = XLSX_NOW.getTimezoneOffset();
+function xlsxNumDate(v) {
+  var out = new Date();
+  out.setTime(v * 24 * 60 * 60 * 1000 + XLSX_DNTHRESH);
+  if (out.getTimezoneOffset() !== XLSX_NOWOFF) out.setTime(out.getTime() + (out.getTimezoneOffset() - XLSX_NOWOFF) * 60000);
+  return out;
+}
+
+// styles.xml -> για κάθε δείκτη στυλ κελιού (s="N"): true αν η μορφή του είναι ημερομηνία.
+function xlsxDateStyles(stylesXml) {
+  if (!stylesXml) return null;
+  var custom = {};
+  var nf = stylesXml.match(/<(?:\w+:)?numFmts[^>]*>([\s\S]*?)<\/(?:\w+:)?numFmts>/);
+  if (nf) {
+    var m, re = /<(?:\w+:)?numFmt\b[^>]*>/g;
+    while ((m = re.exec(nf[1])) !== null) {
+      var at = xlsxAttrs(m[0]);
+      if (at.numFmtId == null || at.formatCode == null) continue;
+      var id = parseInt(at.numFmtId, 10);
+      if (id > 392) throw xlsxFallbackError("numFmtId > 392");
+      custom[id] = xlsxUnescape(at.formatCode);
+    }
+  }
+  var xfs = stylesXml.match(/<(?:\w+:)?cellXfs[^>]*>([\s\S]*?)<\/(?:\w+:)?cellXfs>/);
+  if (!xfs) return null;
+  var isDate = [], x, reXf = /<(?:\w+:)?xf\b[^>]*>/g;
+  while ((x = reXf.exec(xfs[1])) !== null) {
+    var xa = xlsxAttrs(x[0]);
+    var fid = xa.numFmtId ? parseInt(xa.numFmtId, 10) : 0;
+    if (fid > 392) throw xlsxFallbackError("xf numFmtId > 392");
+    if (isNaN(fid)) fid = 0;
+    var fmt = custom[fid] != null ? custom[fid] : (XLSX_FMT_BUILTIN[fid] != null ? XLSX_FMT_BUILTIN[fid] : (XLSX_FMT_DEFAULTS[fid] || "General"));
+    isDate.push(xlsxFmtIsDate(fmt));
+  }
+  return isDate;
+}
+
+function xlsxDecodeCell(ref) { // "AB12" -> {c, r} (0-based)
+  var r = 0, c = 0;
+  for (var i = 0; i < ref.length; i++) {
+    var n = ref.charCodeAt(i);
+    if (n >= 48 && n <= 57) r = 10 * r + (n - 48); else if (n >= 65 && n <= 90) c = 26 * c + (n - 64);
+  }
+  return { c: c - 1, r: r - 1 };
+}
+
+function xlsxResolveTarget(base, target) {
+  if (target.charAt(0) === "/") return target.slice(1);
+  var parts = base.split("/"); parts.pop();
+  target.split("/").forEach(function (p) { if (p === "..") parts.pop(); else if (p !== "." && p !== "") parts.push(p); });
+  return parts.join("/");
+}
+
+/* Κύριος αναγνώστης. Καλεί onHeader(headerRow) μία φορά (η πρώτη γραμμή του εύρους του φύλλου) και
+   onRow(rowArr) για κάθε επόμενη μη κενή <row>, με τιμές όπως θα τις έδινε το sheet_to_json. Το
+   onHeader επιστρέφει τον μέγιστο δείκτη στήλης που χρειάζεται — στήλες πέρα από αυτόν δεν
+   αποκωδικοποιούνται καν (γλιτώνει μνήμη και χρόνο). */
+function readXlsxStreaming(file, onHeader, onRow) {
+  if (typeof DecompressionStream === "undefined" || typeof TextDecoder === "undefined" || !file.stream) {
+    return Promise.reject(xlsxFallbackError("streaming APIs unavailable"));
+  }
+  var entries, sst = null, dateStyles = null, sheetPath;
+  function get(path) { return entries[String(path).toLowerCase()]; }
+  function relsFor(path) {
+    var parts = path.split("/"), fname = parts.pop();
+    return get(parts.concat(["_rels", fname + ".rels"]).join("/"));
+  }
+  var wbPath, sstPath = null, stylesPath = null;
+  return zipIndex(file).then(function (ents) {
+    entries = ents;
+    // Όπως το SheetJS: τα μέρη (workbook, sharedStrings, styles) εντοπίζονται από το [Content_Types].xml.
+    var ctEntry = get("[Content_Types].xml");
+    if (!ctEntry) throw xlsxFallbackError("no [Content_Types].xml");
+    return zipEntryText(file, ctEntry);
+  }).then(function (ctXml) {
+    var m, re = /<(?:\w+:)?Override\b[^>]*>/g;
+    var WB_TYPES = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.template.main+xml",
+      "application/vnd.ms-excel.sheet.macroEnabled.main+xml", "application/vnd.ms-excel.addin.macroEnabled.main+xml",
+      "application/vnd.ms-excel.template.macroEnabled.main+xml", "application/vnd.ms-excel.sheet.binary.macroEnabled.main"];
+    var SST_TYPES = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml", "application/vnd.ms-excel.sharedStrings"];
+    var STY_TYPES = ["application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml", "application/vnd.ms-excel.styles"];
+    while ((m = re.exec(ctXml)) !== null) {
+      var at = xlsxAttrs(m[0]);
+      if (!at.PartName || !at.ContentType) continue;
+      var part = at.PartName.replace(/^\/+/, "");
+      if (!wbPath && WB_TYPES.indexOf(at.ContentType) > -1) wbPath = part;
+      else if (sstPath === null && SST_TYPES.indexOf(at.ContentType) > -1) sstPath = part;
+      else if (stylesPath === null && STY_TYPES.indexOf(at.ContentType) > -1) stylesPath = part;
+    }
+    if (!wbPath || !/\.xml$/i.test(wbPath) || !get(wbPath)) throw xlsxFallbackError("workbook part not found");
+    if (sstPath !== null && !get(sstPath)) throw xlsxFallbackError("sharedStrings part missing");
+    if (stylesPath !== null && !get(stylesPath)) throw xlsxFallbackError("styles part missing");
+    var wbRels = relsFor(wbPath);
+    return Promise.all([zipEntryText(file, get(wbPath)), wbRels ? zipEntryText(file, wbRels) : ""]);
+  }).then(function (res) {
+    var wbXml = res[0], relsXml = res[1];
+    var pr = wbXml.match(/<(?:\w+:)?workbookPr\b[^>]*>/);
+    if (pr) { var d1904 = xlsxAttrs(pr[0]).date1904; if (d1904 === "1" || d1904 === "true") throw xlsxFallbackError("date1904"); }
+    var sheetsBlock = wbXml.match(/<(?:\w+:)?sheets[^>]*>([\s\S]*?)<\/(?:\w+:)?sheets>/);
+    var firstSheet = sheetsBlock && sheetsBlock[1].match(/<(?:\w+:)?sheet\b[^>]*>/);
+    if (!firstSheet) throw xlsxFallbackError("no sheets");
+    var rid = xlsxAttrs(firstSheet[0]).id;
+    var rels = {}, m, reRel = /<(?:\w+:)?Relationship\b[^>]*>/g;
+    while ((m = reRel.exec(relsXml)) !== null) {
+      var ra = xlsxAttrs(m[0]);
+      if (ra.Id && ra.Target) rels[ra.Id] = xlsxResolveTarget(wbPath, ra.Target);
+    }
+    sheetPath = rid && rels[rid] ? rels[rid] : null;
+    if (!sheetPath || !/worksheets\//i.test(sheetPath) || !get(sheetPath)) throw xlsxFallbackError("first sheet is not a worksheet");
+    return Promise.all([sstPath !== null ? zipEntryText(file, get(sstPath)) : null, stylesPath !== null ? zipEntryText(file, get(stylesPath)) : null]);
+  }).then(function (res) {
+    sst = res[0] != null ? xlsxParseSST(res[0]) : null;
+    dateStyles = xlsxDateStyles(res[1]);
+    return zipEntryStream(file, get(sheetPath));
+  }).then(function (sheetStream) {
+    var P = null;              // πρόθεμα namespace (π.χ. "x:") — ανιχνεύεται από το <sheetData>
+    var pre = "";              // κείμενο πριν το <sheetData>
+    var buf = "";              // μη επεξεργασμένο υπόλοιπο μέσα στο sheetData
+    var done = false, headerDone = false, maxCol = -1;
+    var range = null;          // {s:{r,c}, e:{r,c}} από το <dimension>
+    var rowCounter = 0, lastRow = -1;
+    var reRow, reCell, rowClose, cellClose;
+
+    function setupPrefix(p) {
+      P = p || "";
+      var esc = P.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      reRow = new RegExp("<" + esc + "row(?=[\\s>/])([^>]*?)(/?)>", "g");
+      reCell = new RegExp("<" + esc + "c(?=[\\s>/])([^>]*?)(/?)>", "g");
+      rowClose = "</" + P + "row>";
+      cellClose = "</" + P + "c>";
+    }
+
+    // Κάθε διαφορετικό κείμενο κρατιέται ΜΙΑ φορά, σαν ανεξάρτητο αντίγραφο: αλλιώς κάθε τιμή είναι
+    // "κομμάτι" (slice) του XML και κρατάει ολόκληρο το κείμενο γύρω της ζωντανό στη μνήμη. Επιπλέον
+    // οι επαναλαμβανόμενες τιμές (πελάτες, τομείς, νομοί…) μοιράζονται το ίδιο αντικείμενο.
+    var strCache = new Map();
+    function intern(s) {
+      var c = strCache.get(s);
+      if (c !== undefined) return c;
+      c = JSON.parse(JSON.stringify(s));
+      strCache.set(c, c);
+      return c;
+    }
+
+    function cellValue(attrs, content) {
+      var t = attrs.t, vm = content ? content.match(/<(?:\w+:)?v(?:[^>]*)>([\s\S]*?)<\/(?:\w+:)?v>/) : null;
+      var v = (vm && vm[1] !== "") ? xlsxUnescape(vm[1]) : undefined;
+      if (t == null && v === undefined) return null;
+      if (t == null) t = "n";
+      switch (t) {
+        case "n": {
+          var num = parseFloat(v);
+          if (v === undefined || v === "") return null;
+          if (dateStyles && attrs.s !== undefined && dateStyles[attrs.s]) return xlsxNumDate(num);
+          return num;
+        }
+        case "s": {
+          if (v === undefined) return null;
+          if (!sst) throw xlsxFallbackError("shared string without sharedStrings.xml");
+          var idx = parseInt(v, 10);
+          if (!(idx >= 0 && idx < sst.length)) throw xlsxFallbackError("shared string index out of range");
+          var sv = sst[idx];
+          return sv === undefined ? null : intern(sv);
+        }
+        case "str": return v != null ? intern(v) : "";
+        case "inlineStr": {
+          var is = content ? content.match(/<(?:\w+:)?is>([\S\s]*?)<\/(?:\w+:)?is>/) : null;
+          if (!is) return "";
+          var it = xlsxSiText(is[1]);
+          return it === undefined ? null : intern(it);
+        }
+        case "b":
+          return v === "1" || v === "true" || v === "TRUE";
+        case "e": return null;
+        default: throw xlsxFallbackError("cell type " + t);
+      }
+    }
+
+    function processRow(rowAttrsText, inner) {
+      var ra = xlsxAttrs(rowAttrsText);
+      rowCounter = ra.r != null ? parseInt(ra.r, 10) : rowCounter + 1;
+      var r0 = rowCounter - 1;
+      if (r0 <= lastRow) throw xlsxFallbackError("rows out of order");
+      lastRow = r0;
+      if (range.s.r < 0) range.s.r = r0;
+      if (r0 < range.s.r || r0 > range.e.r) return;
+      if (!headerDone && r0 > range.s.r) { // η γραμμή επικεφαλίδων λείπει εντελώς
+        maxCol = onHeader([]); headerDone = true;
+      }
+      var isHeader = !headerDone;
+      var limit = isHeader ? Infinity : maxCol;
+      var arr = [];
+      var col = -1, m;
+      reCell.lastIndex = 0;
+      while ((m = reCell.exec(inner)) !== null) {
+        var ca = xlsxAttrs(m[1]);
+        var content = "";
+        if (m[2] !== "/") {
+          var end = inner.indexOf(cellClose, reCell.lastIndex);
+          if (end < 0) end = inner.length;
+          content = inner.slice(reCell.lastIndex, end);
+          reCell.lastIndex = end + cellClose.length;
+        }
+        if (ca.r) {
+          var rc = xlsxDecodeCell(ca.r);
+          if (rc.r !== r0) throw xlsxFallbackError("cell outside its row");
+          col = rc.c;
+        } else col++;
+        if (col < range.s.c || col > range.e.c) continue;
+        var rel = col - range.s.c;
+        if (rel > limit) continue;
+        var val = cellValue(ca, content);
+        if (val !== null) arr[rel] = val;
+      }
+      if (isHeader) { maxCol = onHeader(arr); headerDone = true; }
+      else onRow(arr);
+    }
+
+    function drain(final) {
+      var cut = final ? buf.length : buf.lastIndexOf(rowClose);
+      if (cut < 0) {
+        // Μπορεί να υπάρχουν μόνο αυτο-κλειόμενες γραμμές (<row .../>) — αγνοούνται όπως στο SheetJS.
+        return;
+      }
+      var text = buf.slice(0, final ? cut : cut + rowClose.length);
+      buf = buf.slice(text.length);
+      var m, pos = 0;
+      reRow.lastIndex = 0;
+      while ((m = reRow.exec(text)) !== null) {
+        if (m[2] === "/") continue; // <row .../> χωρίς κελιά
+        var start = reRow.lastIndex;
+        var end = text.indexOf(rowClose, start);
+        if (end < 0) { if (final) end = text.length; else break; }
+        processRow(m[1], text.slice(start, end));
+        reRow.lastIndex = end + rowClose.length;
+        pos = reRow.lastIndex;
+      }
+    }
+
+    function onText(t) {
+      if (done) return;
+      if (P === null) {
+        pre += t;
+        var sd = pre.match(/<(\w+:)?sheetData[^>]*?(\/?)>/);
+        if (!sd) return;
+        var head = pre.slice(0, sd.index);
+        var dimIdx = head.search(/<(?:\w*:)?dimension/);
+        if (dimIdx > 0) {
+          var dm = head.slice(dimIdx, dimIdx + 50).match(/"(\w*:\w*)"/);
+          if (dm) {
+            var parts = dm[1].split(":"), a = xlsxDecodeCell(parts[0]), b = xlsxDecodeCell(parts[1]);
+            if (a.r <= b.r && a.c <= b.c && a.r >= 0 && a.c >= 0) range = { s: a, e: b };
+          }
+        }
+        if (!range) {
+          // Χωρίς <dimension> το SheetJS υπολογίζει το εύρος από τα ίδια τα κελιά: αρχή = η πρώτη <row>.
+          // Η αρχική στήλη δεν επηρεάζει το αποτέλεσμα (ίδια μετατόπιση σε επικεφαλίδες και δεδομένα),
+          // οπότε μετράμε από τη στήλη A χωρίς όριο στο τέλος.
+          range = { s: { r: -1, c: 0 }, e: { r: Infinity, c: Infinity }, fromCells: true };
+        }
+        setupPrefix(sd[1]);
+        if (sd[2] === "/") { done = true; pre = ""; return; }
+        buf = pre.slice(sd.index + sd[0].length);
+        pre = "";
+      } else {
+        buf += t;
+      }
+      var endIdx = buf.indexOf("</" + P + "sheetData>");
+      if (endIdx >= 0) { buf = buf.slice(0, endIdx); drain(true); buf = ""; done = true; return; }
+      drain(false);
+    }
+
+    return streamToText(sheetStream, onText).then(function () {
+      if (!done) { if (P === null) throw xlsxFallbackError("no <sheetData>"); drain(true); }
+      if (!headerDone) onHeader([]);
+    });
+  });
+}
+
+// Επικεφαλίδες -> αντιστοίχιση στηλών, και ένας parser ανά γραμμή. Ίδια λογική και ίδια μηνύματα
+// λάθους με πριν — απλά σπασμένη ώστε να δουλεύει και γραμμή-γραμμή (streaming).
+function makeRowParser(headerRow) {
   var colIndex = {}; // field -> 0-based column index
   var found = {};
   headerRow.forEach(function (cellVal, i) {
@@ -928,21 +1385,23 @@ function parseWorkbookFromRows(rowsArr) {
     throw new Error("Δεν βρέθηκαν οι στήλες: " + missingLabels.join(", ") + ". Βεβαιώσου ότι η πρώτη γραμμή έχει τις σωστές επικεφαλίδες.");
   }
 
-  var rows = [];
-  for (var r = 1; r < rowsArr.length; r++) {
-    var row = rowsArr[r] || [];
+  var maxCol = -1;
+  Object.keys(colIndex).forEach(function (f) { if (colIndex[f] > maxCol) maxCol = colIndex[f]; });
+
+  function parseRow(row) {
+    row = row || [];
     var sector = cellTextRaw(row[colIndex.sector]).trim();
     var nomosRaw = cellTextRaw(row[colIndex.nomos]);
     var customer = cellTextRaw(row[colIndex.customer]).trim();
     var doctype = cellTextRaw(row[colIndex.doctype]).trim();
     var code = cellTextRaw(row[colIndex.code]).trim();
     // skip fully blank rows
-    if (!sector && !nomosRaw && !customer && !doctype && !code) continue;
+    if (!sector && !nomosRaw && !customer && !doctype && !code) return null;
     var country = cellTextRaw(row[colIndex.country]).trim();
     var geo = classifyGeo(code, nomosRaw, country);
     var netVal = cellNumberRaw(row[colIndex.net]);
     var discountPctVal = (colIndex.discountPct !== undefined) ? cellNumberRaw(row[colIndex.discountPct]) : 0;
-    rows.push({
+    return {
       date: cellDateRaw(row[colIndex.date]),
       doctype: doctype,
       nomos: normNomos(nomosRaw),
@@ -960,23 +1419,55 @@ function parseWorkbookFromRows(rowsArr) {
       discountPct: discountPctVal,
       discountAmount: netVal * (discountPctVal / 100),
       geoType: geo.type, geoKey: geo.key
-    });
+    };
+  }
+  return { parseRow: parseRow, maxCol: maxCol };
+}
+
+function parseWorkbookFromRows(rowsArr) {
+  var parser = makeRowParser(rowsArr[0] || []);
+  var rows = [];
+  for (var r = 1; r < rowsArr.length; r++) {
+    var obj = parser.parseRow(rowsArr[r]);
+    if (obj) rows.push(obj);
   }
   return rows;
 }
 
-self.onmessage = function (e) {
-  var file = e.data && e.data.file;
-  if (!file) { self.postMessage({ ok: false, message: "Δεν βρέθηκε αρχείο." }); return; }
-  file.arrayBuffer().then(function (buf) {
+// Ο κλασικός δρόμος (όπως πριν, με τις ίδιες ρυθμίσεις) — χρησιμοποιείται μόνο αν ο streaming
+// αναγνώστης δεν μπορεί να διαβάσει το αρχείο (π.χ. παλιός browser ή ασυνήθιστο αρχείο).
+function parseXlsxClassic(file) {
+  return file.arrayBuffer().then(function (buf) {
     var u8 = new Uint8Array(buf);
     var wb = XLSX.read(u8, { type: "array", cellDates: true });
     var wsName = wb.SheetNames[0];
     if (!wsName) throw new Error("Το αρχείο δεν έχει κανένα φύλλο.");
     var ws = wb.Sheets[wsName];
     var rowsArr = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: null });
-    var rows = parseWorkbookFromRows(rowsArr);
-    self.postMessage({ ok: true, rows: rows });
+    return parseWorkbookFromRows(rowsArr);
+  });
+}
+
+function parseXlsxStreaming(file) {
+  var parser = null, rows = [];
+  return readXlsxStreaming(file, function (headerRow) {
+    parser = makeRowParser(headerRow);
+    return parser.maxCol;
+  }, function (rowArr) {
+    var obj = parser.parseRow(rowArr);
+    if (obj) rows.push(obj);
+  }).then(function () { return rows; });
+}
+
+self.onmessage = function (e) {
+  var file = e.data && e.data.file;
+  if (!file) { self.postMessage({ ok: false, message: "Δεν βρέθηκε αρχείο." }); return; }
+  var mode = "streaming";
+  parseXlsxStreaming(file).catch(function (err) {
+    if (err && err.xlsxFallback) { mode = "classic"; return parseXlsxClassic(file); }
+    throw err;
+  }).then(function (rows) {
+    self.postMessage({ ok: true, rows: rows, mode: mode });
   }).catch(function (err) {
     self.postMessage({ ok: false, message: (err && err.message) ? err.message : "Δεν ήταν δυνατή η ανάγνωση του αρχείου .xlsx." });
   });
