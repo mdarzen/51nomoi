@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>51 Νομοί Pro</title>
-<meta name="description" content="Η advanced έκδοση του εργαλείου 51 Νομοί — ξεκινά από την ίδια βάση (v1 Simple) και εδώ προστίθενται τα πιο advanced χαρακτηριστικά.">
+<meta name="description" content="51 Νομοί Pro — Έκδοση 33: καρτέλα πελάτη και τομέα, ευκαιρίες cross-selling, συγκέντρωση πελατών, εκπτώσεις, ακυρώσεις παραγγελιών και αποθήκευση στη συσκευή.">
 
 <!-- ---------- "Εγκατάσταση" σαν εφαρμογή (Add to Home Screen) στο iPhone/iOS και Android ---------- -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -607,6 +607,128 @@
     .kpi-row { grid-template-columns: repeat(2, 1fr); }
     .bridge-row { grid-template-columns: 1fr; }
   }
+
+  /* ============================= Beta v3 ============================= */
+  .beta-tag {
+    display: inline-block; vertical-align: middle; font-family: var(--font-body); font-size: 11px; font-weight: 700;
+    letter-spacing: .08em; padding: 3px 8px; border-radius: 999px; background: var(--terracotta); color: #fff; margin-left: 8px;
+  }
+  .beta-tag.small { font-size: 9.5px; padding: 2px 6px; margin-left: 6px; }
+  .beta-banner {
+    margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--terracotta-wash);
+    color: var(--text-primary); font-size: 13px; line-height: 1.5;
+  }
+  .store-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 10px; font-size: 12.5px; color: var(--text-secondary); }
+  .store-row .store-text { flex: 1 1 260px; min-width: 0; }
+  .btn-ghost {
+    font: inherit; font-size: 12.5px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border-strong);
+    background: var(--surface); color: var(--text-primary); cursor: pointer;
+  }
+  .btn-ghost:hover { background: var(--surface-sunken); }
+  .btn-ghost:disabled { opacity: .5; cursor: default; }
+  .btn-ghost.danger { color: var(--terracotta); border-color: var(--terracotta); }
+  .beta-note { margin: -6px 0 12px; font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+  .beta-scope { font-size: 12px; color: var(--text-muted); }
+  .beta-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 14px; }
+  .beta-kpi { background: var(--surface-sunken); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+  .beta-kpi .k { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); font-weight: 600; }
+  .beta-kpi .v { font-family: var(--font-display); font-size: 17px; font-weight: 700; margin-top: 4px; font-variant-numeric: tabular-nums; color: var(--text-primary); overflow-wrap: normal; }
+  @media (max-width: 560px) { .beta-kpi .v { font-size: 15px; } .beta-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .beta-kpi .s { font-size: 11.5px; color: var(--text-secondary); margin-top: 2px; }
+  .beta-grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 16px; align-items: start; }
+  @media (max-width: 860px) { .beta-grid2 { grid-template-columns: minmax(0, 1fr); } }
+  .beta-subtitle { font-family: var(--font-display); font-size: 13px; font-weight: 600; margin: 4px 0 8px; color: var(--text-primary); }
+  table.beta-table { border-collapse: collapse; width: 100%; font-size: 12.5px; min-width: 460px; }
+  table.beta-table th {
+    text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); font-weight: 600;
+    padding: 8px 10px; background: var(--surface-sunken); border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  table.beta-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text-primary); }
+  table.beta-table tbody tr:last-child td { border-bottom: none; }
+  table.beta-table th.num, table.beta-table td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  table.beta-table td.neg { color: var(--terracotta); }
+  table.beta-table td.pos { color: var(--good); }
+  table.beta-table td.muted { color: var(--text-muted); }
+  .cust-link {
+    font: inherit; color: var(--accent); background: none; border: 0; padding: 0; margin: 0; cursor: pointer; text-align: left;
+    text-decoration: underline; text-decoration-color: var(--accent-wash-strong); text-underline-offset: 2px;
+  }
+  .cust-link:hover, .cust-link:focus-visible { text-decoration-color: var(--accent); }
+  .abc-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .abc-chip { padding: 6px 11px; border-radius: 999px; font-size: 12.5px; background: var(--accent-wash); color: var(--text-primary); border: 1px solid var(--border); }
+  .abc-chip b { font-family: var(--font-display); margin-right: 4px; }
+  .abc-chip.abc-A { background: var(--accent-wash-strong); }
+  .abc-chip.abc-C { background: var(--surface-sunken); }
+  .beta-svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .beta-svg .axis { stroke: var(--border-strong); stroke-width: 1; }
+  .beta-svg .grid { stroke: var(--border); stroke-width: 1; stroke-dasharray: 3 3; }
+  .beta-svg .lbl { font-size: 10.5px; fill: var(--text-muted); font-family: var(--font-body); }
+  .beta-svg .lbl-strong { font-size: 10.5px; fill: var(--text-primary); font-family: var(--font-body); font-weight: 600; }
+  .beta-svg .curve { fill: none; stroke: var(--accent); stroke-width: 2.2; }
+  .beta-svg .area { fill: var(--accent-wash); }
+  .beta-svg .ref { stroke: var(--terracotta); stroke-width: 1.2; stroke-dasharray: 4 3; }
+  .beta-svg .diag { stroke: var(--text-muted); stroke-width: 1; stroke-dasharray: 2 4; }
+  .beta-svg .dot { fill: var(--seq-400); opacity: .55; }
+  .beta-svg .dot.flag { fill: var(--terracotta); opacity: .95; }
+  .beta-svg .avgline { stroke: var(--text-secondary); stroke-width: 1; stroke-dasharray: 4 3; }
+  .beta-svg .bar-ss { fill: var(--bar-ss); }
+  .beta-svg .bar-fw { fill: var(--bar-fw); }
+  /* S/S και F/W με καθαρά διαφορετικά χρώματα και στο σκούρο θέμα */
+  :root { --bar-ss: #0f6e8c; --bar-fw: #184f95; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bar-ss: #4fb3d9; --bar-fw: #a393f5; } }
+  :root[data-theme="dark"] { --bar-ss: #4fb3d9; --bar-fw: #a393f5; }
+  .beta-svg .bar-other { fill: var(--text-muted); }
+  .beta-svg .bar-neg { fill: var(--terracotta); }
+  .beta-toolbar { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .beta-tabs { display: inline-flex; gap: 4px; flex-wrap: wrap; background: var(--surface-sunken); padding: 3px; border-radius: 10px; }
+  .beta-empty { padding: 14px; text-align: center; color: var(--text-muted); font-size: 13px; background: var(--surface-sunken); border-radius: 10px; }
+  .doc-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; font-size: 12px; align-items: center; color: var(--text-secondary); }
+  .doc-chip { padding: 4px 9px; border-radius: 999px; background: var(--terracotta-wash); color: var(--text-primary); }
+  .beta-legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 11.5px; color: var(--text-secondary); margin-top: 6px; }
+  .beta-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  .beta-more { margin-top: 8px; font-size: 12px; color: var(--text-muted); }
+
+  /* Καρτέλα πελάτη: αναζήτηση */
+  .cust-search { position: relative; max-width: 560px; }
+  .cust-search input {
+    width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; /* 16px: αλλιώς το iPhone κάνει zoom */ padding: 10px 12px; border-radius: 10px;
+    border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-primary);
+  }
+  .cust-search input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .cust-suggest {
+    position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 40; background: var(--surface-raised);
+    border: 1px solid var(--border-strong); border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,.18); max-height: 330px; overflow-y: auto;
+  }
+  .cust-suggest button {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 10px; width: 100%; text-align: left; font: inherit; font-size: 13.5px;
+    padding: 10px 12px; border: 0; background: none; color: var(--text-primary); cursor: pointer; border-bottom: 1px solid var(--border);
+  }
+  .cust-suggest button:last-child { border-bottom: 0; }
+  .cust-suggest button:hover, .cust-suggest button.is-active { background: var(--accent-wash); }
+  .cust-suggest .meta { color: var(--text-muted); font-size: 12px; white-space: nowrap; }
+  .cust-suggest .none { padding: 10px 12px; font-size: 13px; color: var(--text-muted); }
+
+  /* Καρτέλα πελάτη: παράθυρο */
+  .takis-dialog.cust-dialog { max-width: 920px; max-height: 92vh; font-family: var(--font-body); color: var(--text-primary); }
+  .cust-body { overflow-y: auto; padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+  /* Χωρίς αυτό, σε flex στήλη με όριο ύψους, τα .table-scroll (overflow:auto) «ζουλιούνται» σε ύψος 0 και οι πίνακες εξαφανίζονται. */
+  .cust-body > * { flex-shrink: 0; }
+  .cust-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  /* Τάκης: γρήγορες ενέργειες, διακοπή, πρόοδος */
+  .takis-quick { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 18px 0; }
+  .takis-quick button { margin-top: 0; }
+  .takis-progress { align-self: flex-start; font-size: 12px; color: var(--text-muted); padding: 0 4px; }
+  .takis-stop-btn { font: inherit; font-size: 13px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--terracotta); background: var(--surface); color: var(--terracotta); cursor: pointer; }
+  .takis-mode-note { font-size: 11px; color: var(--text-muted); padding: 4px 18px 0; }
+  /* Τα παράθυρα (Τάκης, Bonus, καρτέλα) είναι έξω από το .app — χωρίς αυτό έπαιρναν τη serif γραμματοσειρά του browser. */
+  .takis-overlay { font-family: var(--font-body); color: var(--text-primary); }
+  /* Πίνακες με πολλές στήλες: στο κινητό κυλάνε οριζόντια αντί να στριμώχνονται */
+  table.beta-table.wide { min-width: 720px; }
+  .cell-reason { font-size: 11.5px; color: var(--text-secondary); margin-top: 3px; line-height: 1.35; }
+  table.beta-table td { vertical-align: top; }
+  table.beta-table td.name { min-width: 150px; }
+  table.beta-table td.wrap, table.beta-table th.wrap { white-space: normal; }
 </style>
 <style>
   /* ---------- Μόνο για την έκδοση GitHub Pages ---------- */
@@ -614,17 +736,19 @@
   [hidden] { display: none !important; }
   img { max-width: 100%; }
   /* Ο «Τάκης» χρειάζεται το περιβάλλον του Claude για να απαντά — εδώ δεν είναι διαθέσιμος, οπότε
-     κρύβεται το κουμπί του και το Bonus ανεβαίνει στη θέση του. */
-  #takisFab { display: none !important; }
+     κρύβονται όλα τα κουμπιά του (πάνω δεξιά, «Σύνοψη για διοίκηση», «Ρώτα τον Τάκη» στις καρτέλες)
+     και το Bonus ανεβαίνει στη θέση του. */
+  #takisFab, #betaBriefShortcut, .cust-actions { display: none !important; }
   .bonus-fab { top: calc(16px + env(safe-area-inset-top, 0px)) !important; }
 </style>
 </head>
 <body>
 <div class="app">
   <header class="hero">
-    <div class="hero-eyebrow">Ανάλυση παραστατικών &middot; Εργαλείο νομών &middot; v2 · Pro (σε εξέλιξη)</div>
+    <div class="hero-eyebrow">Ανάλυση παραστατικών &middot; Εργαλείο νομών &middot; v2 · Pro &middot; Έκδοση 33 (30/09/2026)</div>
     <h1>51 Νομοί Pro</h1>
     <p>Ανέβασε το αρχείο παραστατικών, διάλεξε έναν ή περισσότερους εμπορικούς τομείς και δες αμέσως ποσότητες, αξίες, αριθμό πελατών και κενούς νομούς — μαζί με χάρτη πλέγματος της Ελλάδας.</p>
+    <div class="beta-banner">✨ <b>Νέα στην Έκδοση 33:</b> Καρτέλα Πελάτη και Τομέα, Ευκαιρίες cross-selling, Συγκέντρωση πελατών (Pareto), Εκπτώσεις, Ακυρώσεις παραγγελιών και αποθήκευση του αρχείου στη συσκευή. <button type="button" class="btn-ghost" id="betaBriefShortcut" style="margin-left:4px">📋 Σύνοψη για διοίκηση</button></div>
   </header>
 
   <section class="panel">
@@ -644,6 +768,7 @@
       <span id="statusText">Προβολή με δείγμα δεδομένων — ανέβασε το δικό σου αρχείο για πραγματικά αποτελέσματα.</span>
     </div>
     <div class="privacy-note">🔒 Η επεξεργασία γίνεται τοπικά στον browser σου· το αρχείο δεν στέλνεται πουθενά.</div>
+    <div class="store-row"><span class="store-text" id="storeStatus">💾 …</span><button type="button" class="btn-ghost danger" id="storeDeleteBtn" disabled>🗑 Διαγραφή αποθηκευμένων δεδομένων</button></div>
     <div id="errorBanner" class="error-banner hidden"></div>
   </section>
 
@@ -688,6 +813,15 @@
   </section>
 
   <section class="kpi-row" id="kpiRow"></section>
+
+  <section class="panel" id="custSearchPanel">
+    <div class="panel-header"><h2>Καρτέλα Πελάτη / Τομέα<span class="beta-tag small">ΝΕΟ</span></h2></div>
+    <p class="beta-note">Γράψε όνομα ή κωδικό πελάτη, ή όνομα εμπορικού τομέα (🏷️), για να δεις όλο το ιστορικό του. Τόνοι και κεφαλαία δεν παίζουν ρόλο. Μπορείς επίσης να πατήσεις σε οποιοδήποτε υπογραμμισμένο όνομα στους πίνακες.</p>
+    <div class="cust-search">
+      <input type="search" id="custSearchInput" placeholder="π.χ. όνομα πελάτη, ΧΟΝ.1234 ή τομέας" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="custSuggest" aria-label="Αναζήτηση πελάτη ή τομέα">
+      <div class="cust-suggest hidden" id="custSuggest" role="listbox"></div>
+    </div>
+  </section>
 
   <section class="panel" id="bridgePanel" hidden>
     <div class="panel-header">
@@ -768,6 +902,28 @@
     </div>
   </section>
 
+  <section class="results-stack" id="betaStack">
+    <div class="panel" id="paretoPanel">
+      <div class="panel-header"><h2>Συγκέντρωση Πελατών (Pareto / ABC)<span class="beta-tag small">ΝΕΟ</span></h2><span class="beta-scope" id="paretoScope"></span></div>
+      <p class="beta-note">Πόσο εξαρτάται ο τζίρος από λίγους πελάτες. Ίδια φίλτρα με την υπόλοιπη σελίδα· με 2 σεζόν επιλεγμένες διαλέγεις ποια θα δεις (εξ ορισμού η πιο πρόσφατη).</p>
+      <div id="paretoBody"></div>
+    </div>
+    <div class="panel" id="discountPanel">
+      <div class="panel-header"><h2>Αποδοτικότητα Εκπτώσεων<span class="beta-tag small">ΝΕΟ</span></h2><span class="beta-scope" id="discountScope"></span></div>
+      <div id="discountBody"></div>
+    </div>
+    <div class="panel" id="returnsPanel">
+      <div class="panel-header"><h2>Ακυρώσεις Παραγγελιών<span class="beta-tag small">ΝΕΟ</span></h2><span class="beta-scope" id="returnsScope"></span></div>
+      <p class="beta-note">ΠΑΡΑ = αρχική παραγγελία · ΠΑΑ = ακύρωση (ή μέρος της) · ΠΑΡΝ = αντικατάσταση (το παλιό ακυρώνεται με ΠΑΑ, το καινούριο μπαίνει με ΠΑΡΝ). Τελική αξία = αρχικές − ακυρώσεις + αντικαταστάσεις· πραγματική απώλεια = ακυρώσεις − αντικαταστάσεις. Εδώ μετράνε και οι τρεις τύποι, ανεξάρτητα από το φίλτρο «Τύπος Παραστατικού»· τα υπόλοιπα φίλτρα ισχύουν.</p>
+      <div id="returnsBody"></div>
+    </div>
+    <div class="panel" id="crossPanel">
+      <div class="panel-header"><h2>Ευκαιρίες Cross-selling<span class="beta-tag small">ΝΕΟ</span></h2><span class="beta-scope" id="crossScope"></span></div>
+      <p class="beta-note">Ποιοι πελάτες ΔΕΝ αγοράζουν έναν τομέα που αγοράζουν συνήθως οι παρόμοιοί τους. Ίδια φίλτρα με την υπόλοιπη σελίδα· με 2 σεζόν επιλεγμένες διαλέγεις ποια θα δεις (εξ ορισμού η πιο πρόσφατη).</p>
+      <div id="crossBody"></div>
+    </div>
+  </section>
+
   <section class="panel empty-panel">
     <h2>Κενοί Νομοί <span class="count-badge" id="emptyCount">0</span></h2>
     <div class="chip-list" id="emptyChipList"></div>
@@ -787,17 +943,19 @@
     <div class="takis-dialog-header">
       <div>
         <strong>Τάκης</strong>
-        <span class="takis-dialog-sub">Βλέπει τα τρέχοντα φιλτραρισμένα δεδομένα σου — ρώτησέ τον ό,τι θες.</span>
+        <span class="takis-dialog-sub">Βλέπει τα τρέχοντα φίλτρα και μπορεί να ψάξει σε όλες τις γραμμές του αρχείου — ρώτησέ τον ό,τι θες.</span>
       </div>
       <div class="takis-dialog-actions">
         <button type="button" class="takis-dialog-clear" id="takisClearBtn" title="Καθαρισμός ιστορικού" aria-label="Καθαρισμός ιστορικού">🧹</button>
         <button type="button" class="takis-dialog-close" id="takisCloseBtn" aria-label="Κλείσιμο">&times;</button>
       </div>
     </div>
+    <div class="takis-quick"><button type="button" class="btn-ghost" id="takisBriefBtn">📋 Σύνοψη για διοίκηση</button></div>
     <div class="takis-messages" id="takisMessages"></div>
     <form class="takis-input-row" id="takisForm">
       <input type="text" id="takisInput" class="takis-input" placeholder="π.χ. ποιος πελάτης έχασε τα περισσότερα;" autocomplete="off" />
       <button type="submit" class="btn-primary" id="takisSendBtn">Στείλε</button>
+      <button type="button" class="takis-stop-btn hidden" id="takisStopBtn">⏹ Διακοπή</button>
     </form>
   </div>
 </div>
@@ -834,6 +992,21 @@
         <span class="bonus-hint">Αντέγραψε το κείμενο και φέρ' το σε μια συνομιλία με τον Claude — εκεί θα γίνει η πραγματική έρευνα στο διαδίκτυο και θα λάβεις την πλήρη αναφορά.</span>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="takis-overlay hidden" id="custOverlay">
+  <div class="takis-dialog cust-dialog" role="dialog" aria-modal="true" aria-labelledby="custTitle">
+    <div class="takis-dialog-header">
+      <div>
+        <strong id="custTitle">Πελάτης</strong>
+        <span class="takis-dialog-sub" id="custSub"></span>
+      </div>
+      <div class="takis-dialog-actions">
+        <button type="button" class="takis-dialog-close" id="custCloseBtn" aria-label="Κλείσιμο">&times;</button>
+      </div>
+    </div>
+    <div class="cust-body" id="custBody"></div>
   </div>
 </div>
 
@@ -1580,7 +1753,10 @@ self.onmessage = function (e) {
     sortDir: "desc",
     expanded: {},      // geoKey -> true when its customer breakdown is open (nomoi table)
     intlExpanded: {},  // "cyprus" | "foreign" -> true
-    bridgeTab: "count" // "count" | "value" — which view the New/Lost/L4L customer bridge section shows
+    bridgeTab: "count", // "count" | "value" — which view the New/Lost/L4L customer bridge section shows
+    fileName: "",        // Beta: όνομα αρχείου που φαίνεται
+    dataSource: "sample", // Beta: "sample" | "upload" | "device"
+    savedAt: null
   };
 
   /* ============================= Helpers ============================= */
@@ -2261,8 +2437,8 @@ self.onmessage = function (e) {
     });
     highDiscountRows.sort(function (a, b) { return b.discountPct - a.discountPct; });
 
-    // 2) "Δωρεάν" γραμμές: ποσότητα > 0 αλλά μηδενική/αρνητική Καθαρή Αξία, ή σχεδόν 100% έκπτωση.
-    var giveawayRows = filtered.filter(function (r) { return r.qty > 0 && (r.net <= 0 || r.discountPct >= SUSPICIOUS_GIVEAWAY_PCT); });
+    // 2) "Δωρεάν" γραμμές: ποσότητα > 0 αλλά μηδενική Καθαρή Αξία, ή σχεδόν 100% έκπτωση. (Αρνητική αξία = ακύρωση ΠΑΑ, όχι δωρεάν.)
+    var giveawayRows = filtered.filter(function (r) { return r.qty > 0 && (r.net === 0 || (r.net > 0 && r.discountPct >= SUSPICIOUS_GIVEAWAY_PCT)); });
     giveawayRows.sort(function (a, b) { return b.qty - a.qty; });
 
     // 3) Ασυνήθιστα μεγάλες γραμμές: το κλασικό στατιστικό "φράχτη ακραίων τιμών" του Tukey
@@ -2286,7 +2462,7 @@ self.onmessage = function (e) {
     var valueOutlierRows = valueThreshold !== null ? filtered.filter(function (r) { return r.net >= valueThreshold; }) : [];
     valueOutlierRows.sort(function (a, b) { return b.net - a.net; });
 
-    // 4) Αρνητικές τιμές: πιθανές επιστροφές/πιστωτικά, ή απλά λάθος καταχώρηση — έξω από τον σκοπό
+    // 4) Αρνητικές τιμές: συνήθως ακυρώσεις παραγγελιών (ΠΑΑ), ή απλά λάθος καταχώρηση — έξω από τον σκοπό
     // αυτού του ελέγχου να αποφασίσει ποιο από τα δύο είναι, απλά τις κάνει ορατές.
     var negativeRows = filtered.filter(function (r) { return r.net < 0 || r.qty < 0 || r.total < 0; });
     negativeRows.sort(function (a, b) { return a.net - b.net; });
@@ -2332,7 +2508,7 @@ self.onmessage = function (e) {
     }
 
     if (sc.negativeValues.count) {
-      lines.push("- Αρνητικές τιμές (πιθανές επιστροφές/πιστωτικά ή λάθος καταχώρηση): " + fmtInt(sc.negativeValues.count) + " γραμμές" + (sc.negativeValues.count > sc.negativeValues.items.length ? (", οι " + sc.negativeValues.items.length + " πιο αρνητικές") : "") + ":");
+      lines.push("- Αρνητικές τιμές (συνήθως ακυρώσεις παραγγελιών — ΠΑΑ — ή λάθος καταχώρηση): " + fmtInt(sc.negativeValues.count) + " γραμμές" + (sc.negativeValues.count > sc.negativeValues.items.length ? (", οι " + sc.negativeValues.items.length + " πιο αρνητικές") : "") + ":");
       sc.negativeValues.items.forEach(function (r) { lines.push("    " + suspiciousRowLine(r)); });
     } else {
       lines.push("- Αρνητικές τιμές: καμία.");
@@ -2428,6 +2604,1029 @@ self.onmessage = function (e) {
     return lines.join("\n");
   }
 
+  /* ============================= Beta v3: αναλύσεις (καθαρές συναρτήσεις) =============================
+     Όλα εδώ είναι χωρίς DOM ώστε να ελέγχονται αυτόνομα (test_logic.js). Τα φίλτρα έχουν την ίδια
+     σημασία με το computeAggregate(): Τομείς / Σεζόν / Οικογένεια / Τύπος Παραστατικού. */
+
+  // Κανονικοποίηση για αναζήτηση: χωρίς τόνους, κεφαλαία, ενιαία κενά ("Πελάτης" == "ΠΕΛΑΤΗΣ" == "πελατης").
+  function normKey(s) {
+    return String(s == null ? "" : s).normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase().replace(/\s+/g, " ").trim();
+  }
+
+  // Χάρτης χωρίς πρωτότυπο: κλειδιά από το αρχείο (π.χ. πελάτης «constructor» ή «__proto__») δεν μπερδεύονται
+  // με ιδιότητες των αντικειμένων της JavaScript.
+  function dict() { return Object.create(null); }
+
+  // Ποιες σεζόν "κοιτάνε" οι νέες αναλύσεις: με 2 επιλεγμένες (σύγκριση) → μόνο η πιο πρόσφατη,
+  // με 1 → αυτή, με καμία → όλες. Το label εξηγεί στον χρήστη τι βλέπει.
+  function analysisSeasonScope(st) {
+    var seasons = sortSeasons(selectedFrom(st.selectedSeasons || {}));
+    if (seasons.length >= 2) {
+      var high = seasons[seasons.length - 1];
+      return { seasons: [high], label: "Σεζόν " + high + " (η πιο πρόσφατη από τις επιλεγμένες)" };
+    }
+    if (seasons.length === 1) return { seasons: seasons, label: "Σεζόν " + seasons[0] };
+    return { seasons: [], label: "Όλες οι σεζόν" };
+  }
+
+  // Σεζόν για τα πάνελ Συγκέντρωση / Εκπτώσεις / Ακυρώσεις: με 2 επιλεγμένες σεζόν ο χρήστης διαλέγει ποια από τις δύο θα δει
+  // (chosen)· εξ ορισμού — ή αν η επιλογή δεν είναι πια έγκυρη — η πιο πρόσφατη. options = οι σεζόν για επιλογή.
+  function panelSeasonScope(st, chosen) {
+    var seasons = sortSeasons(selectedFrom(st.selectedSeasons || {}));
+    if (seasons.length >= 2) {
+      var high = seasons[seasons.length - 1];
+      if (chosen && chosen !== high && seasons.indexOf(chosen) > -1) {
+        return { seasons: [chosen], options: seasons, label: "Σεζόν " + chosen + " (δική σου επιλογή)" };
+      }
+      return { seasons: [high], options: seasons, label: "Σεζόν " + high + " (η πιο πρόσφατη από τις επιλεγμένες)" };
+    }
+    var base = analysisSeasonScope(st);
+    return { seasons: base.seasons, options: [], label: base.label };
+  }
+
+  var returnsSeasonScope = panelSeasonScope; // παλιό όνομα
+
+  // Γραμμές για τις αναλύσεις: ίδια φίλτρα με την υπόλοιπη σελίδα, αλλά με τις σεζόν του scope
+  // (opts.scope: άλλο scope αντί για το προεπιλεγμένο, π.χ. η σεζόν που διάλεξε ο χρήστης στις Ακυρώσεις).
+  // opts.ignoreDoctype: αγνοεί το φίλτρο Τύπου Παραστατικού (για τις ακυρώσεις παραγγελιών — τύπος ΠΑΑ —
+  // που είναι σε άλλο τύπο παραστατικού από τις παραγγελίες).
+  function filterRowsForAnalysis(st, opts) {
+    opts = opts || {};
+    var rows = st.rows || [];
+    var sel = st.mode === "single" ? (st.selectedSingle ? [st.selectedSingle] : []) : selectedFrom(st.selectedMulti || {});
+    if (!sel.length) return [];
+    var selSet = dict(); sel.forEach(function (s) { selSet[s] = true; });
+    var scope = opts.scope || analysisSeasonScope(st);
+    var seasonSet = dict(); scope.seasons.forEach(function (s) { seasonSet[s] = true; });
+    var families = selectedFrom(st.selectedFamilies || {});
+    var familySet = dict(); families.forEach(function (f) { familySet[f] = true; });
+    var doctypes = opts.ignoreDoctype ? [] : selectedFrom(st.selectedDoctypes || {});
+    var doctypeSet = dict(); doctypes.forEach(function (d) { doctypeSet[d] = true; });
+    return rows.filter(function (r) {
+      if (!selSet[(r.sector || "(χωρίς τομέα)")]) return false;
+      if (scope.seasons.length && !seasonSet[r.season]) return false;
+      if (families.length && !familySet[r.family]) return false;
+      if (doctypes.length && !doctypeSet[r.doctype]) return false;
+      return true;
+    });
+  }
+
+  // Για εμφάνιση: χωρίς «Null» (νομός που λείπει) και οικογένειες χωρίς διπλά κενά, χωρίς διπλοεγγραφές.
+  function cleanGeoList(list) { return (list || []).filter(function (g) { return g && g !== "Null"; }); }
+  function cleanFamilyList(list) {
+    var seen = dict(), out = [];
+    (list || []).forEach(function (f) { var v = String(f || "").replace(/\s+/g, " ").trim(); if (v && !seen[v]) { seen[v] = true; out.push(v); } });
+    return out;
+  }
+  // Σύντομη ετικέτα σεζόν (για υπότιτλους): «Σεζόν 271» ή «Όλες οι σεζόν».
+  function shortScopeLabel(scope) { return scope && scope.seasons && scope.seasons.length ? "Σεζόν " + scope.seasons.join(", ") : "Όλες οι σεζόν"; }
+
+  // Ο τομέας με τη μεγαλύτερη συνολική αξία (για την «Μία επιλογή»)· «(χωρίς τομέα)» μόνο αν δεν υπάρχει άλλος.
+  function topSectorByValue(rows, sectors) {
+    var tot = dict();
+    rows.forEach(function (r) { var s = r.sector || "(χωρίς τομέα)"; tot[s] = (tot[s] || 0) + (r.net || 0); });
+    var best = null;
+    sectors.forEach(function (s) {
+      if (s === "(χωρίς τομέα)" && sectors.length > 1) return;
+      if (best === null || (tot[s] || 0) > (tot[best] || 0)) best = s;
+    });
+    return best === null ? sectors[0] : best;
+  }
+
+  function geoLabel(r) {
+    if (r.geoType === "nomos") return r.geoKey;
+    if (r.geoType === "cyprus") return "Κύπρος";
+    return "Εξωτερικό";
+  }
+
+  /* ---------- Β7: Pareto / συγκέντρωση πελατών ---------- */
+  function computePareto(rows) {
+    var byCust = dict();
+    rows.forEach(function (r) {
+      if (!r.customer) return;
+      byCust[r.customer] = (byCust[r.customer] || 0) + (r.net || 0);
+    });
+    var all = Object.keys(byCust).map(function (c) { return { customer: c, net: byCust[c] }; });
+    var list = all.filter(function (x) { return x.net > 0; });
+    var excluded = all.length - list.length;
+    list.sort(function (a, b) { return b.net - a.net || a.customer.localeCompare(b.customer, "el"); });
+    var total = list.reduce(function (s, x) { return s + x.net; }, 0);
+    var n = list.length;
+    var out = { customerCount: n, excludedNonPositive: excluded, totalNet: total, needed: {}, topShares: {}, classes: null, top: [], curve: [] };
+    if (!n || total <= 0) return out;
+    var cum = 0;
+    var cls = { A: { count: 0, net: 0 }, B: { count: 0, net: 0 }, C: { count: 0, net: 0 } };
+    var marks = [0.5, 0.8, 0.95];
+    list.forEach(function (x, i) {
+      var before = cum / total;
+      cum += x.net;
+      x.cumShare = cum / total * 100;
+      x.share = x.net / total * 100;
+      x.rank = i + 1;
+      // Τάξη ABC: η Α περιλαμβάνει τον πελάτη που "περνάει" το 80%, η Β αυτόν που περνάει το 95%.
+      var c = before < 0.8 ? "A" : (before < 0.95 ? "B" : "C");
+      x.abc = c;
+      cls[c].count++; cls[c].net += x.net;
+      marks.forEach(function (m) {
+        var key = "p" + Math.round(m * 100);
+        if (out.needed[key] === undefined && cum / total >= m - 1e-12) out.needed[key] = i + 1;
+      });
+    });
+    ["A", "B", "C"].forEach(function (k) { cls[k].share = cls[k].net / total * 100; });
+    out.classes = cls;
+    [1, 5, 10, 20].forEach(function (k) {
+      var s = 0; for (var i = 0; i < Math.min(k, n); i++) s += list[i].net;
+      out.topShares["top" + k] = s / total * 100;
+    });
+    out.top = list.slice(0, 30);
+    // Καμπύλη Lorenz/Pareto: έως ~100 σημεία (x = % πελατών, y = % αξίας), πάντα με (0,0) και (100,100).
+    var step = Math.max(1, Math.ceil(n / 100));
+    out.curve.push({ x: 0, y: 0 });
+    for (var j = step - 1; j < n; j += step) out.curve.push({ x: (j + 1) / n * 100, y: list[j].cumShare });
+    if (out.curve[out.curve.length - 1].x < 100) out.curve.push({ x: 100, y: 100 });
+    return out;
+  }
+
+  /* ---------- Β8: αποδοτικότητα εκπτώσεων ---------- */
+  var DISCOUNT_FLAG_PP = 3;       // πόσες ποσοστιαίες μονάδες πάνω από τους "ομοίους" για να σημειωθεί
+  var DISCOUNT_BANDS = 5;         // ζώνες όγκου (πεντημόρια) όταν υπάρχουν αρκετοί πελάτες
+  var DISCOUNT_MIN_FOR_BANDS = 25;
+
+  function computeDiscountEffectiveness(rows) {
+    var byCust = dict();
+    rows.forEach(function (r) {
+      if (!r.customer || !(r.net > 0)) return; // μόνο γραμμές παραγγελιών: οι ακυρώσεις θα μπέρδευαν την αναλογία
+      var c = byCust[r.customer] || (byCust[r.customer] = { customer: r.customer, net: 0, disc: 0, qty: 0 });
+      c.net += r.net; c.disc += (r.discountAmount || 0); c.qty += (r.qty || 0);
+    });
+    var list = Object.keys(byCust).map(function (k) { return byCust[k]; });
+    list.sort(function (a, b) { return b.net - a.net || a.customer.localeCompare(b.customer, "el"); });
+    var n = list.length;
+    var totNet = 0, totDisc = 0;
+    list.forEach(function (c, i) { totNet += c.net; totDisc += c.disc; c.rank = i + 1; c.discPct = c.net ? c.disc / c.net * 100 : 0; });
+    var avg = totNet ? totDisc / totNet * 100 : 0;
+    var out = { customerCount: n, avgDiscPct: avg, totalNet: totNet, totalDisc: totDisc, bands: [], flagged: [], flaggedExcess: 0, points: [] };
+    if (!n) return out;
+    var bandCount = n >= DISCOUNT_MIN_FOR_BANDS ? DISCOUNT_BANDS : 1;
+    for (var b = 0; b < bandCount; b++) {
+      var from = Math.floor(b * n / bandCount), to = Math.floor((b + 1) * n / bandCount); // [from, to)
+      var bn = 0, bd = 0;
+      for (var i = from; i < to; i++) { bn += list[i].net; bd += list[i].disc; list[i].band = b; }
+      // Ομάδες ίσου ΠΛΗΘΟΥΣ πελατών (πεντημόρια): η λίστα είναι ταξινομημένη από τον μεγαλύτερο στον μικρότερο,
+      // άρα maxNet = ο πρώτος της ομάδας, minNet = ο τελευταίος.
+      out.bands.push({
+        band: b, from: from + 1, to: to, customers: to - from, net: bn,
+        maxNet: to > from ? list[from].net : 0, minNet: to > from ? list[to - 1].net : 0,
+        avgDiscPct: bn ? bd / bn * 100 : 0,
+        label: bandCount === 1 ? "Όλοι οι πελάτες" : (b === 0 ? "Οι 20% μεγαλύτεροι" : (b === bandCount - 1 ? "Οι 20% μικρότεροι" : "Επόμενοι 20% (" + (20 * b) + "–" + (20 * (b + 1)) + "%)"))
+      });
+    }
+    list.forEach(function (c) {
+      var peer = out.bands[c.band].avgDiscPct;
+      c.peerDiscPct = peer;
+      c.excessPp = c.discPct - peer;
+      c.excessEur = c.net * c.excessPp / 100;
+      if (c.excessPp >= DISCOUNT_FLAG_PP && c.discPct > avg) { out.flagged.push(c); out.flaggedExcess += c.excessEur; }
+    });
+    out.flagged.sort(function (a, b) { return b.excessEur - a.excessEur; });
+    // Σημεία για το διάγραμμα διασποράς (όγκος vs έκπτωση) — έως 600 για να μένει ελαφρύ.
+    var pts = list.length > 600 ? list.slice(0, 450).concat(out.flagged.filter(function (c) { return c.rank > 450; }).slice(0, 150)) : list;
+    out.points = pts.map(function (c) { return { customer: c.customer, net: c.net, discPct: c.discPct, flagged: c.excessPp >= DISCOUNT_FLAG_PP && c.discPct > avg }; });
+    return out;
+  }
+
+  /* ---------- Β9: ακυρώσεις παραγγελιών ----------
+     Οι τύποι παραστατικών (επιβεβαίωση χρήστη 29/09/2026):
+       ΠΑΡΑ = αρχική παραγγελία (θετική αξία)
+       ΠΑΑ  = ακύρωση παραγγελίας ή μέρους της (αρνητική αξία)
+       ΠΑΡΝ = αντικατάσταση: το παλιό ακυρώνεται με ΠΑΑ και το καινούριο μπαίνει με ΠΑΡΝ (θετική αξία)
+     Άρα: τελική αξία = αρχικές − ακυρώσεις + αντικαταστάσεις, και «πραγματική απώλεια» = ακυρώσεις − αντικαταστάσεις.
+     Στον κώδικα, για ιστορικούς λόγους: sales = αρχικές παραγγελίες (θετικές γραμμές εκτός ΠΑΡΝ),
+     returns = ακυρώσεις (αρνητικές γραμμές), repl = αντικαταστάσεις (θετικές γραμμές ΠΑΡΝ). */
+  var RETURNS_MIN_SALES_SHARE = 0.001; // για ταξινόμηση κατά ποσοστό: αγνόησε ομάδες με < 0,1% των αρχικών παραγγελιών
+  var REPLACEMENT_DOCTYPES = { "ΠΑΡΝ": true };
+  var replacementCache = dict();
+  function isReplacementDoctype(doctype) {
+    var k = String(doctype == null ? "" : doctype);
+    var v = replacementCache[k];
+    if (v === undefined) v = replacementCache[k] = !!REPLACEMENT_DOCTYPES[normKey(k)];
+    return v;
+  }
+  var CANCEL_DOCTYPES = { "ΠΑΑ": true };
+  var cancelCache = dict();
+  function isCancelDoctype(doctype) {
+    var k = String(doctype == null ? "" : doctype);
+    var v = cancelCache[k];
+    if (v === undefined) v = cancelCache[k] = !!CANCEL_DOCTYPES[normKey(k)];
+    return v;
+  }
+  // "orig" | "repl" | "cancel" | null (μηδενική αξία). Πρώτα ο τύπος παραστατικού (ΠΑΡΝ = αντικατάσταση,
+  // ΠΑΑ = ακύρωση, με όποιο πρόσημο), αλλιώς το πρόσημο: αρνητική αξία = ακύρωση, θετική = αρχική παραγγελία.
+  // Ποσά: αρχικές/αντικαταστάσεις = +net, ακυρώσεις = −net (μια θετική γραμμή ΠΑΑ μειώνει τις ακυρώσεις).
+  function orderLineKind(r) {
+    var net = r.net || 0;
+    if (!net) return null;
+    if (isReplacementDoctype(r.doctype)) return "repl";
+    if (isCancelDoctype(r.doctype)) return "cancel";
+    return net < 0 ? "cancel" : "orig";
+  }
+  // Καθαρά τεμάχια μιας γραμμής: στα δεδομένα οι ακυρώσεις (ΠΑΑ) έχουν ΘΕΤΙΚΗ ποσότητα με αρνητική αξία,
+  // οπότε το πρόσημο το δίνει η αξία: τελικά τεμάχια = ΠΑΡΑ − ΠΑΑ + ΠΑΡΝ.
+  // Γραμμή με μηδενική αξία (π.χ. δωρεάν τεμάχια): μετράει κανονικά (+), εκτός αν είναι ακύρωση (ΠΑΑ) — όπως η σελίδα.
+  function netPieces(r) {
+    var net = r.net || 0, q = Math.abs(r.qty || 0);
+    if (net < 0) return -q;
+    if (net > 0) return q;
+    return isCancelDoctype(r.doctype) ? -q : q;
+  }
+
+  function computeReturns(rows) {
+    function blank(key) { return { key: key, sales: 0, returns: 0, repl: 0, qtySales: 0, qtyReturns: 0, returnLines: 0, replLines: 0 }; }
+    function add(b, r, kind, net) {
+      if (kind === "orig") { b.sales += net; b.qtySales += (r.qty || 0); }
+      else if (kind === "repl") { b.repl += net; b.replLines++; }
+      else if (kind === "cancel") { b.returns += -net; b.qtyReturns += Math.abs(r.qty || 0); b.returnLines++; }
+    }
+    function fin(b) {
+      b.rate = b.sales > 0 ? b.returns / b.sales * 100 : null;              // ακυρώσεις ÷ αρχικές
+      b.lost = b.returns - b.repl;                                           // πραγματική απώλεια
+      b.lossRate = b.sales > 0 ? b.lost / b.sales * 100 : null;             // (ακυρώσεις − αντικαταστάσεις) ÷ αρχικές
+      b.netAfter = b.sales - b.returns + b.repl;                             // τελική αξία
+      return b;
+    }
+    var groups = { customer: dict(), sector: dict(), geo: dict() };
+    var tot = blank("ΣΥΝΟΛΟ");
+    var byDoctype = dict();
+    rows.forEach(function (r) {
+      var net = r.net || 0;
+      var kind = orderLineKind(r);
+      if (!kind) return;
+      var keys = { customer: r.customer || "(χωρίς όνομα)", sector: r.sector || "(χωρίς τομέα)", geo: geoLabel(r) };
+      Object.keys(groups).forEach(function (g) {
+        add(groups[g][keys[g]] || (groups[g][keys[g]] = blank(keys[g])), r, kind, net);
+      });
+      add(tot, r, kind, net);
+      if (kind === "cancel") byDoctype[r.doctype || "—"] = (byDoctype[r.doctype || "—"] || 0) + (-net);
+    });
+    function finish(obj) {
+      return Object.keys(obj).map(function (k) { return fin(obj[k]); })
+        .sort(function (a, b) { return b.returns - a.returns || String(a.key).localeCompare(String(b.key), "el"); });
+    }
+    fin(tot);
+    return {
+      totals: tot,
+      minSalesForRate: tot.sales * RETURNS_MIN_SALES_SHARE,
+      customer: finish(groups.customer), sector: finish(groups.sector), geo: finish(groups.geo),
+      returnDoctypes: Object.keys(byDoctype).map(function (d) { return { doctype: d, returns: byDoctype[d] }; }).sort(function (a, b) { return b.returns - a.returns; })
+    };
+  }
+
+  // Ταξινόμηση ομάδων ακυρώσεων: "eur" (κατά αξία) ή "rate" (κατά ποσοστό, μόνο με αρκετές παραγγελίες).
+  function sortReturnGroups(list, mode, minSales) {
+    if (mode !== "rate") return list.slice();
+    return list.filter(function (b) { return b.rate !== null && b.sales >= minSales && b.returns > 0; })
+      .sort(function (a, b) { return b.rate - a.rate || b.returns - a.returns; });
+  }
+
+  /* ---------- Β6: καρτέλα πελάτη (όλο το ιστορικό, χωρίς φίλτρα) ---------- */
+  function uniqueCustomerIndex(rows) {
+    var idx = dict();
+    rows.forEach(function (r) {
+      if (!r.customer) return;
+      var e = idx[r.customer] || (idx[r.customer] = { customer: r.customer, key: normKey(r.customer), codes: dict(), net: 0 });
+      if (r.code) e.codes[r.code] = true;
+      e.net += (r.net || 0);
+    });
+    return Object.keys(idx).map(function (k) {
+      var e = idx[k]; e.codeList = Object.keys(e.codes); e.codeKey = normKey(e.codeList.join(" ")); delete e.codes; return e;
+    });
+  }
+
+  function findCustomers(index, query, limit) {
+    var q = normKey(query);
+    if (!q) return [];
+    var exact = [], starts = [], contains = [];
+    index.forEach(function (e) {
+      if (e.key === q) exact.push(e);
+      else if (e.key.indexOf(q) === 0) starts.push(e);
+      else if (e.key.indexOf(q) > -1 || e.codeKey.indexOf(q) > -1) contains.push(e);
+    });
+    function byNet(a, b) { return b.net - a.net; }
+    return exact.concat(starts.sort(byNet), contains.sort(byNet)).slice(0, limit || 20);
+  }
+
+  function computeCustomerProfile(rows, customer) {
+    var mine = rows.filter(function (r) { return r.customer === customer; });
+    if (!mine.length) return null;
+    var p = { customer: customer, lines: mine.length, codes: dict(), geos: dict(), families: dict(), sales: 0, returns: 0, repl: 0, qty: 0, disc: 0, discBase: 0, firstDate: null, lastDate: null, seasons: dict(), sectors: dict(), doctypes: dict() };
+    mine.forEach(function (r) {
+      var net = r.net || 0;
+      if (r.code) p.codes[r.code] = true;
+      p.geos[geoLabel(r)] = true;
+      if (r.family) p.families[r.family] = true;
+      p.doctypes[r.doctype || "—"] = (p.doctypes[r.doctype || "—"] || 0) + 1;
+      var s = p.seasons[r.season || "—"] || (p.seasons[r.season || "—"] = { season: r.season || "—", sales: 0, returns: 0, repl: 0, qty: 0, disc: 0, discBase: 0, lines: 0 });
+      var sec = p.sectors[r.sector || "(χωρίς τομέα)"] || (p.sectors[r.sector || "(χωρίς τομέα)"] = { sector: r.sector || "(χωρίς τομέα)", sales: 0, returns: 0, repl: 0 });
+      s.lines++;
+      var kind = orderLineKind(r);
+      var pcs = netPieces(r);
+      p.qty += pcs; s.qty += pcs;                          // τελικά τεμάχια (ΠΑΡΑ − ΠΑΑ + ΠΑΡΝ)
+      if (net > 0) { p.disc += (r.discountAmount || 0); p.discBase += net; s.disc += (r.discountAmount || 0); s.discBase += net; }
+      if (kind === "orig") {
+        p.sales += net; s.sales += net; sec.sales += net;
+        // Πρώτη/τελευταία παραγγελία: μόνο από αρχικές παραγγελίες (όχι αντικαταστάσεις/ακυρώσεις).
+        if (r.date instanceof Date && !isNaN(r.date.getTime())) {
+          if (!p.firstDate || r.date < p.firstDate) p.firstDate = r.date;
+          if (!p.lastDate || r.date > p.lastDate) p.lastDate = r.date;
+        }
+      } else if (kind === "repl") {
+        p.repl += net; s.repl += net; sec.repl += net;
+      } else if (kind === "cancel") {
+        p.returns += -net; s.returns += -net; sec.returns += -net;
+      }
+    });
+    p.codeList = Object.keys(p.codes); p.geoList = Object.keys(p.geos); p.familyList = Object.keys(p.families);
+    p.net = p.sales - p.returns + p.repl;                               // τελική αξία
+    p.returnRate = p.sales > 0 ? p.returns / p.sales * 100 : null;      // ακυρώσεις ÷ αρχικές
+    p.lost = p.returns - p.repl;
+    p.lossRate = p.sales > 0 ? p.lost / p.sales * 100 : null;          // πραγματική απώλεια ÷ αρχικές
+    p.discPct = p.discBase > 0 ? p.disc / p.discBase * 100 : 0;
+    var seasonList = sortSeasons(Object.keys(p.seasons)).map(function (k) {
+      var s = p.seasons[k];
+      s.net = s.sales - s.returns + s.repl;
+      s.discPct = s.discBase > 0 ? s.disc / s.discBase * 100 : 0;
+      s.type = seasonTypeSuffix(k);
+      return s;
+    });
+    // Μεταβολή έναντι της προηγούμενης σεζόν ΙΔΙΟΥ τύπου (S/S με S/S, F/W με F/W) που είχε αρχικές παραγγελίες.
+    seasonList.forEach(function (s, i) {
+      s.prevSameType = null; s.changePct = null;
+      if (!s.type) return;
+      for (var j = i - 1; j >= 0; j--) {
+        if (seasonList[j].type === s.type && seasonList[j].sales > 0) {
+          s.prevSameType = seasonList[j].season;
+          s.changePct = pctChange(seasonList[j].net, s.net);
+          break;
+        }
+      }
+    });
+    p.seasonList = seasonList;
+    p.activeSeasons = seasonList.filter(function (s) { return s.sales > 0; }).length; // σεζόν με αρχικές παραγγελίες
+    p.sectorList = Object.keys(p.sectors).map(function (k) { var x = p.sectors[k]; x.net = x.sales - x.returns + x.repl; return x; })
+      .sort(function (a, b) { return b.net - a.net; });
+    delete p.codes; delete p.geos; delete p.families; delete p.seasons; delete p.sectors;
+    return p;
+  }
+
+  /* ---------- Γ11: εργαλεία δεδομένων για τον Τάκη ---------- */
+  var TAKIS_GROUP_DIMS = { customer: "customer", sector: "sector", nomos: "geo", season: "season", family: "family", doctype: "doctype", code: "code", month: "month", none: "none" };
+  // Για τον Τάκη τα πεδία λέγονται orders / cancellations / cancel_rate (ΠΑΑ = Ακύρωση Παραγγελίας).
+  // Δεχόμαστε και τα παλιά ονόματα (sales / returns / return_rate) για ασφάλεια.
+  var TAKIS_SORT_KEYS = ["net", "orders", "cancellations", "replacements", "qty", "lines", "customers", "discount_pct", "cancel_rate", "loss_rate"];
+  var TAKIS_NAME_ALIASES = { sales: "orders", returns: "cancellations", return_rate: "cancel_rate" };
+
+  function round2(x) { return Math.round(x * 100) / 100; }
+
+  // Επιστρέφει {set, unknown} — αντιστοιχεί τις τιμές που έστειλε ο Τάκης σε υπαρκτές (χωρίς τόνους/κεφαλαία).
+  // Ο Τάκης μπορεί να στείλει μία τιμή ως σκέτο string αντί για λίστα — τη δεχόμαστε κι έτσι.
+  function asList(v) {
+    if (v === undefined || v === null || v === "") return null;
+    if (Array.isArray(v)) return v.length ? v : null;
+    return [v];
+  }
+
+  function matchValues(wanted, available) {
+    wanted = asList(wanted);
+    if (!wanted) return null;
+    var byKey = dict(); available.forEach(function (v) { byKey[normKey(v)] = v; });
+    var set = dict(), unknown = [];
+    wanted.forEach(function (w) {
+      var hit = byKey[normKey(w)];
+      if (hit !== undefined) set[hit] = true; else unknown.push(String(w));
+    });
+    return { set: set, unknown: unknown };
+  }
+
+  function monthKey(d) {
+    if (!(d instanceof Date) || isNaN(d.getTime())) return "(χωρίς ημ/νία)";
+    var m = d.getMonth() + 1;
+    return d.getFullYear() + "-" + (m < 10 ? "0" : "") + m;
+  }
+
+  // "ΕΕΕΕ-ΜΜ-ΗΗ" -> Date σε τοπική ώρα (αρχή ή τέλος της ημέρας). Οτιδήποτε άλλο -> null.
+  function parseDateInput(v, endOfDay) {
+    var m = String(v).trim().match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+    if (!m) return null;
+    var y = +m[1], mo = +m[2], d = +m[3];
+    var dt = endOfDay ? new Date(y, mo - 1, d, 23, 59, 59, 999) : new Date(y, mo - 1, d, 0, 0, 0, 0);
+    if (dt.getFullYear() !== y || dt.getMonth() !== mo - 1 || dt.getDate() !== d) return null;
+    return dt;
+  }
+
+  function takisQuery(st, input) {
+    input = input || {};
+    var rows = st.rows || [];
+    var useCurrent = input.use_current_filters !== false;
+    var warnings = [];
+    var groupDim = TAKIS_GROUP_DIMS[String(input.group_by || "none")];
+    if (!groupDim) { warnings.push("Άγνωστο group_by — χρησιμοποιήθηκε none"); groupDim = "none"; }
+    var cur = {
+      sectors: st.mode === "single" ? (st.selectedSingle ? [st.selectedSingle] : []) : selectedFrom(st.selectedMulti || {}),
+      seasons: selectedFrom(st.selectedSeasons || {}),
+      families: selectedFrom(st.selectedFamilies || {}),
+      doctypes: selectedFrom(st.selectedDoctypes || {})
+    };
+    // Με 2 σεζόν στην οθόνη (σύγκριση) οι νέες αναλύσεις μετράνε την πιο πρόσφατη· το ίδιο κάνει και το
+    // εργαλείο, εκτός αν ζητηθεί ανάλυση ανά σεζόν (τότε κρατάει και τις δύο, για σύγκριση).
+    if (useCurrent && !asList(input.seasons) && cur.seasons.length >= 2 && groupDim !== "season") {
+      var both = sortSeasons(cur.seasons);
+      cur.seasons = both.slice(-1);
+      warnings.push("Στην οθόνη είναι επιλεγμένες 2 σεζόν (" + both.join(" & ") + "): μετρήθηκε μόνο η πιο πρόσφατη (" + cur.seasons[0] + "). Για σύγκριση ζήτα group_by=season ή δώσε seasons.");
+    }
+    function dimFilter(name, available) {
+      var m = matchValues(input[name], available);
+      if (m) {
+        if (m.unknown.length) warnings.push("Άγνωστες τιμές στο " + name + ": " + m.unknown.slice(0, 5).join(", "));
+        return m.set;
+      }
+      if (useCurrent && cur[name] && cur[name].length) { var s = dict(); cur[name].forEach(function (v) { s[v] = true; }); return s; }
+      return null;
+    }
+    var fSector = dimFilter("sectors", st.sectors || uniqueSectors(rows));
+    // Κανένας τομέας επιλεγμένος στην οθόνη (και ο Τάκης δεν ζήτησε συγκεκριμένους): η οθόνη δεν δείχνει τίποτα,
+    // άρα ούτε το εργαλείο — αντί να μετρήσει σιωπηλά ΟΛΟΥΣ τους τομείς.
+    if (useCurrent && !asList(input.sectors) && !cur.sectors.length) {
+      return {
+        filters_used: { sectors: "κανένας επιλεγμένος στην οθόνη" }, matched_lines: 0, groups_total: 0, showing: 0, rows: [],
+        warnings: warnings.concat(["Στην οθόνη δεν είναι επιλεγμένος κανένας εμπορικός τομέας. Δώσε sectors ή use_current_filters=false."])
+      };
+    }
+    var fSeason = dimFilter("seasons", st.seasons || uniqueValues(rows, "season"));
+    var fFamily = dimFilter("families", st.families || uniqueValues(rows, "family"));
+    var lineTypeIn = TAKIS_NAME_ALIASES[String(input.line_type)] || String(input.line_type);
+    var lineType = ["all", "orders", "cancellations"].indexOf(lineTypeIn) > -1 ? lineTypeIn : "all";
+    // Τύπος Παραστατικού: εξ ορισμού ισχύει το φίλτρο της οθόνης για παραγγελίες/net/qty (ώστε τα νούμερα
+    // να συμφωνούν με όσα βλέπει ο χρήστης). Οι ακυρώσεις (cancellations, cancel_rate) όμως μετράνε ΟΛΟΥΣ
+    // τους τύπους, όπως το πάνελ «Ακυρώσεις», γιατί είναι σε άλλο τύπο (ΠΑΑ) από τις παραγγελίες —
+    // εκτός αν ο Τάκης ζητήσει ρητά συγκεκριμένους τύπους.
+    var explicitDoc = !!asList(input.doctypes);
+    var fDoctype;
+    if (explicitDoc) fDoctype = dimFilter("doctypes", st.doctypes || uniqueValues(rows, "doctype"));
+    else if (lineType === "cancellations" || input.ignore_doctype_filter === true) fDoctype = null;
+    else fDoctype = dimFilter("doctypes", st.doctypes || uniqueValues(rows, "doctype"));
+    var returnsAllDoctypes = !explicitDoc && !!fDoctype && lineType === "all";
+    var geoAvail = dict(); rows.forEach(function (r) { geoAvail[geoLabel(r)] = true; });
+    var fGeo = matchValues(input.nomoi, Object.keys(geoAvail));
+    if (fGeo && fGeo.unknown.length) warnings.push("Άγνωστοι νομοί: " + fGeo.unknown.slice(0, 5).join(", "));
+    var custContains = input.customer_contains ? normKey(input.customer_contains) : "";
+    var custList = asList(input.customers);
+    var custExact = custList ? custList.map(normKey) : null;
+    var dFrom = input.date_from ? parseDateInput(input.date_from, false) : null;
+    var dTo = input.date_to ? parseDateInput(input.date_to, true) : null;
+    if (input.date_from && !dFrom) warnings.push("Μη έγκυρη date_from (χρειάζεται ΕΕΕΕ-ΜΜ-ΗΗ)");
+    if (input.date_to && !dTo) warnings.push("Μη έγκυρη date_to (χρειάζεται ΕΕΕΕ-ΜΜ-ΗΗ)");
+
+    var groups = dict(), matched = 0;
+    rows.forEach(function (r) {
+      var net = r.net || 0;
+      var kind = orderLineKind(r);
+      if (lineType === "orders" && kind !== "orig") return;
+      if (lineType === "cancellations" && kind !== "cancel") return;
+      if (fSector && !fSector[r.sector || "(χωρίς τομέα)"]) return;
+      if (fSeason && !fSeason[r.season]) return;
+      if (fFamily && !fFamily[r.family]) return;
+      if (fGeo && !fGeo.set[geoLabel(r)]) return;
+      if (custContains || custExact) {
+        var ck = normKey(r.customer);
+        if (custContains && ck.indexOf(custContains) === -1 && normKey(r.code).indexOf(custContains) === -1) return;
+        if (custExact && custExact.indexOf(ck) === -1) return;
+      }
+      if (dFrom || dTo) {
+        if (!(r.date instanceof Date) || isNaN(r.date.getTime())) return;
+        if (dFrom && r.date < dFrom) return;
+        if (dTo && r.date > dTo) return;
+      }
+      var passDoc = !fDoctype || !!fDoctype[r.doctype];
+      if (!passDoc && !returnsAllDoctypes) return;
+      var key = groupDim === "none" ? "ΣΥΝΟΛΟ" : groupDim === "geo" ? geoLabel(r) : groupDim === "month" ? monthKey(r.date) : String(r[groupDim] == null ? "—" : r[groupDim]);
+      var g = groups[key] || (groups[key] = { key: key, net: 0, sales: 0, returns: 0, repl: 0, qty: 0, lines: 0, disc: 0, discBase: 0, custs: dict(), salesAll: 0, returnsAll: 0, replAll: 0 });
+      if (kind === "orig") g.salesAll += net; else if (kind === "repl") g.replAll += net; else if (kind === "cancel") g.returnsAll += -net;
+      if (!passDoc) return;
+      matched++;
+      g.net += net; g.lines++; g.qty += netPieces(r);
+      if (net > 0) { g.disc += (r.discountAmount || 0); g.discBase += net; }
+      if (kind === "orig") g.sales += net; else if (kind === "repl") g.repl += net; else if (kind === "cancel") g.returns += -net;
+      if (r.customer) g.custs[r.customer] = true;
+    });
+    var list = Object.keys(groups).map(function (k) { return groups[k]; })
+      .filter(function (g) { return g.lines > 0 || (returnsAllDoctypes && (g.returnsAll > 0 || g.replAll > 0)); })
+      .map(function (g) {
+        var ret = returnsAllDoctypes ? g.returnsAll : g.returns;
+        var rep = returnsAllDoctypes ? g.replAll : g.repl;
+        var base = returnsAllDoctypes ? g.salesAll : g.sales;
+        var onlyOrders = lineType === "orders"; // μόνο αρχικές παραγγελίες: ακυρώσεις/αντικαταστάσεις δεν έχουν νόημα
+        return {
+          key: g.key, net: round2(g.net), orders: round2(g.sales), cancellations: onlyOrders ? null : round2(ret), replacements: onlyOrders ? null : round2(rep),
+          qty: round2(g.qty), lines: g.lines,
+          customers: Object.keys(g.custs).length,
+          discount_pct: g.discBase > 0 ? round2(g.disc / g.discBase * 100) : 0,
+          cancel_rate: !onlyOrders && base > 0 ? round2(ret / base * 100) : null,
+          loss_rate: !onlyOrders && base > 0 ? round2((ret - rep) / base * 100) : null
+        };
+      });
+    var sortIn = TAKIS_NAME_ALIASES[String(input.sort_by)] || String(input.sort_by);
+    var sortBy = TAKIS_SORT_KEYS.indexOf(sortIn) > -1 ? sortIn : (groupDim === "season" || groupDim === "month" ? "key" : "net");
+    var asc = String(input.order || "") === "asc" || (sortBy === "key" && String(input.order || "") !== "desc");
+    list.sort(function (a, b) {
+      var va = sortBy === "key" ? a.key : a[sortBy], vb = sortBy === "key" ? b.key : b[sortBy];
+      if (sortBy === "key") return (groupDim === "season" ? seasonNum(va) - seasonNum(vb) : String(va).localeCompare(String(vb), "el")) * (asc ? 1 : -1);
+      if (va === null) va = -Infinity; if (vb === null) vb = -Infinity;
+      return (asc ? va - vb : vb - va);
+    });
+    var limit = Math.max(1, Math.min(50, parseInt(input.limit, 10) || 20));
+    var used = {
+      sectors: fSector ? Object.keys(fSector).length + " τομείς" : "όλοι",
+      seasons: fSeason ? sortSeasons(Object.keys(fSeason)) : "όλες",
+      families: fFamily ? Object.keys(fFamily) : "όλες",
+      doctypes: fDoctype ? Object.keys(fDoctype) : "όλοι",
+      line_type: lineType
+    };
+    if (returnsAllDoctypes) used.cancellations_note = "Τα cancellations, replacements, cancel_rate και loss_rate μετράνε όλους τους τύπους παραστατικών (όπως το πάνελ Ακυρώσεις)· τα net/orders/qty/lines μόνο τους τύπους: " + Object.keys(fDoctype).join(", ");
+    return {
+      filters_used: used,
+      matched_lines: matched, groups_total: list.length, showing: Math.min(limit, list.length),
+      rows: list.slice(0, limit), warnings: warnings
+    };
+  }
+
+  function takisCustomerTool(st, input) {
+    var name = String((input && input.name) || "").trim();
+    if (!name) throw new Error("Χρειάζεται όνομα πελάτη (name).");
+    var hits = findCustomers(uniqueCustomerIndex(st.rows || []), name, 8);
+    if (!hits.length) throw new Error("Δεν βρέθηκε πελάτης που να ταιριάζει με «" + name + "».");
+    // Προτίμηση στο ίδιο ακριβώς όνομα (π.χ. «Παπας» και «ΠΑΠΑΣ» είναι διαφορετικοί πελάτες με ίδιο κλειδί).
+    var exact = hits.filter(function (h) { return h.customer === name; });
+    if (!exact.length) exact = hits.filter(function (h) { return h.key === normKey(name); });
+    if (!exact.length && hits.length > 1) {
+      return { ambiguous: true, candidates: hits.map(function (h) { return { customer: h.customer, codes: h.codeList.slice(0, 3), net: round2(h.net) }; }) };
+    }
+    var p = computeCustomerProfile(st.rows, (exact[0] || hits[0]).customer);
+    return {
+      customer: p.customer, codes: p.codeList.slice(0, 5), geography: cleanGeoList(p.geoList), families: cleanFamilyList(p.familyList),
+      orders: round2(p.sales), cancellations: round2(p.returns), replacements: round2(p.repl), net: round2(p.net),
+      cancel_rate: p.returnRate === null ? null : round2(p.returnRate), loss_rate: p.lossRate === null ? null : round2(p.lossRate),
+      discount_pct: round2(p.discPct), qty: round2(p.qty), lines: p.lines, active_seasons: p.activeSeasons,
+      first_order: p.firstDate ? fmtDateShort(p.firstDate) : null, last_order: p.lastDate ? fmtDateShort(p.lastDate) : null,
+      seasons: p.seasonList.map(function (s) { return { season: s.season, orders: round2(s.sales), cancellations: round2(s.returns), replacements: round2(s.repl), net: round2(s.net), qty: round2(s.qty), discount_pct: round2(s.discPct), change_vs_prev_same_type_pct: s.changePct === null ? null : round2(s.changePct), prev_same_type: s.prevSameType }; }),
+      top_sectors: p.sectorList.slice(0, 10).map(function (x) { return { sector: x.sector, orders: round2(x.sales), cancellations: round2(x.returns), replacements: round2(x.repl), net: round2(x.net) }; })
+    };
+  }
+
+  function takisListValues(st, input) {
+    var dim = String((input && input.dimension) || "");
+    var fieldMap = { customer: "customer", sector: "sector", nomos: "geo", season: "season", family: "family", doctype: "doctype" };
+    var field = fieldMap[dim];
+    if (!field) throw new Error("dimension πρέπει να είναι ένα από: " + Object.keys(fieldMap).join(", "));
+    var q = input.contains ? normKey(input.contains) : "";
+    var tot = dict();
+    (st.rows || []).forEach(function (r) {
+      var v = field === "geo" ? geoLabel(r) : r[field];
+      if (v == null || v === "") return;
+      if (q && normKey(v).indexOf(q) === -1) return;
+      tot[v] = (tot[v] || 0) + (r.net || 0);
+    });
+    var list = Object.keys(tot).map(function (k) { return { value: k, net: round2(tot[k]) }; });
+    list.sort(field === "season" ? function (a, b) { return seasonNum(a.value) - seasonNum(b.value); } : function (a, b) { return b.net - a.net; });
+    var limit = Math.max(1, Math.min(100, parseInt(input.limit, 10) || 30));
+    return { dimension: dim, total_distinct: list.length, values: list.slice(0, limit) };
+  }
+
+  // Συνοπτικό κείμενο των νέων αναλύσεων για τον Τάκη (και τη σύνοψη για διοίκηση).
+  // choices: {pareto, discount, returns} = οι σεζόν που διάλεξε ο χρήστης σε κάθε πάνελ (null = η πιο πρόσφατη).
+  function betaAnalysesText(st, choices) {
+    choices = choices || {};
+    var scP = panelSeasonScope(st, choices.pareto), scD = panelSeasonScope(st, choices.discount), scR = panelSeasonScope(st, choices.returns);
+    var rows = filterRowsForAnalysis(st, { scope: scP });
+    var lines = ["ΝΕΕΣ ΑΝΑΛΥΣΕΙΣ (με τα τρέχοντα φίλτρα· σε κάθε πάνελ ο χρήστης βλέπει: Συγκέντρωση — " + scP.label + ", Εκπτώσεις — " + scD.label + ", Ακυρώσεις — " + scR.label + ", Cross-selling — " + panelSeasonScope(st, choices.crosssell).label + "):"];
+    var par = computePareto(rows);
+    if (par.customerCount) {
+      lines.push("- Συγκέντρωση (" + scP.label + "): " + fmtInt(par.customerCount) + " πελάτες με θετική αξία. Το 50% της αξίας το φέρνουν " + par.needed.p50 +
+        " πελάτες, το 80% " + par.needed.p80 + ". Top 1: " + fmtPct(par.topShares.top1) + ", Top 10: " + fmtPct(par.topShares.top10) +
+        ". Τάξη Α: " + par.classes.A.count + " πελάτες (" + fmtPct(par.classes.A.share) + ").");
+      lines.push("  Top 5: " + par.top.slice(0, 5).map(function (x) { return x.customer + " " + fmtCur(x.net) + " (" + fmtPct(x.share) + ")"; }).join("; "));
+    } else lines.push("- Συγκέντρωση (" + scP.label + "): δεν υπάρχουν πελάτες με θετική αξία.");
+    rows = scD.seasons.join("|") === scP.seasons.join("|") ? rows : filterRowsForAnalysis(st, { scope: scD });
+    var dsc = computeDiscountEffectiveness(rows);
+    if (dsc.customerCount) {
+      lines.push("- Εκπτώσεις (" + scD.label + "): μέση σταθμισμένη έκπτωση " + fmtPct(dsc.avgDiscPct) + (dsc.bands.length > 1 ? ". Ανά ομάδα πελατών κατά μέγεθος (" + dsc.bands.length + " ομάδες με ίσο πλήθος πελατών): " : ". Λίγοι πελάτες, μία ομάδα: ") +
+        dsc.bands.map(function (b) { return b.label + " " + fmtPct(b.avgDiscPct); }).join(", ") + ".");
+      lines.push("  " + dsc.flagged.length + " πελάτες παίρνουν ≥" + DISCOUNT_FLAG_PP + " μονάδες μεγαλύτερη έκπτωση από όσους έχουν παρόμοιο όγκο (επιπλέον έκπτωση ≈ " + fmtCur(dsc.flaggedExcess) + ")" +
+        (dsc.flagged.length ? ". Μεγαλύτεροι: " + dsc.flagged.slice(0, 5).map(function (c) { return c.customer + " " + fmtPct(c.discPct) + " vs " + fmtPct(c.peerDiscPct) + " (+" + fmtCur(c.excessEur) + ")"; }).join("; ") : "") + ".");
+    }
+    var ret = computeReturns(filterRowsForAnalysis(st, { ignoreDoctype: true, scope: scR }));
+    if (ret.totals.sales > 0 || ret.totals.returns > 0 || ret.totals.repl > 0) {
+      lines.push("- Ακυρώσεις/αντικαταστάσεις (" + scR.label + ", όλοι οι τύποι παραστατικών): αρχικές παραγγελίες " + fmtCur(ret.totals.sales) + ", ακυρώσεις (ΠΑΑ) " + fmtCur(ret.totals.returns) +
+        " (" + (ret.totals.rate === null ? "—" : fmtPct(ret.totals.rate)) + " των αρχικών), αντικαταστάσεις (ΠΑΡΝ) " + fmtCur(ret.totals.repl) +
+        ", πραγματική απώλεια " + fmtCur(ret.totals.lost) + " (" + (ret.totals.lossRate === null ? "—" : fmtPct(ret.totals.lossRate)) + "), τελική αξία " + fmtCur(ret.totals.netAfter) + ". Τύποι με αρνητική αξία: " + ret.returnDoctypes.slice(0, 3).map(function (d) { return d.doctype + " " + fmtCur(d.returns); }).join(", ") + ".");
+      var hiRate = sortReturnGroups(ret.sector, "rate", ret.minSalesForRate).slice(0, 3);
+      if (hiRate.length) lines.push("  Τομείς με υψηλότερο ποσοστό ακυρώσεων: " + hiRate.map(function (b) { return b.key + " " + fmtPct(b.rate); }).join("; ") + ".");
+      var hiCust = ret.customer.slice(0, 3).filter(function (b) { return b.returns > 0; });
+      if (hiCust.length) lines.push("  Πελάτες με τις μεγαλύτερες ακυρώσεις: " + hiCust.map(function (b) { return b.key + " " + fmtCur(b.returns) + (b.rate !== null ? " (" + fmtPct(b.rate) + ")" : ""); }).join("; ") + ".");
+    }
+    // Beta 2: cross-selling (με τη σεζόν του πάνελ «Ευκαιρίες cross-selling»)
+    var scX = panelSeasonScope(st, choices.crosssell);
+    var cx = (choices.crossResult && choices.crossResult.scope && choices.crossResult.scope.seasons.join("|") === scX.seasons.join("|"))
+      ? choices.crossResult.result : computeCrossSell(filterRowsForAnalysis(st, { scope: scX }));
+    if (cx.opportunityCount) {
+      lines.push("- Ευκαιρίες cross-selling (" + scX.label + "): " + fmtInt(cx.opportunityCount) + " προτάσεις «πελάτης → τομέας που δεν αγοράζει ακόμα». Κορυφαίες: " +
+        cx.opportunities.slice(0, 5).map(function (o) { return o.customer + " → " + o.sector + " (το " + fmtPct(o.conf) + " όσων παίρνουν " + o.fromSector + " το παίρνουν, τυπική αξία " + fmtCur(o.typicalValue) + ")"; }).join("; ") + ".");
+      if (cx.pairs.length) lines.push("  Τομείς που πάνε μαζί: " + cx.pairs.slice(0, 5).map(function (x) { return x.a + " + " + x.b + " (" + x.both + " πελάτες)"; }).join("; ") + ".");
+    }
+    return lines.join("\n");
+  }
+
+  /* ---------- Α1: συμπαγής αποθήκευση γραμμών στη συσκευή ---------- */
+  var COMPACT_STR_FIELDS = ["doctype", "nomos", "customer", "sector", "code", "country", "family", "season", "geoType", "geoKey"];
+  var COMPACT_NUM_FIELDS = ["qty", "net", "vat", "total", "discountPct", "discountAmount"];
+
+  function encodeRowsCompact(rows) {
+    var n = rows.length, out = { v: 1, n: n, dict: {}, idx: {}, num: {}, date: new Float64Array(n) };
+    COMPACT_STR_FIELDS.forEach(function (f) {
+      var map = new Map(), dict = [], arr = new Uint32Array(n);
+      for (var i = 0; i < n; i++) {
+        var v = rows[i][f];
+        if (v === undefined) v = null;
+        var id = map.get(v);
+        if (id === undefined) { id = dict.length; dict.push(v); map.set(v, id); }
+        arr[i] = id;
+      }
+      out.dict[f] = dict; out.idx[f] = arr;
+    });
+    COMPACT_NUM_FIELDS.forEach(function (f) {
+      var arr = new Float64Array(n);
+      for (var i = 0; i < n; i++) { var v = rows[i][f]; arr[i] = (typeof v === "number") ? v : NaN; }
+      out.num[f] = arr;
+    });
+    for (var i = 0; i < n; i++) {
+      var d = rows[i].date;
+      out.date[i] = (d instanceof Date) ? d.getTime() : NaN;
+    }
+    return out;
+  }
+
+  function decodeRowsCompact(c) {
+    if (!c || c.v !== 1 || typeof c.n !== "number") throw new Error("Μη αναγνωρίσιμη μορφή αποθηκευμένων δεδομένων.");
+    var rows = new Array(c.n);
+    for (var i = 0; i < c.n; i++) {
+      var r = {};
+      var t = c.date[i];
+      r.date = isNaN(t) ? null : new Date(t);
+      for (var a = 0; a < COMPACT_STR_FIELDS.length; a++) { var f = COMPACT_STR_FIELDS[a]; r[f] = c.dict[f][c.idx[f][i]]; }
+      for (var b = 0; b < COMPACT_NUM_FIELDS.length; b++) { var g = COMPACT_NUM_FIELDS[b]; var v = c.num[g][i]; r[g] = isNaN(v) ? null : v; }
+      rows[i] = r;
+    }
+    return rows;
+  }
+
+  // Ίδια ακριβώς κωδικοποίηση/αποκωδικοποίηση με τις παραπάνω, αλλά σε κομμάτια με μικρές παύσεις ανάμεσα,
+  // ώστε με 200.000+ γραμμές να μην "παγώνει" η σελίδα (ιδίως στο κινητό).
+  function encodeRowsCompactAsync(rows, chunk) {
+    chunk = chunk || 15000;
+    var n = rows.length, out = { v: 1, n: n, dict: {}, idx: {}, num: {}, date: new Float64Array(n) };
+    var maps = {};
+    COMPACT_STR_FIELDS.forEach(function (f) { maps[f] = new Map(); out.dict[f] = []; out.idx[f] = new Uint32Array(n); });
+    COMPACT_NUM_FIELDS.forEach(function (f) { out.num[f] = new Float64Array(n); });
+    var i0 = 0;
+    return new Promise(function (resolve, reject) {
+      function step() {
+        try {
+          var end = Math.min(n, i0 + chunk);
+          for (var i = i0; i < end; i++) {
+            var r = rows[i];
+            for (var a = 0; a < COMPACT_STR_FIELDS.length; a++) {
+              var f = COMPACT_STR_FIELDS[a], v = r[f];
+              if (v === undefined) v = null;
+              var id = maps[f].get(v);
+              if (id === undefined) { id = out.dict[f].length; out.dict[f].push(v); maps[f].set(v, id); }
+              out.idx[f][i] = id;
+            }
+            for (var b = 0; b < COMPACT_NUM_FIELDS.length; b++) {
+              var g = COMPACT_NUM_FIELDS[b], x = r[g];
+              out.num[g][i] = (typeof x === "number") ? x : NaN;
+            }
+            var d = r.date;
+            out.date[i] = (d instanceof Date) ? d.getTime() : NaN;
+          }
+          i0 = end;
+          if (i0 < n) setTimeout(step, 0); else resolve(out);
+        } catch (e) { reject(e); }
+      }
+      step();
+    });
+  }
+
+  function decodeRowsCompactAsync(c, chunk) {
+    chunk = chunk || 15000;
+    return new Promise(function (resolve, reject) {
+      if (!c || c.v !== 1 || typeof c.n !== "number") { reject(new Error("Μη αναγνωρίσιμη μορφή αποθηκευμένων δεδομένων.")); return; }
+      var rows = new Array(c.n), i0 = 0;
+      function step() {
+        try {
+          var end = Math.min(c.n, i0 + chunk);
+          for (var i = i0; i < end; i++) {
+            var r = {};
+            var t = c.date[i];
+            r.date = isNaN(t) ? null : new Date(t);
+            for (var a = 0; a < COMPACT_STR_FIELDS.length; a++) { var f = COMPACT_STR_FIELDS[a]; r[f] = c.dict[f][c.idx[f][i]]; }
+            for (var b = 0; b < COMPACT_NUM_FIELDS.length; b++) { var g = COMPACT_NUM_FIELDS[b]; var v = c.num[g][i]; r[g] = isNaN(v) ? null : v; }
+            rows[i] = r;
+          }
+          i0 = end;
+          if (i0 < c.n) setTimeout(step, 0); else resolve(rows);
+        } catch (e) { reject(e); }
+      }
+      step();
+    });
+  }
+
+  // Για κείμενο από το αρχείο που μπαίνει σε innerHTML (tooltips): < > & " ' γίνονται ακίνδυνα.
+  function escHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (ch) {
+      return ch === "&" ? "&amp;" : ch === "<" ? "&lt;" : ch === ">" ? "&gt;" : ch === '"' ? "&quot;" : "&#39;";
+    });
+  }
+
+  /* ============================= Beta 2 · Δ3: ευκαιρίες cross-selling =============================
+     «Αγοράζει» έναν τομέα = θετική Καθαρή Αξία στον τομέα, στις γραμμές της ανάλυσης (ίδια φίλτρα με τη σελίδα).
+     Κανόνας Χ→Υ: από όσους αγοράζουν Χ, τι ποσοστό αγοράζει και Υ (confidence). Για κάθε πελάτη και κάθε τομέα
+     Υ που ΔΕΝ αγοράζει, κρατάμε τον καλύτερο κανόνα από τους τομείς Χ που ήδη αγοράζει. Η «τυπική αξία» του Υ
+     είναι ο διάμεσος όσων τον αγοράζουν (όχι ο μέσος, για να μη φουσκώνει από λίγους μεγάλους πελάτες). */
+  var CS_MIN_BUYERS_X = 8;   // ο τομέας Χ πρέπει να έχει τουλάχιστον τόσους αγοραστές για να βγάλει συμπέρασμα
+  var CS_MIN_BUYERS_Y = 5;   // και ο προτεινόμενος Υ
+  var CS_MIN_BOTH = 5;       // τουλάχιστον τόσοι πελάτες αγοράζουν και τα δύο
+  var CS_MIN_CONF = 0.35;    // τουλάχιστον 35% όσων παίρνουν Χ παίρνουν και Υ
+  var CS_MIN_LIFT = 1.2;     // και αυτό να είναι 20%+ πάνω από το πόσο συχνά αγοράζεται ο Υ γενικά
+
+  function medianOf(arr) {
+    if (!arr.length) return 0;
+    var a = arr.slice().sort(function (x, y) { return x - y; });
+    var m = Math.floor(a.length / 2);
+    return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+  }
+
+  function computeCrossSell(rows) {
+    var cs = dict(); // customer -> sector -> net
+    rows.forEach(function (r) {
+      if (!r.customer || !r.sector) return;
+      var m = cs[r.customer] || (cs[r.customer] = dict());
+      m[r.sector] = (m[r.sector] || 0) + (r.net || 0);
+    });
+    var sectors = [], sIdx = dict(), custs = [];
+    Object.keys(cs).forEach(function (c) {
+      var list = [], total = 0;
+      Object.keys(cs[c]).forEach(function (s) {
+        var v = cs[c][s];
+        if (v > 0) {
+          if (sIdx[s] === undefined) { sIdx[s] = sectors.length; sectors.push(s); }
+          list.push(sIdx[s]); total += v;
+        }
+      });
+      if (list.length) custs.push({ customer: c, set: list, total: total, spend: cs[c] });
+    });
+    var N = custs.length, S = sectors.length;
+    var out = { customerCount: N, sectorCount: S, pairs: [], opportunities: [], byCustomer: dict(), bySector: dict(), related: dict(), typical: dict(), buyers: dict() };
+    if (!N || S < 2) return out;
+    var buyers = new Uint32Array(S), both = new Uint32Array(S * S);
+    var spendLists = sectors.map(function () { return []; });
+    custs.forEach(function (c) {
+      var set = c.set;
+      for (var i = 0; i < set.length; i++) {
+        buyers[set[i]]++;
+        spendLists[set[i]].push(c.spend[sectors[set[i]]]);
+        for (var j = i + 1; j < set.length; j++) { both[set[i] * S + set[j]]++; both[set[j] * S + set[i]]++; }
+      }
+    });
+    var typical = new Float64Array(S);
+    for (var s = 0; s < S; s++) { typical[s] = medianOf(spendLists[s]); out.typical[sectors[s]] = typical[s]; out.buyers[sectors[s]] = buyers[s]; }
+    function ruleOk(x, y) {
+      var b = both[x * S + y];
+      if (buyers[x] < CS_MIN_BUYERS_X || buyers[y] < CS_MIN_BUYERS_Y || b < CS_MIN_BOTH) return 0;
+      var conf = b / buyers[x];
+      if (conf < CS_MIN_CONF || conf / (buyers[y] / N) < CS_MIN_LIFT) return 0;
+      return conf;
+    }
+    // Ζεύγη που «πάνε μαζί» + σχετικοί τομείς ανά τομέα (για την καρτέλα τομέα)
+    for (var x = 0; x < S; x++) {
+      var rel = [];
+      for (var y = 0; y < S; y++) {
+        if (x === y) continue;
+        var cf = ruleOk(x, y);
+        if (cf) rel.push({ sector: sectors[y], conf: cf * 100, both: both[x * S + y], lift: cf / (buyers[y] / N) });
+        if (y > x && both[x * S + y] >= CS_MIN_BOTH && buyers[x] >= CS_MIN_BUYERS_X && buyers[y] >= CS_MIN_BUYERS_X) {
+          var cxy = both[x * S + y] / buyers[x], cyx = both[x * S + y] / buyers[y];
+          var lift = both[x * S + y] * N / (buyers[x] * buyers[y]);
+          if (lift >= CS_MIN_LIFT && Math.max(cxy, cyx) >= CS_MIN_CONF) out.pairs.push({ a: sectors[x], b: sectors[y], both: both[x * S + y], confAB: cxy * 100, confBA: cyx * 100, lift: lift });
+        }
+      }
+      rel.sort(function (p, q) { return q.conf - p.conf || q.both - p.both; });
+      if (rel.length) out.related[sectors[x]] = rel.slice(0, 10);
+    }
+    out.pairs.sort(function (p, q) { return q.both - p.both || q.lift - p.lift; });
+    out.pairCount = out.pairs.length;
+    out.pairs = out.pairs.slice(0, 30);
+    // Κανόνες Χ→Υ μία φορά σε πίνακα (αλλιώς ξαναϋπολογίζονται για κάθε πελάτη — αργό με «όλες τις σεζόν»).
+    var RM = new Float64Array(S * S), targets = [];
+    for (var ry = 0; ry < S; ry++) {
+      var any = false;
+      for (var rx = 0; rx < S; rx++) { if (rx !== ry) { var v = ruleOk(rx, ry); if (v) { RM[rx * S + ry] = v; any = true; } } }
+      if (any) targets.push(ry);
+    }
+    // Ευκαιρίες ανά πελάτη
+    var all = [];
+    custs.forEach(function (c) {
+      var has = {}; c.set.forEach(function (i) { has[i] = true; });
+      var mine = [];
+      for (var t = 0; t < targets.length; t++) {
+        var y = targets[t];
+        if (has[y]) continue;
+        var best = 0, from = -1;
+        for (var k = 0; k < c.set.length; k++) {
+          var cf = RM[c.set[k] * S + y];
+          if (cf > best || (cf === best && cf > 0 && from >= 0 && both[c.set[k] * S + y] > both[from * S + y])) { best = cf; from = c.set[k]; }
+        }
+        if (!best) continue;
+        mine.push({ customer: c.customer, sector: sectors[y], fromSector: sectors[from], conf: best * 100, buyersFrom: buyers[from], both: both[from * S + y],
+          typicalValue: typical[y], score: best * typical[y], customerValue: c.total });
+      }
+      mine.sort(function (p, q) { return q.score - p.score || q.conf - p.conf || String(p.sector).localeCompare(String(q.sector), "el"); });
+      if (mine.length) { out.byCustomer[c.customer] = mine.slice(0, 5); Array.prototype.push.apply(all, mine.slice(0, 5)); }
+      mine.forEach(function (o) { (out.bySector[o.sector] || (out.bySector[o.sector] = [])).push(o); });
+    });
+    Object.keys(out.bySector).forEach(function (s) {
+      out.bySector[s].sort(function (p, q) { return q.conf - p.conf || q.customerValue - p.customerValue; });
+      out.bySector[s] = out.bySector[s].slice(0, 30);
+    });
+    // Ίδιο score για όλους όσοι παίρνουν την ίδια πρόταση από τον ίδιο τομέα: πρώτα οι μεγαλύτεροι πελάτες.
+    all.sort(function (p, q) { return q.score - p.score || q.customerValue - p.customerValue || String(p.customer).localeCompare(String(q.customer), "el"); });
+    // Ποικιλία στην κορυφή: έως 3 προτάσεις ανά τομέα πρώτα, μετά οι υπόλοιπες.
+    var first = [], rest = [], perSector = dict();
+    all.forEach(function (o) { var n = perSector[o.sector] || 0; if (n < 3) { first.push(o); perSector[o.sector] = n + 1; } else rest.push(o); });
+    out.opportunityCount = all.length;
+    out.opportunities = first.concat(rest).slice(0, 200);
+    return out;
+  }
+
+  /* ============================= Beta 2 · Δ4: καρτέλα τομέα / brand ============================= */
+  function uniqueSectorIndex(rows) {
+    var idx = dict();
+    rows.forEach(function (r) {
+      var s = r.sector || "(χωρίς τομέα)";
+      var e = idx[s] || (idx[s] = { sector: s, key: normKey(s), net: 0 });
+      e.net += (r.net || 0);
+    });
+    return Object.keys(idx).map(function (k) { return idx[k]; });
+  }
+
+  function findSectors(index, query, limit) {
+    var q = normKey(query);
+    if (!q) return [];
+    var exact = [], starts = [], contains = [];
+    index.forEach(function (e) {
+      if (e.key === q) exact.push(e);
+      else if (e.key.indexOf(q) === 0) starts.push(e);
+      else if (e.key.indexOf(q) > -1) contains.push(e);
+    });
+    function byNet(a, b) { return b.net - a.net; }
+    return exact.concat(starts.sort(byNet), contains.sort(byNet)).slice(0, limit || 20);
+  }
+
+  // Όλο το ιστορικό ενός τομέα (χωρίς φίλτρα), με την ίδια λογική ΠΑΡΑ / ΠΑΑ / ΠΑΡΝ με την καρτέλα πελάτη.
+  function computeSectorProfile(rows, sector) {
+    var mine = rows.filter(function (r) { return (r.sector || "(χωρίς τομέα)") === sector; });
+    if (!mine.length) return null;
+    var p = { sector: sector, lines: mine.length, sales: 0, returns: 0, repl: 0, qty: 0, disc: 0, discBase: 0, customers: dict(), seasons: dict(), doctypes: dict() };
+    var custSeason = dict(), geoSeason = dict();
+    mine.forEach(function (r) {
+      var net = r.net || 0, kind = orderLineKind(r), season = r.season || "—";
+      var s = p.seasons[season] || (p.seasons[season] = { season: season, sales: 0, returns: 0, repl: 0, qty: 0, disc: 0, discBase: 0, customers: dict() });
+      p.doctypes[r.doctype || "—"] = (p.doctypes[r.doctype || "—"] || 0) + 1;
+      var pcs = netPieces(r); p.qty += pcs; s.qty += pcs;
+      if (net > 0) { p.disc += (r.discountAmount || 0); p.discBase += net; s.disc += (r.discountAmount || 0); s.discBase += net; }
+      if (kind === "orig") { p.sales += net; s.sales += net; if (r.customer) { p.customers[r.customer] = true; s.customers[r.customer] = true; } }
+      else if (kind === "repl") { p.repl += net; s.repl += net; }
+      else if (kind === "cancel") { p.returns += -net; s.returns += -net; }
+      if (kind) {
+        var cKey = r.customer || "(χωρίς όνομα)", gKey = geoLabel(r);
+        var cs = custSeason[cKey] || (custSeason[cKey] = dict()); cs[season] = (cs[season] || 0) + net;
+        var gs = geoSeason[gKey] || (geoSeason[gKey] = dict()); gs[season] = (gs[season] || 0) + net;
+      }
+    });
+    p.net = p.sales - p.returns + p.repl;
+    p.returnRate = p.sales > 0 ? p.returns / p.sales * 100 : null;
+    p.lost = p.returns - p.repl;
+    p.lossRate = p.sales > 0 ? p.lost / p.sales * 100 : null;
+    p.discPct = p.discBase > 0 ? p.disc / p.discBase * 100 : 0;
+    p.customerCount = Object.keys(p.customers).length;
+    var seasonList = sortSeasons(Object.keys(p.seasons)).map(function (k) {
+      var s = p.seasons[k];
+      s.net = s.sales - s.returns + s.repl;
+      s.discPct = s.discBase > 0 ? s.disc / s.discBase * 100 : 0;
+      s.type = seasonTypeSuffix(k);
+      s.customerCount = Object.keys(s.customers).length;
+      s.avgPerCustomer = s.customerCount ? s.net / s.customerCount : 0;
+      return s;
+    });
+    seasonList.forEach(function (s, i) {
+      s.prevSameType = null; s.changePct = null;
+      if (!s.type) return;
+      for (var j = i - 1; j >= 0; j--) {
+        if (seasonList[j].type === s.type && seasonList[j].sales > 0) { s.prevSameType = seasonList[j].season; s.changePct = pctChange(seasonList[j].net, s.net); break; }
+      }
+    });
+    p.seasonList = seasonList;
+    p.activeSeasons = seasonList.filter(function (s) { return s.sales > 0; }).length;
+    // Πιο πρόσφατη σεζόν με αρχικές παραγγελίες και η προηγούμενη ΙΔΙΟΥ τύπου: πελάτες, ροή πελατών, νομοί.
+    var active = seasonList.filter(function (s) { return s.sales > 0; });
+    var latest = active.length ? active[active.length - 1] : null;
+    p.latestSeason = latest ? latest.season : null;
+    p.prevSeason = latest ? latest.prevSameType : null;
+    function compare(map) {
+      return Object.keys(map).map(function (k) {
+        var cur = p.latestSeason ? (map[k][p.latestSeason] || 0) : 0, prev = p.prevSeason ? (map[k][p.prevSeason] || 0) : 0;
+        return { key: k, latest: cur, prev: prev, changePct: pctChange(prev, cur) };
+      }).filter(function (x) { return x.latest || x.prev; });
+    }
+    p.topCustomers = compare(custSeason).sort(function (a, b) { return b.latest - a.latest || b.prev - a.prev; });
+    p.topGeo = compare(geoSeason).sort(function (a, b) { return b.latest - a.latest || b.prev - a.prev; });
+    p.flow = null;
+    if (latest && p.prevSeason) {
+      var cur = latest.customers, prev = p.seasons[p.prevSeason].customers;
+      var kept = 0, fresh = 0, gone = 0, freshValue = 0, goneValue = 0;
+      Object.keys(cur).forEach(function (c) { if (prev[c]) kept++; else { fresh++; freshValue += (custSeason[c][p.latestSeason] || 0); } });
+      Object.keys(prev).forEach(function (c) { if (!cur[c]) { gone++; goneValue += (custSeason[c][p.prevSeason] || 0); } });
+      p.flow = { kept: kept, fresh: fresh, gone: gone, freshValue: freshValue, goneValue: goneValue };
+    }
+    seasonList.forEach(function (s) { delete s.customers; });
+    delete p.customers; delete p.seasons;
+    return p;
+  }
+
+  function takisSectorTool(st, input) {
+    var name = String((input && input.name) || "").trim();
+    if (!name) throw new Error("Χρειάζεται όνομα εμπορικού τομέα (name).");
+    var hits = findSectors(uniqueSectorIndex(st.rows || []), name, 8);
+    if (!hits.length) throw new Error("Δεν βρέθηκε εμπορικός τομέας που να ταιριάζει με «" + name + "».");
+    var exact = hits.filter(function (h) { return h.sector === name; });
+    if (!exact.length) exact = hits.filter(function (h) { return h.key === normKey(name); });
+    if (!exact.length && hits.length > 1) return { ambiguous: true, candidates: hits.map(function (h) { return { sector: h.sector, net: round2(h.net) }; }) };
+    var p = computeSectorProfile(st.rows, (exact[0] || hits[0]).sector);
+    return {
+      sector: p.sector, orders: round2(p.sales), cancellations: round2(p.returns), replacements: round2(p.repl), net: round2(p.net),
+      cancel_rate: p.returnRate === null ? null : round2(p.returnRate), loss_rate: p.lossRate === null ? null : round2(p.lossRate),
+      discount_pct: round2(p.discPct), qty: round2(p.qty), customers_all_time: p.customerCount, active_seasons: p.activeSeasons,
+      seasons: p.seasonList.map(function (s) { return { season: s.season, orders: round2(s.sales), cancellations: round2(s.returns), replacements: round2(s.repl), net: round2(s.net), customers: s.customerCount, avg_per_customer: round2(s.avgPerCustomer), discount_pct: round2(s.discPct), change_vs_prev_same_type_pct: s.changePct === null ? null : round2(s.changePct), prev_same_type: s.prevSameType }; }),
+      latest_season: p.latestSeason, previous_same_type: p.prevSeason,
+      customer_flow: p.flow ? { kept: p.flow.kept, new: p.flow.fresh, not_ordered_yet_or_lost: p.flow.gone, new_value: round2(p.flow.freshValue), lost_prev_value: round2(p.flow.goneValue) } : null,
+      top_customers: p.topCustomers.slice(0, 15).map(function (x) { return { customer: x.key, latest: round2(x.latest), prev: round2(x.prev), change_pct: x.changePct === null ? null : round2(x.changePct) }; }),
+      top_nomoi: p.topGeo.slice(0, 10).map(function (x) { return { nomos: x.key, latest: round2(x.latest), prev: round2(x.prev), change_pct: x.changePct === null ? null : round2(x.changePct) }; })
+    };
+  }
+
+  // Ευκαιρίες cross-selling για τον Τάκη: για πελάτη, για τομέα, ή οι κορυφαίες συνολικά.
+  function takisCrossSellTool(st, input, scope, pre) {
+    input = input || {};
+    var cs = pre || computeCrossSell(filterRowsForAnalysis(st, { scope: scope }));
+    function own(obj, k) { return Object.prototype.hasOwnProperty.call(obj, k) ? obj[k] : undefined; }
+    var limit = Math.max(1, Math.min(30, parseInt(input.limit, 10) || 15));
+    function fmt(o) { return { customer: o.customer, suggested_sector: o.sector, because_buys: o.fromSector, pct_of_those_buyers_who_also_buy: round2(o.conf), typical_value_of_suggested: round2(o.typicalValue), customer_current_value: round2(o.customerValue) }; }
+    var res = { season_scope: scope ? scope.label : "", customers_analysed: cs.customerCount, rule: "Από όσους αγοράζουν τον τομέα Χ, τουλάχιστον 35% αγοράζουν και τον Υ (και 20%+ πάνω από τη γενική συχνότητα του Υ)." };
+    if (input.customer) {
+      var want = String(input.customer);
+      var hits = findCustomers(uniqueCustomerIndex(st.rows || []), want, 8);
+      var exactC = hits.filter(function (h) { return h.customer === want; });
+      if (!exactC.length) exactC = hits.filter(function (h) { return h.key === normKey(want); });
+      if (!hits.length) throw new Error("Δεν βρέθηκε πελάτης που να ταιριάζει με «" + want + "».");
+      if (!exactC.length && hits.length > 1) return { ambiguous: true, candidates: hits.map(function (h) { return h.customer; }) };
+      var name = (exactC[0] || hits[0]).customer;
+      res.customer = name; res.opportunities = (own(cs.byCustomer, name) || []).map(fmt);
+      if (!res.opportunities.length) res.note = "Καμία ευκαιρία που να περνάει τα κριτήρια για αυτόν τον πελάτη με τα τρέχοντα φίλτρα.";
+    } else if (input.sector) {
+      var wantS = String(input.sector);
+      var sh = findSectors(uniqueSectorIndex(st.rows || []), wantS, 8);
+      var exactS = sh.filter(function (h) { return h.sector === wantS; });
+      if (!exactS.length) exactS = sh.filter(function (h) { return h.key === normKey(wantS); });
+      if (!sh.length) throw new Error("Δεν βρέθηκε εμπορικός τομέας που να ταιριάζει με «" + wantS + "».");
+      if (!exactS.length && sh.length > 1) return { ambiguous: true, candidates: sh.map(function (h) { return h.sector; }) };
+      var sec = (exactS[0] || sh[0]).sector;
+      res.sector = sec; res.candidate_customers = (own(cs.bySector, sec) || []).slice(0, limit).map(fmt);
+      res.often_bought_with = (own(cs.related, sec) || []).map(function (x) { return { sector: x.sector, pct: round2(x.conf), customers_both: x.both }; });
+    } else {
+      res.top_opportunities = cs.opportunities.slice(0, limit).map(fmt);
+      res.top_pairs = cs.pairs.slice(0, 10).map(function (x) { return { a: x.a, b: x.b, customers_both: x.both, pct_a_also_b: round2(x.confAB), pct_b_also_a: round2(x.confBA) }; });
+    }
+    return res;
+  }
+
   /* ============================= Rendering ============================= */
 
   function el(tag, attrs, children) {
@@ -2450,7 +3649,8 @@ self.onmessage = function (e) {
       text.textContent = "Προβολή με δείγμα δεδομένων — ανέβασε το δικό σου αρχείο για πραγματικά αποτελέσματα.";
     } else {
       dot.className = "status-dot live";
-      text.textContent = "Φορτώθηκε το αρχείο σου — " + state.rows.length.toLocaleString("el-GR") + " γραμμές, " + state.sectors.length + " εμπορικοί τομείς.";
+      text.textContent = (state.dataSource === "device" ? "Άνοιξε από τη συσκευή το τελευταίο σου αρχείο" : "Φορτώθηκε το αρχείο σου") +
+        (state.fileName ? " «" + state.fileName + "»" : "") + " — " + state.rows.length.toLocaleString("el-GR") + " γραμμές, " + state.sectors.length + " εμπορικοί τομείς.";
     }
   }
 
@@ -2652,7 +3852,7 @@ self.onmessage = function (e) {
         var table = el("table");
         rows.slice(0, 25).forEach(function (r) {
           var tr = el("tr");
-          tr.appendChild(el("td", { text: r.customer || r.country }));
+          tr.appendChild(r.customer ? el("td", {}, [custLinkEl(r.customer)]) : el("td", { text: r.country }));
           tr.appendChild(el("td", { class: "num", text: agg_diffModeGlobal ? fmtSigned(r.net) : fmtCur(r.net) }));
           table.appendChild(tr);
         });
@@ -2745,7 +3945,7 @@ self.onmessage = function (e) {
       var tbody2 = document.createElement("tbody");
       breakdown.forEach(function (b) {
         var row = el("tr");
-        row.appendChild(el("td", { text: b.customer }));
+        row.appendChild(el("td", {}, [custLinkEl(b.customer)]));
         row.appendChild(el("td", { text: b.season }));
         row.appendChild(el("td", { class: "num", text: fmtInt(b.qty) }));
         row.appendChild(el("td", { class: "num", text: fmtCur(b.net) }));
@@ -2955,8 +4155,8 @@ self.onmessage = function (e) {
     var body;
     if (diffMode) {
       body =
-        '<div class="tt-row"><span>Σεζόν ' + lowSeason + '</span><b>' + fmtCur(data.netLow || 0) + '</b></div>' +
-        '<div class="tt-row"><span>Σεζόν ' + highSeason + '</span><b>' + fmtCur(data.netHigh || 0) + '</b></div>' +
+        '<div class="tt-row"><span>Σεζόν ' + escHtml(lowSeason) + '</span><b>' + fmtCur(data.netLow || 0) + '</b></div>' +
+        '<div class="tt-row"><span>Σεζόν ' + escHtml(highSeason) + '</span><b>' + fmtCur(data.netHigh || 0) + '</b></div>' +
         '<div class="tt-row"><span>Διαφορά</span><b>' + fmtSigned(data.net || 0) + '</b></div>' +
         '<div class="tt-row"><span>Πελάτες</span><b>' + fmtInt(data.customers) + '</b></div>';
     } else {
@@ -2965,7 +4165,7 @@ self.onmessage = function (e) {
         '<div class="tt-row"><span>Καθαρή Αξία</span><b>' + fmtCur(data.net) + '</b></div>' +
         '<div class="tt-row"><span>Πελάτες</span><b>' + fmtInt(data.customers) + '</b></div>';
     }
-    tooltipEl.innerHTML = '<div class="tt-title">' + name + (data.tag ? tagPillHtml(data.tag) : "") + '</div>' + body;
+    tooltipEl.innerHTML = '<div class="tt-title">' + escHtml(name) + (data.tag ? tagPillHtml(data.tag) : "") + '</div>' + body;
     tooltipEl.classList.remove("hidden");
     moveTooltip(evt);
   }
@@ -2978,14 +4178,14 @@ self.onmessage = function (e) {
     var closeBtn = pinned ? '<button type="button" class="tt-close" aria-label="Κλείσιμο">&times;</button>' : "";
     if (!list.length) {
       var emptyLabel = field === "sector" ? "Δεν υπάρχουν τομείς." : "Δεν υπάρχουν πελάτες.";
-      return closeBtn + '<div class="tt-title">' + title + '</div><div class="tt-row"><span>' + emptyLabel + '</span></div>';
+      return closeBtn + '<div class="tt-title">' + escHtml(title) + '</div><div class="tt-row"><span>' + emptyLabel + '</span></div>';
     }
     var shown = list.slice(0, 50);
     var rows = shown.map(function (r) {
-      return '<div class="tt-row"><span>' + (r[field] || "") + '</span><b>' + fmtSigned(r.net) + '</b></div>';
+      return '<div class="tt-row"><span>' + escHtml(r[field] || "") + '</span><b>' + fmtSigned(r.net) + '</b></div>';
     }).join("");
     var more = list.length > shown.length ? '<div class="tt-more">+ ' + fmtInt(list.length - shown.length) + ' ακόμα</div>' : "";
-    return closeBtn + '<div class="tt-title">' + title + ' (' + fmtInt(list.length) + ')</div><div class="tt-list">' + rows + '</div>' + more;
+    return closeBtn + '<div class="tt-title">' + escHtml(title) + ' (' + fmtInt(list.length) + ')</div><div class="tt-list">' + rows + '</div>' + more;
   }
   function showBridgeTooltip(evt, title, list, keyField) {
     if (tooltipPinned) return; // ένα καρφωμένο tooltip αγνοεί το hover άλλων πλακιδίων μέχρι να κλείσει
@@ -3184,7 +4384,7 @@ self.onmessage = function (e) {
         '<div class="tt-row"><span>Μέσος όρος</span><b>' + fmtPerCapita(pen.avg) + '</b></div>' +
         '<div class="tt-row"><span>' + vsAvg + ' το μέσο όρο</span></div>';
     }
-    tooltipEl.innerHTML = '<div class="tt-title">' + item.nomos + '</div>' + body;
+    tooltipEl.innerHTML = '<div class="tt-title">' + escHtml(item.nomos) + '</div>' + body;
     tooltipEl.classList.remove("hidden");
     moveTooltip(evt);
   }
@@ -3410,6 +4610,7 @@ self.onmessage = function (e) {
     renderEmptyList(agg);
     renderTableTitle(agg);
     renderInternational(agg);
+    renderBetaPanels();
     document.getElementById("downloadBtn").disabled = !agg.sectorsUsed.length;
     return agg;
   }
@@ -3916,98 +5117,1220 @@ self.onmessage = function (e) {
     }
   }
 
-  function takisSend(text) {
+  /* ---------- Beta v3 · Γ11: ο Τάκης με εργαλεία δεδομένων ----------
+     Όταν η προβολή το υποστηρίζει (sample.limits().tools), ο Τάκης παίρνει 3 εργαλεία που τρέχουν ΕΔΩ
+     στη σελίδα, πάνω σε ΟΛΕΣ τις γραμμές του αρχείου (τίποτα δεν φεύγει ολόκληρο — μόνο τα μικρά
+     αποτελέσματα κάθε ερωτήματος). Αν δεν υποστηρίζεται, δουλεύει όπως πριν (μόνο με τη σύνοψη). */
+
+  var takisAbortCtl = null;     // AbortController της τρέχουσας ερώτησης (κουμπί Διακοπή)
+  var takisToolsState = null;   // null = δεν ελέγχθηκε ακόμα, true/false μετά τον έλεγχο
+
+  var takisToolsMax = 0;       // πόσα εργαλεία επιτρέπει η προβολή (στέλνουμε έως τόσα, με σειρά σημασίας)
+
+  function takisCheckTools(cap) {
+    if (takisToolsState !== null) return Promise.resolve(takisToolsState);
+    if (!cap || typeof cap.limits !== "function") { takisToolsState = false; return Promise.resolve(false); }
+    return Promise.resolve().then(function () { return cap.limits(); }).then(function (l) {
+      takisToolsMax = (l && l.tools && l.tools.maxCount) || 0;
+      takisToolsState = takisToolsMax >= 3;
+      return takisToolsState;
+    }).catch(function () { takisToolsState = false; return false; });
+  }
+
+  // Κρατάει κάθε αποτέλεσμα εργαλείου κάτω από το όριο των 32 KB (κόβει γραμμές αν χρειαστεί).
+  function takisJsonBytes(v) {
+    var s = JSON.stringify(v);
+    try { return new TextEncoder().encode(s).length; } catch (e) { return s.length * 2; } // ελληνικά ≈ 2 bytes/χαρακτήρα
+  }
+  function takisFitResult(res) {
+    if (takisJsonBytes(res) <= 30000) return res;
+    if (res && Array.isArray(res.rows)) {
+      var copy = Object.assign({}, res);
+      while (copy.rows.length > 1 && takisJsonBytes(copy) > 30000) copy.rows = copy.rows.slice(0, Math.floor(copy.rows.length * 0.7));
+      copy.showing = copy.rows.length;
+      copy.warnings = (copy.warnings || []).concat(["Το αποτέλεσμα κόπηκε λόγω μεγέθους — ζήτα λιγότερες γραμμές."]);
+      return copy;
+    }
+    throw new Error("Το αποτέλεσμα είναι πολύ μεγάλο — ζήτα κάτι πιο συγκεκριμένο.");
+  }
+
+  var TAKIS_DIM_LABELS = { customer: "πελάτη", sector: "τομέα", nomos: "νομό", season: "σεζόν", family: "οικογένεια", doctype: "τύπο παραστατικού", code: "κωδικό", month: "μήνα", none: "σύνολο" };
+
+  // «Φωτογραφία» των δεδομένων/φίλτρων τη στιγμή της ερώτησης: αν ο χρήστης αλλάξει φίλτρα ή ανεβάσει
+  // άλλο αρχείο όσο ψάχνει ο Τάκης, τα εργαλεία συνεχίζουν πάνω στα ίδια δεδομένα με τη σύνοψη.
+  function takisSnapshot() {
+    return {
+      rows: state.rows, mode: state.mode, selectedSingle: state.selectedSingle,
+      selectedMulti: Object.assign({}, state.selectedMulti), selectedSeasons: Object.assign({}, state.selectedSeasons),
+      selectedFamilies: Object.assign({}, state.selectedFamilies), selectedDoctypes: Object.assign({}, state.selectedDoctypes),
+      sectors: state.sectors, seasons: state.seasons, families: state.families, doctypes: state.doctypes,
+      crossScope: panelSeasonScope(state, betaUi.seasonChoice.crosssell),
+      crossPre: currentCrossSell()
+    };
+  }
+
+  function takisBuildTools(progress, snap) {
+    var strArr = { type: "array", items: { type: "string" } };
+    return [
+      {
+        name: "query_sales",
+        description: "Exact query over ALL order lines of the loaded file (not just the summary). Filters, groups and sums. Returns rows of {key, net, orders, cancellations, replacements, qty, lines, customers, discount_pct, cancel_rate, loss_rate} plus filters_used and warnings (read them). orders = original orders (ΠΑΡΑ); cancellations = ΠΑΑ as a positive amount; replacements = ΠΑΡΝ; cancel_rate = cancellations/orders; loss_rate = (cancellations-replacements)/orders. net/orders/qty follow the on-screen doctype filter; cancellations/replacements/rates count all doctypes unless you pass doctypes. On-screen filters apply to any dimension you do not pass; with 2 seasons on screen only the newer is used unless group_by=season.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            group_by: { type: "string", enum: ["customer", "sector", "nomos", "season", "family", "doctype", "code", "month", "none"] },
+            sort_by: { type: "string", enum: ["net", "orders", "cancellations", "replacements", "qty", "lines", "customers", "discount_pct", "cancel_rate", "loss_rate"], description: "Default net (season/month: chronological)." },
+            order: { type: "string", enum: ["desc", "asc"] },
+            limit: { type: "integer", minimum: 1, maximum: 50 },
+            use_current_filters: { type: "boolean", description: "Default true. false = start from the whole file." },
+            line_type: { type: "string", enum: ["all", "orders", "cancellations"], description: "cancellations = order-cancellation lines (ΠΑΑ, negative net); they ignore the on-screen doctype filter." },
+            ignore_doctype_filter: { type: "boolean" },
+            sectors: strArr, seasons: strArr, families: strArr, doctypes: strArr,
+            nomoi: { type: "array", items: { type: "string" }, description: "Nomos names as in the data (e.g. ΑΤΤΙΚΗ), or Κύπρος / Εξωτερικό." },
+            customers: { type: "array", items: { type: "string" }, description: "Exact customer names." },
+            customer_contains: { type: "string", description: "Substring of customer name or customer code." },
+            date_from: { type: "string", description: "YYYY-MM-DD, inclusive." },
+            date_to: { type: "string", description: "YYYY-MM-DD, inclusive." }
+          }
+        },
+        execute: function (input) {
+          input = input || {};
+          progress("🔎 Ψάχνω στα δεδομένα: ανά " + (TAKIS_DIM_LABELS[String(input.group_by || "none")] || "σύνολο") + "…");
+          return takisFitResult(takisQuery(snap, input));
+        }
+      },
+      {
+        name: "customer_profile",
+        description: "Full history of ONE customer across the whole file, ignoring on-screen filters: totals (orders ΠΑΡΑ, cancellations ΠΑΑ, replacements ΠΑΡΝ, final net), discount %, first/last order date, per-season figures with change vs the previous season of the same type (S/S vs S/S, F/W vs F/W), top sectors. If the name is ambiguous it returns candidates instead.",
+        inputSchema: { type: "object", properties: { name: { type: "string", description: "Customer name or part of it, or customer code." } }, required: ["name"] },
+        execute: function (input) {
+          var name = String((input && input.name) || "");
+          progress("📇 Ανοίγω την καρτέλα πελάτη «" + name.slice(0, 40) + "»…");
+          return takisFitResult(takisCustomerTool(snap, { name: name }));
+        }
+      },
+      {
+        name: "list_values",
+        description: "Lists the distinct values of a dimension that exist in the file (with their total net), optionally only those containing some text. Use it to find exact names before filtering.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            dimension: { type: "string", enum: ["customer", "sector", "nomos", "season", "family", "doctype"] },
+            contains: { type: "string" },
+            limit: { type: "integer", minimum: 1, maximum: 100 }
+          },
+          required: ["dimension"]
+        },
+        execute: function (input) {
+          progress("📋 Βρίσκω τις διαθέσιμες τιμές…");
+          return takisFitResult(takisListValues(snap, input || {}));
+        }
+      },
+      {
+        name: "sector_profile",
+        description: "Full history of ONE commercial sector (brand) across the whole file, ignoring on-screen filters: orders (ΠΑΡΑ), cancellations (ΠΑΑ), replacements (ΠΑΡΝ), final net, customers per season, change vs previous same-type season, new/lost customers latest vs previous same-type season, top customers and nomoi. Returns candidates if the name is ambiguous.",
+        inputSchema: { type: "object", properties: { name: { type: "string", description: "Sector name or part of it." } }, required: ["name"] },
+        execute: function (input) {
+          var name = String((input && input.name) || "");
+          progress("🏷️ Ανοίγω την καρτέλα τομέα «" + name.slice(0, 40) + "»…");
+          return takisFitResult(takisSectorTool(snap, { name: name }));
+        }
+      },
+      {
+        name: "cross_sell",
+        description: "Cross-selling suggestions with the on-screen filters: for a customer (sectors they do not buy but similar customers do), for a sector (customers who could buy it and sectors often bought with it), or overall top opportunities and sector pairs. Statistical: among buyers of sector X, >=35% also buy Y.",
+        inputSchema: { type: "object", properties: { customer: { type: "string" }, sector: { type: "string" }, limit: { type: "integer", minimum: 1, maximum: 30 } } },
+        execute: function (input) {
+          progress("🔗 Ψάχνω ευκαιρίες cross-selling…");
+          return takisFitResult(takisCrossSellTool(snap, input || {}, snap.crossScope, snap.crossPre && snap.crossPre.result));
+        }
+      }
+    ];
+  }
+
+  function takisSetBusyUi(busy) {
+    document.getElementById("takisSendBtn").classList.toggle("hidden", busy);
+    document.getElementById("takisStopBtn").classList.toggle("hidden", !busy);
+    document.getElementById("takisBriefBtn").disabled = busy;
+  }
+
+  // Κείμενο για αποθήκευση/λήψη της σύνοψης για διοίκηση.
+  function takisBriefFileText(text) {
+    var now = new Date();
+    return "51 Νομοί Pro — Σύνοψη για διοίκηση\n" +
+      "Ημερομηνία: " + fmtDateShort(now) + "\n" +
+      (state.isSample ? "ΠΡΟΣΟΧΗ: δείγμα δεδομένων, όχι πραγματικό αρχείο.\n" : (state.fileName ? "Αρχείο: " + state.fileName + "\n" : "")) +
+      "\n" + text + "\n";
+  }
+
+  function takisSaveTextFile(text, btn) {
+    var d = new Date();
+    var mm = String(d.getMonth() + 1), dd = String(d.getDate());
+    var filename = "Synopsi_dioikisis_" + d.getFullYear() + "-" + (mm.length < 2 ? "0" + mm : mm) + "-" + (dd.length < 2 ? "0" + dd : dd) + ".txt";
+    function fallback() {
+      try {
+        var blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url; a.download = filename; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+      } catch (e) { console.warn("Text download failed:", e); }
+    }
+    if (window.claude && typeof window.claude.use === "function") {
+      window.claude.use("downloads").then(function (downloads) {
+        if (!downloads) { fallback(); return; }
+        downloads.save({ filename: filename, data: text }).then(function () {
+          if (btn) { btn.textContent = "✅ Αποθηκεύτηκε"; setTimeout(function () { btn.textContent = "💾 Λήψη .txt"; }, 1800); }
+        }).catch(function (e) {
+          console.warn("Downloads capability declined/failed:", e && e.code);
+          if (btn && !(e && e.code === "declined")) { btn.textContent = "⚠️ Δεν αποθηκεύτηκε"; setTimeout(function () { btn.textContent = "💾 Λήψη .txt"; }, 2500); }
+        });
+      }).catch(fallback);
+    } else fallback();
+  }
+
+  var TAKIS_BRIEF_PROMPT =
+    "Ετοίμασε μια ΣΥΝΟΨΗ ΓΙΑ ΤΗ ΔΙΟΙΚΗΣΗ για τα δεδομένα με τα τρέχοντα φίλτρα.\n" +
+    "Μορφή: απλό κείμενο χωρίς markdown (χωρίς #, *, **, πίνακες), έως 300 λέξεις, χωρίς γράφημα.\n" +
+    "Ξεκίνα με μία γραμμή «Φίλτρα:» (τομείς, σεζόν, οικογένειες, τύποι παραστατικών).\n" +
+    "Μετά αυτές τις ενότητες, με τίτλους σε κεφαλαία:\n" +
+    "1. ΕΙΚΟΝΑ — 3 έως 4 βασικά νούμερα (Καθαρή Αξία, πελάτες, μέση αξία πελάτη) και τη μεταβολή τους αν υπάρχει σύγκριση σεζόν.\n" +
+    "2. ΤΙ ΠΑΕΙ ΚΑΛΑ — 2 έως 3 σημεία.\n" +
+    "3. ΤΙ ΧΡΕΙΑΖΕΤΑΙ ΠΡΟΣΟΧΗ — συγκέντρωση σε λίγους πελάτες, εκπτώσεις πάνω από τους ομοίους, ακυρώσεις παραγγελιών, χαμένοι πελάτες ή νομοί.\n" +
+    "4. ΠΡΟΤΕΙΝΟΜΕΝΕΣ ΕΝΕΡΓΕΙΕΣ — 3 συγκεκριμένες ενέργειες, με ονόματα πελατών/νομών/τομέων όπου έχει νόημα.\n" +
+    "Κάθε ισχυρισμός να στηρίζεται σε νούμερο από τα δεδομένα. Αν κάτι δεν φαίνεται, μην το μαντεύεις.";
+
+  // text: ό,τι στέλνεται στον Τάκη. opts.display: τι φαίνεται ως μήνυμα χρήστη (αν διαφέρει),
+  // opts.extraContext: επιπλέον δεδομένα μόνο γι' αυτή την ερώτηση, opts.brief: σύνοψη για διοίκηση.
+  function takisSend(text, opts) {
+    opts = opts || {};
     text = String(text || "").trim();
     if (!text || takisBusy) return;
 
-    var currentSig = takisFilterSignature(state);
+    var currentSig = takisFilterSignature(state) + "|" + state.rows.length + "|" + (state.fileName || "") + "|" + (state.dataSource || "");
     if (takisLastSignature !== null && currentSig !== takisLastSignature && takisHistory.length) {
       takisHistory = [];
       takisAppendMessage("system-note", "🔄 Τα φίλτρα άλλαξαν — ξεκινάω με φρέσκο ιστορικό ώστε οι απαντήσεις να βασίζονται μόνο στα τρέχοντα δεδομένα.");
     }
     takisLastSignature = currentSig;
 
-    takisAppendMessage("user", text);
-    document.getElementById("takisInput").value = "";
+    takisAppendMessage("user", opts.display || text);
+    if (!opts.keepInput) document.getElementById("takisInput").value = "";
     takisBusy = true;
     document.getElementById("takisSendBtn").disabled = true;
+    takisSetBusyUi(true);
     var thinking = takisAppendMessage("assistant", "…σκέφτεται");
+    var progressEl = null;
+    var gotText = false;
+    function progress(msg) {
+      if (!progressEl) {
+        progressEl = document.createElement("div");
+        progressEl.className = "takis-progress";
+        thinking.parentNode.insertBefore(progressEl, thinking.nextSibling);
+      }
+      progressEl.textContent = msg;
+      if (!gotText) thinking.textContent = "…ψάχνει στα δεδομένα";
+      var wrap = document.getElementById("takisMessages");
+      wrap.scrollTop = wrap.scrollHeight;
+    }
+    function done() {
+      if (progressEl && progressEl.parentNode) progressEl.parentNode.removeChild(progressEl);
+      takisAbortCtl = null;
+      takisSetBusyUi(false);
+      takisFinishTurn();
+    }
 
     ensureTakisCapability().then(function (cap) {
       if (!cap) {
         thinking.className = "takis-msg error";
         thinking.textContent = "Ο Τάκης δεν είναι διαθέσιμος αυτή τη στιγμή σε αυτή την προβολή.";
-        takisFinishTurn();
+        done();
         return;
       }
-      var contextText = buildTakisContextText(state, computeAggregate());
-      var instructions = "Είσαι ο \"Τάκης\", ο βοηθός μέσα στο εργαλείο ανάλυσης πωλήσεων \"51 Νομοί Pro\". " +
-        "Απάντα πάντα στα Ελληνικά, σύντομα και συγκεκριμένα, με βάση ΑΠΟΚΛΕΙΣΤΙΚΑ τα παρακάτω δεδομένα " +
-        "(τα τρέχοντα φιλτραρισμένα νούμερα του εργαλείου αυτή τη στιγμή). Αν κάτι δεν φαίνεται στα δεδομένα " +
-        "παρακάτω, πες καθαρά ότι δεν το βλέπεις — μην το μαντεύεις.\n\n" +
-        "Αν ο χρήστης ζητήσει γράφημα/διάγραμμα, ή αν κρίνεις ότι ένα γράφημα θα βοηθούσε να φανεί κάτι πιο " +
-        "καθαρά, γράψε πρώτα μια σύντομη εξήγηση σε κείμενο και πρόσθεσε στο τέλος ΕΝΑ (και μόνο ένα) μπλοκ " +
-        "κώδικα ΑΚΡΙΒΩΣ σε αυτή τη μορφή:\n```chart\n{\"type\":\"bar\",\"title\":\"...\",\"labels\":[\"...\"],\"series\":[{\"name\":\"...\",\"data\":[0,0]}]}\n```\n" +
-        "Επιτρεπτά type: \"bar\" ή \"line\" (μπορούν να έχουν πολλές series, οι αριθμοί επιτρέπεται να είναι " +
-        "αρνητικοί) ή \"pie\" (ΜΟΝΟ ΜΙΑ series, αριθμοί ΟΧΙ αρνητικοί). Έως 20 labels, έως 6 series. Μέσα στο " +
-        "\"data\" βάλε ΜΟΝΟ αριθμούς (όχι κείμενο, όχι σύμβολα € ή %). Αν δεν έχει ζητηθεί ρητά γράφημα και τα " +
-        "δεδομένα δεν προσφέρονται για οπτικοποίηση, μην προσθέσεις καθόλου μπλοκ chart." +
-        "\n\n=== ΤΡΕΧΟΝΤΑ ΔΕΔΟΜΕΝΑ ===\n" + contextText;
+      return takisCheckTools(cap).then(function (useTools) {
+        var snap = takisSnapshot();
+        var contextText = buildTakisContextText(state, computeAggregate());
+        var betaText = "";
+        try { betaText = betaAnalysesText(state, Object.assign({}, betaUi.seasonChoice, { crossResult: snap.crossPre })); } catch (e) { betaText = ""; }
+        var toolList = useTools ? takisBuildTools(progress, snap).slice(0, Math.max(3, takisToolsMax)) : [];
+        var toolNames = toolList.map(function (t) { return t.name; }).join(", ");
+        function buildTurns(withTools) {
+        var instructions = "Είσαι ο \"Τάκης\", ο βοηθός μέσα στο εργαλείο ανάλυσης πωλήσεων \"51 Νομοί Pro\". " +
+          "Απάντα πάντα στα Ελληνικά, σύντομα και συγκεκριμένα, με βάση ΑΠΟΚΛΕΙΣΤΙΚΑ τα δεδομένα του εργαλείου. " +
+          "Αν κάτι δεν φαίνεται στα δεδομένα, πες καθαρά ότι δεν το βλέπεις — μην το μαντεύεις.\n" +
+          "ΤΥΠΟΙ ΠΑΡΑΣΤΑΤΙΚΩΝ: ΠΑΡΑ = αρχική παραγγελία. ΠΑΑ = ακύρωση παραγγελίας ή μέρους της (αρνητική αξία — ΟΧΙ επιστροφή " +
+          "ή πιστωτικό, να τη λες πάντα «ακύρωση»). ΠΑΡΝ = αντικατάσταση: το παλιό ακυρώνεται με ΠΑΑ και το καινούριο μπαίνει " +
+          "με ΠΑΡΝ — ΔΕΝ είναι νέα πώληση. Τελική αξία = ΠΑΡΑ − ΠΑΑ + ΠΑΡΝ· πραγματική απώλεια = ΠΑΑ − ΠΑΡΝ. Η σελίδα από " +
+          "προεπιλογή δείχνει μόνο ΠΑΡΑ (αρχικές παραγγελίες).\n\n" +
+          (withTools ?
+            "ΕΡΓΑΛΕΙΑ: Έχεις εργαλεία (" + toolNames + ") που διαβάζουν ΟΛΕΣ τις γραμμές του αρχείου. " +
+            "Η σύνοψη παρακάτω είναι μόνο περίληψη· για ό,τι δεν φαίνεται εκεί (συγκεκριμένος πελάτης, νομός, μήνας, κωδικός, " +
+            "κατάταξη πέρα από τα πρώτα, συγκρίσεις) ΧΡΗΣΙΜΟΠΟΙΗΣΕ τα εργαλεία αντί να πεις ότι δεν το βλέπεις. Αν ένα όνομα " +
+            "δεν ταιριάζει ακριβώς, βρες το με list_values. Μη γράφεις ΤΙΠΟΤΑ πριν ή ανάμεσα στις κλήσεις εργαλείων (ούτε " +
+            "«ας ψάξω») — γράψε μόνο την τελική απάντηση. Όταν δίνεις νούμερα από εργαλείο, πες σύντομα ποια φίλτρα ισχύουν.\n\n" : "") +
+          "Αν ο χρήστης ζητήσει γράφημα/διάγραμμα, ή αν κρίνεις ότι ένα γράφημα θα βοηθούσε να φανεί κάτι πιο " +
+          "καθαρά, γράψε πρώτα μια σύντομη εξήγηση σε κείμενο και πρόσθεσε στο τέλος ΕΝΑ (και μόνο ένα) μπλοκ " +
+          "κώδικα ΑΚΡΙΒΩΣ σε αυτή τη μορφή:\n```chart\n{\"type\":\"bar\",\"title\":\"...\",\"labels\":[\"...\"],\"series\":[{\"name\":\"...\",\"data\":[0,0]}]}\n```\n" +
+          "Επιτρεπτά type: \"bar\" ή \"line\" (μπορούν να έχουν πολλές series, οι αριθμοί επιτρέπεται να είναι " +
+          "αρνητικοί) ή \"pie\" (ΜΟΝΟ ΜΙΑ series, αριθμοί ΟΧΙ αρνητικοί). Έως 20 labels, έως 6 series. Μέσα στο " +
+          "\"data\" βάλε ΜΟΝΟ αριθμούς (όχι κείμενο, όχι σύμβολα € ή %). Αν δεν έχει ζητηθεί ρητά γράφημα και τα " +
+          "δεδομένα δεν προσφέρονται για οπτικοποίηση, μην προσθέσεις καθόλου μπλοκ chart." +
+          "\n\n=== ΤΡΕΧΟΝΤΑ ΔΕΔΟΜΕΝΑ ===\n" + contextText +
+          (betaText ? "\n\n" + betaText : "") +
+          (opts.extraContext ? "\n\n" + opts.extraContext : "");
 
-      var turns = [
-        { role: "user", content: instructions },
-        { role: "assistant", content: "Εντάξει, τα βλέπω. Ρώτησέ με ό,τι θες γι' αυτά." }
-      ];
-      takisHistory.forEach(function (m) { turns.push(m); });
-      turns.push({ role: "user", content: text });
-
-      cap(turns, {
-        onText: function (evt) { thinking.textContent = (evt && evt.text) || "…σκέφτεται"; },
-        modelTier: "default"
-      }).then(function (res) {
-        var parsed = parseTakisChartBlock(res.text);
-        thinking.className = "takis-msg assistant";
-        thinking.textContent = parsed.displayText || "(κενή απάντηση)";
-        if (parsed.chartRaw) {
-          var chartSpec = validateChartSpec(parsed.chartRaw);
-          if (chartSpec) {
-            var chartHost = document.createElement("div");
-            chartHost.className = "takis-chart-wrap";
-            takisRenderChart(chartHost, chartSpec);
-            thinking.appendChild(chartHost);
-          } else {
-            var errNote = document.createElement("div");
-            errNote.className = "takis-chart-error";
-            errNote.textContent = "⚠️ Δεν κατάφερα να φτιάξω έγκυρο γράφημα από αυτά τα δεδομένα.";
-            thinking.appendChild(errNote);
-          }
+        var turns = [
+          { role: "user", content: instructions },
+          { role: "assistant", content: "Εντάξει, τα βλέπω. Ρώτησέ με ό,τι θες γι' αυτά." }
+        ];
+        takisHistory.forEach(function (m) { turns.push(m); });
+        turns.push({ role: "user", content: text });
+        return turns;
         }
-        takisAddCopyButton(thinking, parsed.displayText);
-        takisHistory.push({ role: "user", content: text });
-        takisHistory.push({ role: "assistant", content: parsed.displayText });
-        takisFinishTurn();
-      }).catch(function (err) {
-        thinking.className = "takis-msg error";
-        thinking.textContent = takisErrorText(err);
-        takisFinishTurn();
+
+        function run(withTools) {
+          takisAbortCtl = new AbortController();
+          var callOpts = {
+            onText: function (evt) { gotText = true; thinking.textContent = (evt && evt.text) || "…σκέφτεται"; },
+            signal: takisAbortCtl.signal,
+            modelTier: "default"
+          };
+          if (withTools) callOpts.tools = toolList;
+          return cap(buildTurns(withTools), callOpts).catch(function (err) {
+            // Αν η προβολή τελικά δεν τρέχει εργαλεία, ξαναρωτάμε ΜΙΑ φορά χωρίς αυτά.
+            if (withTools && err && err.code === "tools_unavailable" && !gotText) {
+              takisToolsState = false;
+              return run(false);
+            }
+            throw err;
+          });
+        }
+
+        return run(useTools).then(function (res) {
+          var parsed = parseTakisChartBlock(res.text);
+          thinking.className = "takis-msg assistant";
+          thinking.textContent = parsed.displayText || "(κενή απάντηση)";
+          if (res.truncated) {
+            var tn = document.createElement("div");
+            tn.className = "takis-chart-error";
+            tn.textContent = "⚠️ Η απάντηση κόπηκε λόγω μεγέθους — ζήτα κάτι πιο συγκεκριμένο.";
+            thinking.appendChild(tn);
+          }
+          if (parsed.chartRaw) {
+            var chartSpec = validateChartSpec(parsed.chartRaw);
+            if (chartSpec) {
+              var chartHost = document.createElement("div");
+              chartHost.className = "takis-chart-wrap";
+              takisRenderChart(chartHost, chartSpec);
+              thinking.appendChild(chartHost);
+            } else {
+              var errNote = document.createElement("div");
+              errNote.className = "takis-chart-error";
+              errNote.textContent = "⚠️ Δεν κατάφερα να φτιάξω έγκυρο γράφημα από αυτά τα δεδομένα.";
+              thinking.appendChild(errNote);
+            }
+          }
+          takisAddCopyButton(thinking, parsed.displayText);
+          if (opts.brief && parsed.displayText) {
+            var saveBtn = document.createElement("button");
+            saveBtn.type = "button";
+            saveBtn.className = "takis-copy-btn";
+            saveBtn.style.marginLeft = "6px";
+            saveBtn.textContent = "💾 Λήψη .txt";
+            var fileText = takisBriefFileText(parsed.displayText);
+            saveBtn.addEventListener("click", function () { takisSaveTextFile(fileText, saveBtn); });
+            thinking.appendChild(saveBtn);
+          }
+          takisHistory.push({ role: "user", content: text });
+          // Ποτέ κενό μήνυμα στο ιστορικό (π.χ. απάντηση μόνο με γράφημα) — θα απέρριπτε κάθε επόμενη ερώτηση.
+          takisHistory.push({ role: "assistant", content: parsed.displayText || (parsed.chartRaw ? "(απάντησα με γράφημα)" : "(κενή απάντηση)") });
+          // Κρατάμε το ιστορικό μικρό (όριο 64 KB ανά ερώτηση): τα 6 τελευταία ζεύγη αρκούν.
+          if (takisHistory.length > 12) takisHistory = takisHistory.slice(takisHistory.length - 12);
+          done();
+        });
       });
-    }).catch(function () {
-      thinking.className = "takis-msg error";
-      thinking.textContent = "Ο Τάκης δεν είναι διαθέσιμος αυτή τη στιγμή.";
-      takisFinishTurn();
+    }).catch(function (err) {
+      if (err && err.code === "cancelled") {
+        thinking.className = "takis-msg assistant";
+        thinking.textContent = (err.text ? err.text + "\n\n" : "") + "⏹ Σταμάτησε.";
+      } else if (err && err.code === "prompt_too_large") {
+        thinking.className = "takis-msg error";
+        thinking.textContent = "Η ερώτηση βγήκε πολύ μεγάλη για τον Τάκη — πάτα 🧹 για καθαρό ιστορικό ή ζήτα κάτι πιο συγκεκριμένο.";
+      } else {
+        thinking.className = "takis-msg error";
+        thinking.textContent = (err && err.text ? err.text + "\n\n" : "") + takisErrorText(err);
+      }
+      done();
+    });
+  }
+
+  function takisStop() {
+    if (takisAbortCtl) { try { takisAbortCtl.abort(); } catch (e) { /* ήδη σταματημένο */ } }
+  }
+
+  function takisSendBrief() {
+    if (takisBusy) return;
+    takisOpenDialog();
+    takisSend(TAKIS_BRIEF_PROMPT, { display: "📋 Σύνοψη για διοίκηση", brief: true, keepInput: true });
+  }
+
+  function takisAskAboutSector(name) {
+    var extra = "";
+    try { extra = "ΚΑΡΤΕΛΑ ΤΟΜΕΑ «" + name + "» (όλο το ιστορικό του αρχείου, χωρίς φίλτρα):\n" + JSON.stringify(takisSectorTool(state, { name: name })); } catch (e) { extra = ""; }
+    try { extra += "\n\nCROSS-SELLING ΓΙΑ ΤΟΝ ΤΟΜΕΑ (τρέχοντα φίλτρα):\n" + JSON.stringify(takisCrossSellTool(state, { sector: name, limit: 10 }, panelSeasonScope(state, betaUi.seasonChoice.crosssell), (currentCrossSell() || {}).result)); } catch (e2) { /* - */ }
+    closeCustomerCard();
+    takisOpenDialog();
+    if (takisBusy) return;
+    takisSend("Ανάλυσε τον εμπορικό τομέα «" + name + "»: πορεία ανά σεζόν (σε σχέση με την προηγούμενη ίδιου τύπου), πελάτες που κερδίσαμε ή χάσαμε, ακυρώσεις, και σε ποιους πελάτες θα μπορούσαμε να τον προτείνουμε.",
+      { extraContext: extra, keepInput: true });
+  }
+
+  function takisAskAboutCustomer(name) {
+    var extra = "";
+    try { extra = "ΚΑΡΤΕΛΑ ΠΕΛΑΤΗ «" + name + "» (όλο το ιστορικό του αρχείου, χωρίς φίλτρα):\n" + JSON.stringify(takisCustomerTool(state, { name: name })); } catch (e) { extra = ""; }
+    closeCustomerCard();
+    takisOpenDialog();
+    if (takisBusy) return;
+    takisSend("Ανάλυσε τον πελάτη «" + name + "»: πώς πάει ανά σεζόν (σε σχέση με την προηγούμενη ίδιου τύπου), ακυρώσεις παραγγελιών, εκπτώσεις σε σχέση με πελάτες παρόμοιου όγκου, και τι να προσέξουμε ή να κάνουμε.",
+      { extraContext: extra, keepInput: true });
+  }
+
+  /* ============================= Beta v3: οθόνες (Β6 / Β7 / Β8 / Β9 / Α1) ============================= */
+
+  var betaUi = {
+    returnsTab: "customer",   // "customer" | "sector" | "geo"
+    returnsSort: "eur",       // "eur" | "rate"
+    // Σεζόν που διάλεξε ο χρήστης σε κάθε πάνελ (null = η πιο πρόσφατη από τις 2 επιλεγμένες πάνω).
+    seasonChoice: { pareto: null, discount: null, returns: null, crosssell: null },
+    crossSell: null,          // τελευταίο αποτέλεσμα cross-selling (για την καρτέλα πελάτη/τομέα): {result, scope, rows}
+    sectIndex: null, sectIndexRows: null,
+    seasonSig: null,          // ποιες σεζόν ήταν επιλεγμένες πάνω — αν αλλάξουν, όλα τα πάνελ γυρνάνε στην πιο πρόσφατη
+    seasonRows: null,         // ... και ποιο αρχείο ήταν φορτωμένο (νέο αρχείο = επαναφορά)
+    custIndex: null, custIndexRows: null,
+    suggestActive: -1, suggestList: [],
+    loadSeq: 0,               // αυξάνεται σε κάθε νέα φόρτωση/διαγραφή, ώστε μια αργή επαναφορά/αποθήκευση να μην "πατήσει" νεότερη
+    uploadSeq: 0,             // αυξάνεται σε κάθε ανέβασμα, ώστε ένα παλιότερο ανέβασμα που τελειώνει αργότερα να αγνοείται
+    storageUnavailable: false // true όταν η προβολή δεν έχει IndexedDB (δεν ξαναδοκιμάζουμε σε κάθε ανέβασμα)
+  };
+  // Στενή οθόνη (κινητό): μικρότερο πλάτος σχεδίου ώστε τα γράμματα των διαγραμμάτων να μη μικραίνουν υπερβολικά.
+  function betaChartW(wide, narrow) { return (window.innerWidth || 1024) < 600 ? narrow : wide; }
+  var ABC_LABEL = { A: "Α", B: "Β", C: "Γ" };
+
+  function betaSvgEl(tag, attrs) {
+    var e = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  function betaSvgText(svg, x, y, txt, cls, anchor) {
+    var t = betaSvgEl("text", { x: x, y: y, class: cls || "lbl", "text-anchor": anchor || "middle" });
+    t.textContent = txt;
+    svg.appendChild(t);
+    return t;
+  }
+
+  function custLinkEl(name) {
+    var b = el("button", { type: "button", class: "cust-link", title: "Άνοιγμα καρτέλας πελάτη", text: name });
+    b.setAttribute("data-customer", name);
+    return b;
+  }
+
+  function sectLinkEl(name) {
+    var b = el("button", { type: "button", class: "cust-link sect-link", title: "Άνοιγμα καρτέλας τομέα", text: name });
+    b.setAttribute("data-sector", name);
+    return b;
+  }
+
+  function betaKpi(label, value, sub) {
+    return el("div", { class: "beta-kpi" }, [
+      el("div", { class: "k", text: label }),
+      el("div", { class: "v", text: value }),
+      sub ? el("div", { class: "s", text: sub }) : null
+    ]);
+  }
+
+  // headers: [[τίτλος, "num"|""], ...]· cells: string | Node | {text, cls}
+  function betaTable(headers, rows, tableCls) {
+    var wrap = el("div", { class: "table-scroll" });
+    var t = el("table", { class: "beta-table" + (tableCls ? " " + tableCls : "") });
+    var thead = document.createElement("thead");
+    var htr = el("tr");
+    headers.forEach(function (h) { htr.appendChild(el("th", { class: h[1] || "", text: h[0] })); });
+    thead.appendChild(htr); t.appendChild(thead);
+    var tb = document.createElement("tbody");
+    rows.forEach(function (cells) {
+      var tr = el("tr");
+      cells.forEach(function (c, i) {
+        var cls = (headers[i] && headers[i][1]) || "";
+        var td;
+        if (c && typeof c === "object" && c.nodeType) { td = el("td", { class: cls }); td.appendChild(c); }
+        else if (c && typeof c === "object") td = el("td", { class: (cls + " " + (c.cls || "")).trim(), text: c.text });
+        else td = el("td", { class: cls, text: (c === null || c === undefined) ? "—" : String(c) });
+        tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb); wrap.appendChild(t);
+    return wrap;
+  }
+
+  function betaEmpty(host, msg) { host.appendChild(el("div", { class: "beta-empty", text: msg })); }
+  function pctOrDash(v) { return (v === null || v === undefined || !isFinite(v)) ? "—" : fmtPct(v); }
+
+  // Αν άλλαξαν οι επιλεγμένες σεζόν πάνω (ή φορτώθηκε άλλο αρχείο), όλα τα πάνελ γυρνάνε στην πιο πρόσφατη σεζόν.
+  function syncSeasonChoices() {
+    var sig = sortSeasons(selectedFrom(state.selectedSeasons || {})).join("|");
+    if (betaUi.seasonSig !== sig || betaUi.seasonRows !== state.rows) {
+      betaUi.seasonChoice = { pareto: null, discount: null, returns: null, crosssell: null };
+      betaUi.seasonSig = sig;
+      betaUi.seasonRows = state.rows;
+    }
+  }
+
+  // Επιλογή σεζόν μέσα σε ένα πάνελ — εμφανίζεται μόνο όταν πάνω είναι επιλεγμένες 2 σεζόν.
+  function appendSeasonChooser(host, scope, panel) {
+    if (!scope.options || scope.options.length < 2) return;
+    var pick = el("div", { class: "beta-toolbar" });
+    var seg = el("div", { class: "beta-tabs", role: "tablist", "aria-label": "Σεζόν για αυτή την ανάλυση" });
+    seg.appendChild(el("span", { class: "beta-scope", style: "align-self:center;padding:0 6px", text: "Σεζόν:" }));
+    scope.options.forEach(function (sv) {
+      var b = el("button", { type: "button", class: "bridge-tab" + (scope.seasons[0] === sv ? " is-active" : ""), text: sv });
+      b.setAttribute("data-season", sv);
+      b.setAttribute("data-panel", panel);
+      seg.appendChild(b);
+    });
+    pick.appendChild(seg);
+    host.appendChild(pick);
+  }
+
+  /* ---------- Β7: Pareto ---------- */
+  function renderParetoPanel(rows, scope) {
+    var host = document.getElementById("paretoBody");
+    document.getElementById("paretoScope").textContent = scope.label;
+    host.innerHTML = "";
+    appendSeasonChooser(host, scope, "pareto");
+    var p = computePareto(rows);
+    if (!p.customerCount) { betaEmpty(host, "Δεν υπάρχουν πελάτες με θετική Καθαρή Αξία στην τρέχουσα επιλογή."); return; }
+    var n = p.customerCount;
+    function shareOfCustomers(k) { return fmtPct(k / n * 100) + " των πελατών"; }
+    host.appendChild(el("div", { class: "beta-kpis" }, [
+      betaKpi("Πελάτες με αξία", fmtInt(n), "Σύνολο " + fmtCur(p.totalNet)),
+      betaKpi("50% της αξίας", fmtInt(p.needed.p50) + " πελάτες", shareOfCustomers(p.needed.p50)),
+      betaKpi("80% της αξίας", fmtInt(p.needed.p80) + " πελάτες", shareOfCustomers(p.needed.p80)),
+      betaKpi("Top 10 πελάτες", fmtPct(p.topShares.top10), "της αξίας · ο 1ος μόνος του " + fmtPct(p.topShares.top1))
+    ]));
+    var chips = el("div", { class: "abc-chips" });
+    ["A", "B", "C"].forEach(function (k) {
+      var c = p.classes[k];
+      var chip = el("span", { class: "abc-chip abc-" + k });
+      chip.appendChild(el("b", { text: "Τάξη " + ABC_LABEL[k] }));
+      chip.appendChild(document.createTextNode(fmtInt(c.count) + " πελάτες · " + fmtPct(c.share) + " της αξίας"));
+      chips.appendChild(chip);
+    });
+    host.appendChild(chips);
+    host.appendChild(el("p", { class: "beta-note", text: "Τάξη Α = οι πελάτες που φέρνουν το πρώτο 80% της αξίας, Β = το επόμενο 15%, Γ = το τελευταίο 5%." +
+      (p.excludedNonPositive ? " " + fmtInt(p.excludedNonPositive) + " πελάτες με μηδενική ή αρνητική αξία (π.χ. μόνο ακυρώσεις) δεν μετράνε εδώ." : "") }));
+
+    var grid = el("div", { class: "beta-grid2" });
+    // Καμπύλη
+    var W = betaChartW(520, 380), H = 280, L = 40, R = 12, T = 12, B = 30;
+    var pw = W - L - R, ph = H - T - B;
+    function X(v) { return L + v / 100 * pw; }
+    function Y(v) { return T + ph - v / 100 * ph; }
+    var svg = betaSvgEl("svg", { viewBox: "0 0 " + W + " " + H, class: "beta-svg", role: "img", "aria-label": "Καμπύλη συγκέντρωσης: % πελατών προς % αξίας" });
+    [0, 20, 40, 60, 80, 100].forEach(function (v) {
+      svg.appendChild(betaSvgEl("line", { x1: L, x2: W - R, y1: Y(v), y2: Y(v), class: "grid" }));
+      betaSvgText(svg, L - 6, Y(v) + 3, v + "%", "lbl", "end");
+      betaSvgText(svg, X(v), H - B + 14, v + "%", "lbl", "middle");
+    });
+    svg.appendChild(betaSvgEl("line", { x1: X(0), y1: Y(0), x2: X(100), y2: Y(100), class: "diag" }));
+    var pts = p.curve.map(function (c) { return X(c.x).toFixed(1) + "," + Y(c.y).toFixed(1); });
+    svg.appendChild(betaSvgEl("path", { d: "M" + X(0) + "," + Y(0) + " L" + pts.join(" L") + " L" + X(100) + "," + Y(0) + " Z", class: "area" }));
+    svg.appendChild(betaSvgEl("polyline", { points: pts.join(" "), class: "curve" }));
+    var x80 = p.needed.p80 / n * 100;
+    svg.appendChild(betaSvgEl("line", { x1: X(0), x2: X(x80), y1: Y(80), y2: Y(80), class: "ref" }));
+    svg.appendChild(betaSvgEl("line", { x1: X(x80), x2: X(x80), y1: Y(80), y2: Y(0), class: "ref" }));
+    betaSvgText(svg, Math.min(X(x80) + 6, W - R - 140), Y(80) + 16, "80% αξίας ← " + fmtPct(x80) + " πελατών", "lbl-strong", "start");
+    betaSvgText(svg, L + pw / 2, H - 2, "% πελατών (από τον μεγαλύτερο)", "lbl", "middle");
+    var chartBox = el("div");
+    chartBox.appendChild(el("div", { class: "beta-subtitle", text: "Καμπύλη συγκέντρωσης" }));
+    chartBox.appendChild(svg);
+    grid.appendChild(chartBox);
+
+    var tableBox = el("div");
+    tableBox.appendChild(el("div", { class: "beta-subtitle", text: "Top 20 πελάτες" }));
+    tableBox.appendChild(betaTable(
+      [["#", "num"], ["Πελάτης", "name"], ["Καθαρή Αξία", "num"], ["Μερίδιο", "num"], ["Σωρευτικό", "num"], ["Τάξη", ""]],
+      p.top.slice(0, 20).map(function (x) { return [String(x.rank), custLinkEl(x.customer), fmtCur(x.net), fmtPct(x.share), fmtPct(x.cumShare), ABC_LABEL[x.abc]]; })
+    ));
+    grid.appendChild(tableBox);
+    host.appendChild(grid);
+  }
+
+  /* ---------- Β8: εκπτώσεις ---------- */
+  function renderDiscountPanel(rows, scope) {
+    var host = document.getElementById("discountBody");
+    document.getElementById("discountScope").textContent = scope.label;
+    host.innerHTML = "";
+    appendSeasonChooser(host, scope, "discount");
+    var d = computeDiscountEffectiveness(rows);
+    if (!d.customerCount) { betaEmpty(host, "Δεν υπάρχουν γραμμές παραγγελιών στην τρέχουσα επιλογή."); return; }
+    if (!d.totalDisc) { betaEmpty(host, "Δεν βρέθηκαν εκπτώσεις στην τρέχουσα επιλογή (η στήλη «Εμπορική έκπτωση» λείπει από το αρχείο ή είναι παντού 0)."); return; }
+    host.appendChild(el("div", { class: "beta-kpis" }, [
+      betaKpi("Μέση έκπτωση", fmtPct(d.avgDiscPct), "σταθμισμένη με την αξία"),
+      betaKpi("Συνολική έκπτωση", fmtCur(d.totalDisc), "σε " + fmtCur(d.totalNet) + " παραγγελίες"),
+      betaKpi("Πελάτες για έλεγχο", fmtInt(d.flagged.length), "≥" + DISCOUNT_FLAG_PP + " μονάδες πάνω από τους ομοίους τους"),
+      betaKpi("Επιπλέον έκπτωση", fmtCur(d.flaggedExcess), "εκτίμηση πάνω από τον μ.ό. της ομάδας τους")
+    ]));
+    host.appendChild(el("p", { class: "beta-note", text: "Οι πελάτες μπαίνουν σε σειρά από τον μεγαλύτερο στον μικρότερο (Καθαρή Αξία) και χωρίζονται σε 5 ομάδες με ίσο ΠΛΗΘΟΣ πελατών — γι' αυτό κάθε ομάδα έχει περίπου τους ίδιους πελάτες (όταν είναι τουλάχιστον " + DISCOUNT_MIN_FOR_BANDS +
+      "). Σημειώνεται όποιος παίρνει έκπτωση τουλάχιστον " + DISCOUNT_FLAG_PP + " ποσοστιαίες μονάδες πάνω από τον μέσο όρο της ομάδας του ΚΑΙ πάνω από τον γενικό μέσο όρο — δηλαδή μεγάλη έκπτωση χωρίς αντίστοιχο όγκο. Μετράνε μόνο γραμμές παραγγελιών (θετική αξία)." }));
+
+    var grid = el("div", { class: "beta-grid2" });
+    // Διάγραμμα διασποράς: όγκος (λογαριθμικά) προς έκπτωση %
+    var W = betaChartW(520, 380), H = 280, L = 44, R = 12, T = 12, B = 32;
+    var pw = W - L - R, ph = H - T - B;
+    var pts = d.points.filter(function (q) { return q.net > 0; });
+    var lx = pts.map(function (q) { return Math.log10(q.net); });
+    var minX = Math.floor(Math.min.apply(null, lx)), maxX = Math.ceil(Math.max.apply(null, lx));
+    if (maxX <= minX) maxX = minX + 1;
+    var maxY = Math.max(d.avgDiscPct, Math.max.apply(null, pts.map(function (q) { return q.discPct; })));
+    var minY = Math.min(0, Math.min.apply(null, pts.map(function (q) { return q.discPct; })));
+    maxY = maxY <= minY ? minY + 1 : Math.ceil(maxY / 5) * 5;
+    function X(v) { return L + (Math.log10(v) - minX) / (maxX - minX) * pw; }
+    function Y(v) { return T + ph - (v - minY) / (maxY - minY) * ph; }
+    var svg = betaSvgEl("svg", { viewBox: "0 0 " + W + " " + H, class: "beta-svg", role: "img", "aria-label": "Όγκος πελάτη προς ποσοστό έκπτωσης" });
+    var yStep = (maxY - minY) > 20 ? 10 : 5;
+    for (var yv = Math.ceil(minY / yStep) * yStep; yv <= maxY + 1e-9; yv += yStep) {
+      svg.appendChild(betaSvgEl("line", { x1: L, x2: W - R, y1: Y(yv), y2: Y(yv), class: "grid" }));
+      betaSvgText(svg, L - 6, Y(yv) + 3, yv + "%", "lbl", "end");
+    }
+    for (var xv = minX; xv <= maxX; xv++) {
+      svg.appendChild(betaSvgEl("line", { x1: L + (xv - minX) / (maxX - minX) * pw, x2: L + (xv - minX) / (maxX - minX) * pw, y1: T, y2: T + ph, class: "grid" }));
+      betaSvgText(svg, L + (xv - minX) / (maxX - minX) * pw, H - B + 14, fmtCurCompact(Math.pow(10, xv)), "lbl", "middle");
+    }
+    svg.appendChild(betaSvgEl("line", { x1: L, x2: W - R, y1: Y(d.avgDiscPct), y2: Y(d.avgDiscPct), class: "avgline" }));
+    betaSvgText(svg, W - R, Y(d.avgDiscPct) - 4, "μ.ό. " + fmtPct(d.avgDiscPct), "lbl-strong", "end");
+    // Πρώτα οι κανονικοί, μετά οι σημειωμένοι (να φαίνονται από πάνω).
+    pts.slice().sort(function (a, b) { return (a.flagged ? 1 : 0) - (b.flagged ? 1 : 0); }).forEach(function (q) {
+      var c = betaSvgEl("circle", { cx: X(q.net).toFixed(1), cy: Y(q.discPct).toFixed(1), r: q.flagged ? 3.6 : 2.6, class: q.flagged ? "dot flag" : "dot" });
+      var tt = betaSvgEl("title", {});
+      tt.textContent = q.customer + " — " + fmtCur(q.net) + " · έκπτωση " + fmtPct(q.discPct);
+      c.appendChild(tt);
+      svg.appendChild(c);
+    });
+    betaSvgText(svg, L + pw / 2, H - 2, "Καθαρή Αξία πελάτη (λογαριθμική κλίμακα)", "lbl", "middle");
+    var chartBox = el("div");
+    chartBox.appendChild(el("div", { class: "beta-subtitle", text: "Όγκος πελάτη ↔ έκπτωση" }));
+    chartBox.appendChild(svg);
+    chartBox.appendChild(el("div", { class: "beta-legend", html: '<span><i style="background:var(--seq-400)"></i>πελάτης</span><span><i style="background:var(--terracotta)"></i>για έλεγχο</span>' }));
+    grid.appendChild(chartBox);
+
+    var bandsBox = el("div");
+    bandsBox.appendChild(el("div", { class: "beta-subtitle", text: "Μέση έκπτωση ανά ομάδα πελατών (κατά μέγεθος)" }));
+    bandsBox.appendChild(betaTable(
+      [["Ομάδα πελατών", "wrap"], ["Πελάτες", "num"], ["Αξία ανά πελάτη (από–έως)", "num wrap"], ["Καθαρή Αξία ομάδας", "num"], ["Μέση έκπτωση", "num"]],
+      d.bands.map(function (b) {
+        // «από – έως» σε δύο γραμμές, χωρίς να σπάει ποτέ ένα ποσό στη μέση (το € μένει κολλημένο στον αριθμό).
+        var rng = el("span");
+        rng.appendChild(document.createTextNode(fmtCur(b.minNet).replace(/ /g, "\u00a0") + " –"));
+        rng.appendChild(document.createElement("br"));
+        rng.appendChild(document.createTextNode(fmtCur(b.maxNet).replace(/ /g, "\u00a0")));
+        return [b.label, fmtInt(b.customers), rng, fmtCur(b.net), fmtPct(b.avgDiscPct)];
+      })
+    ));
+    grid.appendChild(bandsBox);
+    host.appendChild(grid);
+
+    host.appendChild(el("div", { class: "beta-subtitle", text: "Πελάτες για έλεγχο (μεγαλύτερη επιπλέον έκπτωση πρώτα)" }));
+    if (!d.flagged.length) { betaEmpty(host, "Κανένας πελάτης δεν ξεχωρίζει — οι εκπτώσεις ακολουθούν τον όγκο."); return; }
+    host.appendChild(betaTable(
+      [["Πελάτης", "name"], ["Καθαρή Αξία", "num"], ["Έκπτωση", "num"], ["Ομάδα", "wrap"], ["Μ.ό. ομάδας", "num"], ["Διαφορά", "num"], ["Επιπλέον €", "num"]],
+      d.flagged.slice(0, 25).map(function (c) {
+        return [custLinkEl(c.customer), fmtCur(c.net), { text: fmtPct(c.discPct), cls: "neg" }, d.bands[c.band].label, fmtPct(c.peerDiscPct),
+          "+" + c.excessPp.toLocaleString("el-GR", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " μον.", fmtCur(c.excessEur)];
+      }), "wide"
+    ));
+    if (d.flagged.length > 25) host.appendChild(el("div", { class: "beta-more", text: "…και άλλοι " + fmtInt(d.flagged.length - 25) + "." }));
+  }
+
+  /* ---------- Β9: ακυρώσεις παραγγελιών (ΠΑΑ) ---------- */
+  function renderReturnsPanel(rows, scope) {
+    var host = document.getElementById("returnsBody");
+    document.getElementById("returnsScope").textContent = scope.label;
+    host.innerHTML = "";
+    appendSeasonChooser(host, scope, "returns");
+    var r = computeReturns(rows);
+    var t = r.totals;
+    if (!t.sales && !t.returns && !t.repl) { betaEmpty(host, "Δεν υπάρχουν γραμμές στην τρέχουσα επιλογή."); return; }
+    host.appendChild(el("div", { class: "beta-kpis" }, [
+      betaKpi("Αρχικές παραγγελίες", fmtCur(t.sales), "ΠΑΡΑ"),
+      betaKpi("Ακυρώσεις", fmtCur(t.returns), "ΠΑΑ · " + pctOrDash(t.rate) + " των αρχικών · " + fmtInt(t.returnLines) + " γραμμές"),
+      betaKpi("Αντικαταστάσεις", fmtCur(t.repl), "ΠΑΡΝ · " + fmtInt(t.replLines) + " γραμμές"),
+      betaKpi("Πραγματική απώλεια", fmtCur(t.lost), pctOrDash(t.lossRate) + " των αρχικών (ακυρώσεις − αντικαταστάσεις)"),
+      betaKpi("Τελική αξία", fmtCur(t.netAfter), "αρχικές − ακυρώσεις + αντικαταστάσεις")
+    ]));
+    if (r.returnDoctypes.length) {
+      var chips = el("div", { class: "doc-chips" }, [el("span", { text: "Ακυρώσεις ανά τύπο παραστατικού:" })]);
+      r.returnDoctypes.slice(0, 8).forEach(function (x) { chips.appendChild(el("span", { class: "doc-chip", text: x.doctype + " · " + fmtCur(x.returns) })); });
+      host.appendChild(chips);
+    }
+    var bar = el("div", { class: "beta-toolbar" });
+    var tabs = el("div", { class: "beta-tabs", role: "tablist" });
+    [["customer", "Πελάτες"], ["sector", "Τομείς"], ["geo", "Νομοί"]].forEach(function (x) {
+      var b = el("button", { type: "button", class: "bridge-tab" + (betaUi.returnsTab === x[0] ? " is-active" : ""), text: x[1] });
+      b.setAttribute("data-rtab", x[0]);
+      tabs.appendChild(b);
+    });
+    var sorts = el("div", { class: "beta-tabs" });
+    [["eur", "Κατά € ακυρώσεων"], ["rate", "Κατά % ακυρώσεων"]].forEach(function (x) {
+      var b = el("button", { type: "button", class: "bridge-tab" + (betaUi.returnsSort === x[0] ? " is-active" : ""), text: x[1] });
+      b.setAttribute("data-rsort", x[0]);
+      sorts.appendChild(b);
+    });
+    bar.appendChild(tabs); bar.appendChild(sorts);
+    host.appendChild(bar);
+    var list = sortReturnGroups(r[betaUi.returnsTab], betaUi.returnsSort, r.minSalesForRate).filter(function (b) { return b.returns > 0; });
+    if (betaUi.returnsSort === "rate") host.appendChild(el("p", { class: "beta-note", text: "Κατά ποσοστό: μόνο όσοι έχουν αρχικές παραγγελίες τουλάχιστον " + fmtCur(r.minSalesForRate) + " (0,1% του συνόλου), για να μη βγαίνουν μπροστά μικρά ποσά." }));
+    if (!list.length) {
+      betaEmpty(host, betaUi.returnsSort === "rate" && t.returns > 0
+        ? "Υπάρχουν ακυρώσεις, αλλά καμία ομάδα δεν έχει αρκετές αρχικές παραγγελίες για να βγει ποσοστό — δες «Κατά € ακυρώσεων»."
+        : "Καμία ακύρωση στην τρέχουσα επιλογή.");
+      return;
+    }
+    var nameHead = betaUi.returnsTab === "customer" ? "Πελάτης" : betaUi.returnsTab === "sector" ? "Τομέας" : "Νομός";
+    host.appendChild(betaTable(
+      [[nameHead, "name"], ["Αρχικές", "num"], ["Ακυρώσεις", "num"], ["% ακυρ.", "num"], ["Αντικατ.", "num"], ["% πραγμ. απώλειας", "num"], ["Τελική αξία", "num"]],
+      list.slice(0, 25).map(function (b) {
+        return [betaUi.returnsTab === "customer" && b.key !== "(χωρίς όνομα)" ? custLinkEl(b.key) : (betaUi.returnsTab === "sector" ? sectLinkEl(b.key) : b.key), fmtCur(b.sales), { text: fmtCur(b.returns), cls: "neg" }, pctOrDash(b.rate),
+          b.repl ? fmtCur(b.repl) : "—", pctOrDash(b.lossRate), fmtCur(b.netAfter)];
+      }), "wide"
+    ));
+    if (list.length > 25) host.appendChild(el("div", { class: "beta-more", text: "…και άλλοι " + fmtInt(list.length - 25) + "." }));
+  }
+
+  // Ακυρώσεις: αν άλλαξαν οι επιλεγμένες σεζόν πάνω (ή φορτώθηκε άλλο αρχείο), η επιλογή σεζόν γυρνάει στην πιο πρόσφατη.
+  /* ---------- Beta 2 · Δ3: πάνελ «Ευκαιρίες cross-selling» ---------- */
+  function renderCrossSellPanel(rows, scope) {
+    var host = document.getElementById("crossBody");
+    document.getElementById("crossScope").textContent = scope.label;
+    host.innerHTML = "";
+    appendSeasonChooser(host, scope, "crosssell");
+    var cx = computeCrossSell(rows);
+    betaUi.crossSell = { result: cx, scope: scope, rows: state.rows, sig: betaUi.seasonSig };
+    if (!cx.customerCount) { betaEmpty(host, "Δεν υπάρχουν πελάτες με παραγγελίες στην τρέχουσα επιλογή."); return; }
+    var topValue = cx.opportunities.slice(0, 50).reduce(function (s, o) { return s + o.typicalValue; }, 0);
+    host.appendChild(el("div", { class: "beta-kpis" }, [
+      betaKpi("Πελάτες που εξετάστηκαν", fmtInt(cx.customerCount), fmtInt(cx.sectorCount) + " τομείς με αγορές"),
+      betaKpi("Προτάσεις", fmtInt(cx.opportunityCount || 0), "έως 5 ανά πελάτη"),
+      betaKpi("Τομείς που πάνε μαζί", fmtInt(cx.pairCount || 0), "ζεύγη που περνάνε τα κριτήρια"),
+      betaKpi("Δυνητική αξία (top 50)", fmtCur(topValue), "άθροισμα τυπικών αξιών — ενδεικτικό")
+    ]));
+    host.appendChild(el("p", { class: "beta-note", text: "Πώς βγαίνει: αν τουλάχιστον το " + Math.round(CS_MIN_CONF * 100) + "% όσων αγοράζουν τον τομέα Χ αγοράζουν και τον Υ (με τουλάχιστον " + CS_MIN_BOTH +
+      " πελάτες και στους δύο), και ο Υ είναι τουλάχιστον " + Math.round((CS_MIN_LIFT - 1) * 100) + "% πιο συχνός σε αυτούς απ' ό,τι σε όλους τους πελάτες, τότε ένας πελάτης που παίρνει Χ αλλά όχι Υ είναι υποψήφιος για τον Υ. «Τυπική αξία» = ο διάμεσος όσων αγοράζουν τον Υ. Οι προτάσεις είναι στατιστικές ενδείξεις — όχι βεβαιότητα." }));
+    if (!cx.opportunities.length) { betaEmpty(host, "Καμία πρόταση περνάει τα κριτήρια με τα τρέχοντα φίλτρα. Χρειάζονται αρκετοί πελάτες ανά τομέα — και μετράνε μόνο οι τομείς που είναι επιλεγμένοι στα φίλτρα (π.χ. με έναν μόνο τομέα δεν βγαίνει τίποτα)."); return; }
+    host.appendChild(el("div", { class: "beta-subtitle", text: "Κορυφαίες ευκαιρίες (μεγαλύτερη πιθανότητα × αξία πρώτα)" }));
+    host.appendChild(betaTable(
+      [["Πελάτης", "name"], ["Προτεινόμενος τομέας · γιατί", "name wrap"], ["Τυπική αξία", "num"], ["Ο πελάτης σήμερα", "num"]],
+      cx.opportunities.slice(0, 25).map(function (o) {
+        return [custLinkEl(o.customer), withReason(sectLinkEl(o.sector), "αγοράζει " + o.fromSector + " · το " + fmtPct(o.conf) + " των " + fmtInt(o.buyersFrom) + " πελατών του παίρνουν και αυτόν"), fmtCur(o.typicalValue), fmtCur(o.customerValue)];
+      })
+    ));
+    if (cx.opportunities.length > 25) host.appendChild(el("div", { class: "beta-more", text: "…και άλλες " + fmtInt((cx.opportunityCount || cx.opportunities.length) - 25) + " (δες την καρτέλα κάθε πελάτη ή τομέα)." }));
+    if (cx.pairs.length) {
+      host.appendChild(el("div", { class: "beta-subtitle", text: "Τομείς που αγοράζονται μαζί" }));
+      host.appendChild(betaTable(
+        [["Τομέας Α", "name"], ["Τομέας Β", "name"], ["Πελάτες και στους δύο", "num"], ["Όσοι παίρνουν Α → και Β", "num"], ["Όσοι παίρνουν Β → και Α", "num"]],
+        cx.pairs.slice(0, 15).map(function (x) { return [sectLinkEl(x.a), sectLinkEl(x.b), fmtInt(x.both), fmtPct(x.confAB), fmtPct(x.confBA)]; }), "wide"
+      ));
+    }
+  }
+
+  // Κελί: σύνδεσμος + μικρή εξήγηση από κάτω (ώστε να μη χρειάζεται στενή στήλη «Γιατί»).
+  function withReason(node, text) {
+    var wrap = el("div");
+    wrap.appendChild(node);
+    wrap.appendChild(el("div", { class: "cell-reason", text: text }));
+    return wrap;
+  }
+
+  // Το αποτέλεσμα cross-selling για τις καρτέλες: ό,τι έδειξε το πάνελ, αν ισχύει ακόμα για τα ίδια δεδομένα/σεζόν.
+  function currentCrossSell() {
+    syncSeasonChoices();
+    var c = betaUi.crossSell;
+    if (c && c.rows === state.rows && c.sig === betaUi.seasonSig && c.scope.seasons.join("|") === panelSeasonScope(state, betaUi.seasonChoice.crosssell).seasons.join("|")) return c;
+    try {
+      var scope = panelSeasonScope(state, betaUi.seasonChoice.crosssell);
+      return { result: computeCrossSell(filterRowsForAnalysis(state, { scope: scope })), scope: scope };
+    } catch (e) { console.error(e); return null; }
+  }
+
+  // Κάθε πάνελ με τη δική του σεζόν (εξ ορισμού η πιο πρόσφατη· ο χρήστης μπορεί να διαλέξει την άλλη).
+  function renderParetoSection() {
+    syncSeasonChoices();
+    var scope = panelSeasonScope(state, betaUi.seasonChoice.pareto);
+    renderParetoPanel(filterRowsForAnalysis(state, { scope: scope }), scope);
+  }
+  function renderDiscountSection() {
+    syncSeasonChoices();
+    var scope = panelSeasonScope(state, betaUi.seasonChoice.discount);
+    renderDiscountPanel(filterRowsForAnalysis(state, { scope: scope }), scope);
+  }
+  function renderReturnsSection() {
+    syncSeasonChoices();
+    var scope = panelSeasonScope(state, betaUi.seasonChoice.returns);
+    renderReturnsPanel(filterRowsForAnalysis(state, { ignoreDoctype: true, scope: scope }), scope);
+  }
+  function renderCrossSellSection() {
+    syncSeasonChoices();
+    var scope = panelSeasonScope(state, betaUi.seasonChoice.crosssell);
+    renderCrossSellPanel(filterRowsForAnalysis(state, { scope: scope }), scope);
+  }
+  var BETA_PANEL_RENDER = { pareto: renderParetoSection, discount: renderDiscountSection, returns: renderReturnsSection, crosssell: renderCrossSellSection };
+  var BETA_PANEL_BODY = { pareto: "paretoBody", discount: "discountBody", returns: "returnsBody", crosssell: "crossBody" };
+
+  function renderBetaPanel(panel) {
+    try { BETA_PANEL_RENDER[panel](); } catch (e) {
+      console.error(e);
+      var host = document.getElementById(BETA_PANEL_BODY[panel]);
+      if (host) { host.innerHTML = ""; betaEmpty(host, "⚠️ Κάτι πήγε στραβά σε αυτή την ανάλυση."); }
+    }
+  }
+
+  function renderBetaPanels() {
+    ["pareto", "discount", "returns", "crosssell"].forEach(renderBetaPanel);
+  }
+
+  /* ---------- Β6: καρτέλα πελάτη ---------- */
+  function betaCustIndex() {
+    if (betaUi.custIndexRows !== state.rows) {
+      betaUi.custIndex = uniqueCustomerIndex(state.rows);
+      betaUi.custIndexRows = state.rows;
+    }
+    return betaUi.custIndex;
+  }
+
+  function betaSectIndex() {
+    if (betaUi.sectIndexRows !== state.rows) {
+      betaUi.sectIndex = uniqueSectorIndex(state.rows);
+      betaUi.sectIndexRows = state.rows;
+    }
+    return betaUi.sectIndex;
+  }
+
+  function openSuggestion(kind, name) {
+    if (kind === "sector") openSectorCard(name); else openCustomerCard(name);
+  }
+
+  function hideCustSuggest() {
+    var box = document.getElementById("custSuggest");
+    box.classList.add("hidden");
+    box.innerHTML = "";
+    betaUi.suggestActive = -1; betaUi.suggestList = [];
+    document.getElementById("custSearchInput").setAttribute("aria-expanded", "false");
+  }
+
+  function renderCustSuggest(query) {
+    var box = document.getElementById("custSuggest");
+    var input = document.getElementById("custSearchInput");
+    var q = String(query || "");
+    if (!normKey(q)) { hideCustSuggest(); return; }
+    // Πελάτες ΚΑΙ εμπορικοί τομείς: πρώτα οι ακριβείς αντιστοιχίες, μετά όσοι ξεκινούν έτσι, μετά οι υπόλοιποι.
+    var qk = normKey(q);
+    function rank(key) { return key === qk ? 0 : key.indexOf(qk) === 0 ? 1 : 2; }
+    var items = findSectors(betaSectIndex(), q, 6).map(function (h) { return { kind: "sector", name: h.sector, net: h.net, rank: rank(h.key), meta: "Τομέας · " + fmtCur(h.net) }; })
+      .concat(findCustomers(betaCustIndex(), q, 12).map(function (h) {
+        // Αν ψάξαμε με κωδικό, δείξε αυτόν τον κωδικό (ένας πελάτης μπορεί να έχει περισσότερους από έναν).
+        var code = h.codeList.filter(function (c) { return normKey(c).indexOf(qk) > -1; })[0] || h.codeList[0];
+        return { kind: "customer", name: h.customer, net: h.net, rank: h.key === qk ? 0 : (h.key.indexOf(qk) === 0 ? 1 : 2), meta: (code ? code + (h.codeList.length > 1 ? " (+" + (h.codeList.length - 1) + ")" : "") + " · " : "") + fmtCur(h.net) };
+      }));
+    items.sort(function (a, b) { return a.rank - b.rank || b.net - a.net; });
+    items = items.slice(0, 14);
+    betaUi.suggestList = items; betaUi.suggestActive = items.length ? 0 : -1;
+    box.innerHTML = "";
+    if (!items.length) box.appendChild(el("div", { class: "none", text: "Δεν βρέθηκε πελάτης ή τομέας." }));
+    items.forEach(function (h, i) {
+      var b = el("button", { type: "button", class: i === 0 ? "is-active" : "", role: "option" }, [
+        el("span", { text: (h.kind === "sector" ? "🏷️ " : "") + h.name }),
+        el("span", { class: "meta", text: h.meta })
+      ]);
+      b.setAttribute("data-kind", h.kind);
+      b.setAttribute("data-name", h.name);
+      box.appendChild(b);
+    });
+    box.classList.remove("hidden");
+    input.setAttribute("aria-expanded", "true");
+  }
+
+  function moveCustSuggest(delta) {
+    var n = betaUi.suggestList.length;
+    if (!n) return;
+    betaUi.suggestActive = (betaUi.suggestActive + delta + n) % n;
+    var btns = document.querySelectorAll("#custSuggest button");
+    btns.forEach(function (b, i) { b.classList.toggle("is-active", i === betaUi.suggestActive); });
+    if (btns[betaUi.suggestActive]) btns[betaUi.suggestActive].scrollIntoView({ block: "nearest" });
+  }
+
+  function daysAgoText(d) {
+    if (!(d instanceof Date) || isNaN(d.getTime())) return "";
+    var days = Math.floor((Date.now() - d.getTime()) / 86400000);
+    if (days < 0) return "";
+    if (days === 0) return "σήμερα";
+    return "πριν από " + fmtInt(days) + (days === 1 ? " ημέρα" : " ημέρες");
+  }
+
+  function renderCustomerSeasonChart(list) {
+    var W = betaChartW(640, 400), H = 220, L = 8, R = 8, T = 22, B = 26;
+    var pw = W - L - R, ph = H - T - B;
+    var vals = list.map(function (s) { return s.net; });
+    var maxV = Math.max.apply(null, vals.concat([0])), minV = Math.min.apply(null, vals.concat([0]));
+    var range = (maxV - minV) || 1;
+    function Y(v) { return T + ph - (v - minV) / range * ph; }
+    var svg = betaSvgEl("svg", { viewBox: "0 0 " + W + " " + H, class: "beta-svg", role: "img", "aria-label": "Καθαρή Αξία πελάτη ανά σεζόν" });
+    var gw = pw / Math.max(1, list.length);
+    var bw = Math.max(6, Math.min(46, gw * 0.62));
+    svg.appendChild(betaSvgEl("line", { x1: L, x2: W - R, y1: Y(0), y2: Y(0), class: "axis" }));
+    list.forEach(function (s, i) {
+      var cx = L + gw * i + gw / 2;
+      var y = Y(s.net), y0 = Y(0);
+      var cls = s.net < 0 ? "bar-neg" : s.type === "SS" ? "bar-ss" : s.type === "FW" ? "bar-fw" : "bar-other";
+      var rect = betaSvgEl("rect", { x: (cx - bw / 2).toFixed(1), y: Math.min(y, y0).toFixed(1), width: bw.toFixed(1), height: Math.max(1, Math.abs(y0 - y)).toFixed(1), rx: 3, class: cls });
+      var tt = betaSvgEl("title", {}); tt.textContent = s.season + ": " + fmtCur(s.net); rect.appendChild(tt);
+      svg.appendChild(rect);
+      if (list.length <= (W < 500 ? 8 : 16)) betaSvgText(svg, cx, (s.net >= 0 ? y - 5 : y + 12), fmtCurCompact(s.net), "lbl", "middle");
+      betaSvgText(svg, cx, H - 8, s.season, "lbl-strong", "middle");
+    });
+    return svg;
+  }
+
+  function openCustomerCard(name) {
+    if (!name) return;
+    var p = computeCustomerProfile(state.rows, name);
+    if (!p) return;
+    rememberFocus();
+    hideCustSuggest();
+    document.getElementById("custTitle").textContent = p.customer;
+    var subParts = [];
+    if (p.codeList.length) subParts.push("Κωδ. " + p.codeList.slice(0, 3).join(", ") + (p.codeList.length > 3 ? "…" : ""));
+    var geos = cleanGeoList(p.geoList), fams = cleanFamilyList(p.familyList);
+    if (geos.length) subParts.push(geos.slice(0, 3).join(", "));
+    if (fams.length) subParts.push(fams.slice(0, 2).join(", "));
+    document.getElementById("custSub").textContent = subParts.join(" · ");
+    var body = document.getElementById("custBody");
+    body.innerHTML = "";
+    body.appendChild(el("p", { class: "beta-note", style: "margin:0", text: "Όλο το ιστορικό του αρχείου για αυτόν τον πελάτη — ΔΕΝ επηρεάζεται από τα φίλτρα της σελίδας (όλες οι σεζόν, όλοι οι τύποι παραστατικών)." + (state.isSample ? " Προσοχή: δείγμα δεδομένων." : "") }));
+    body.appendChild(el("div", { class: "beta-kpis", style: "margin:0" }, [
+      betaKpi("Αρχικές παραγγελίες", fmtCur(p.sales), "ΠΑΡΑ"),
+      betaKpi("Ακυρώσεις", fmtCur(p.returns), p.returnRate === null ? "ΠΑΑ" : "ΠΑΑ · " + fmtPct(p.returnRate) + " των αρχικών"),
+      betaKpi("Αντικαταστάσεις", fmtCur(p.repl), p.lossRate === null ? "ΠΑΡΝ" : "ΠΑΡΝ · πραγματική απώλεια " + fmtPct(p.lossRate)),
+      betaKpi("Τελική αξία", fmtCur(p.net), fmtInt(p.qty) + " τεμ. · " + fmtInt(p.lines) + " γραμμές"),
+      betaKpi("Μέση έκπτωση", fmtPct(p.discPct), "σταθμισμένη"),
+      betaKpi("Ενεργές σεζόν", fmtInt(p.activeSeasons), "με παραγγελίες"),
+      betaKpi("Πρώτη παραγγελία", p.firstDate ? fmtDateShort(p.firstDate) : "—", ""),
+      betaKpi("Τελευταία παραγγελία", p.lastDate ? fmtDateShort(p.lastDate) : "—", daysAgoText(p.lastDate))
+    ]));
+    if (p.seasonList.length) {
+      body.appendChild(el("div", { class: "beta-subtitle", text: "Τελική αξία ανά σεζόν" }));
+      body.appendChild(renderCustomerSeasonChart(p.seasonList));
+      body.appendChild(el("div", { class: "beta-legend", html: '<span><i style="background:var(--bar-ss)"></i>S/S (…1)</span><span><i style="background:var(--bar-fw)"></i>F/W (…2)</span><span><i style="background:var(--terracotta)"></i>αρνητική</span>' }));
+      body.appendChild(betaTable(
+        [["Σεζόν", ""], ["Τύπος", ""], ["Αρχικές", "num"], ["Ακυρώσεις", "num"], ["Αντικατ.", "num"], ["Τελική", "num"], ["Τεμ.", "num"], ["Έκπτωση", "num"], ["Μεταβολή", "num"]],
+        p.seasonList.slice().reverse().map(function (s) {
+          var ch = s.changePct === null ? (s.prevSameType ? { text: "—", cls: "muted" } : { text: "πρώτη " + (s.type === "SS" ? "S/S" : s.type === "FW" ? "F/W" : ""), cls: "muted" })
+            : { text: fmtSignedPct(s.changePct) + " vs " + s.prevSameType, cls: s.changePct < 0 ? "neg" : "pos" };
+          return [s.season, s.type === "SS" ? "S/S" : s.type === "FW" ? "F/W" : "—", fmtCur(s.sales), s.returns ? { text: fmtCur(s.returns), cls: "neg" } : "—", s.repl ? fmtCur(s.repl) : "—", fmtCur(s.net), fmtInt(s.qty), fmtPct(s.discPct), ch];
+        }), "wide"
+      ));
+      body.appendChild(el("p", { class: "beta-note", style: "margin:0", text: "Η μεταβολή συγκρίνει με την προηγούμενη σεζόν του ΙΔΙΟΥ τύπου (S/S με S/S, F/W με F/W)." }));
+    }
+    if (p.sectorList.length) {
+      body.appendChild(el("div", { class: "beta-subtitle", text: "Εμπορικοί τομείς" }));
+      body.appendChild(betaTable(
+        [["Τομέας", ""], ["Αρχικές", "num"], ["Ακυρώσεις", "num"], ["Αντικατ.", "num"], ["Τελική", "num"]],
+        p.sectorList.slice(0, 15).map(function (x) { return [sectLinkEl(x.sector), fmtCur(x.sales), x.returns ? { text: fmtCur(x.returns), cls: "neg" } : "—", x.repl ? fmtCur(x.repl) : "—", fmtCur(x.net)]; })
+      ));
+      if (p.sectorList.length > 15) body.appendChild(el("div", { class: "beta-more", text: "…και άλλοι " + fmtInt(p.sectorList.length - 15) + " τομείς." }));
+    }
+    var dts = Object.keys(p.doctypes).sort(function (a, b) { return p.doctypes[b] - p.doctypes[a]; });
+    body.appendChild(el("div", { class: "doc-chips", style: "margin:0" }, [el("span", { text: "Γραμμές ανά τύπο παραστατικού:" })].concat(
+      dts.map(function (d) { return el("span", { class: "doc-chip", text: d + " · " + fmtInt(p.doctypes[d]) }); }))));
+    // Beta 2: ευκαιρίες cross-selling για αυτόν τον πελάτη (με τα τρέχοντα φίλτρα και τη σεζόν του πάνελ cross-selling)
+    var cx = currentCrossSell();
+    if (cx) {
+      var opp = cx.result.byCustomer[p.customer] || [];
+      body.appendChild(el("div", { class: "beta-subtitle", text: "Ευκαιρίες cross-selling · " + shortScopeLabel(cx.scope) + " · τρέχοντα φίλτρα" }));
+      if (!opp.length) body.appendChild(el("div", { class: "beta-empty", text: "Καμία πρόταση που να περνάει τα κριτήρια για αυτόν τον πελάτη με τα τρέχοντα φίλτρα." }));
+      else body.appendChild(betaTable(
+        [["Προτεινόμενος τομέας · γιατί", "name wrap"], ["Τυπική αξία", "num"]],
+        opp.map(function (o) { return [withReason(sectLinkEl(o.sector), "αγοράζει " + o.fromSector + " · το " + fmtPct(o.conf) + " όσων το αγοράζουν παίρνουν και αυτόν"), fmtCur(o.typicalValue)]; })
+      ));
+    }
+    var actions = el("div", { class: "cust-actions" });
+    var ask = el("button", { type: "button", class: "btn-primary", text: "🗣️ Ρώτα τον Τάκη για τον πελάτη" });
+    ask.addEventListener("click", function () { takisAskAboutCustomer(p.customer); });
+    actions.appendChild(ask);
+    body.appendChild(actions);
+    document.getElementById("custOverlay").classList.remove("hidden");
+    body.scrollTop = 0;
+    document.getElementById("custCloseBtn").focus();
+  }
+
+  /* ---------- Beta 2 · Δ4: καρτέλα τομέα / brand (ίδιο παράθυρο με την καρτέλα πελάτη) ---------- */
+  function openSectorCard(name) {
+    if (!name) return;
+    var p = computeSectorProfile(state.rows, name);
+    if (!p) return;
+    rememberFocus();
+    hideCustSuggest();
+    document.getElementById("custTitle").textContent = "🏷️ " + p.sector;
+    document.getElementById("custSub").textContent = "Καρτέλα εμπορικού τομέα · " + fmtInt(p.customerCount) + " πελάτες σε όλο το ιστορικό";
+    var body = document.getElementById("custBody");
+    body.innerHTML = "";
+    body.appendChild(el("p", { class: "beta-note", style: "margin:0", text: "Όλο το ιστορικό του αρχείου για αυτόν τον τομέα — ΔΕΝ επηρεάζεται από τα φίλτρα της σελίδας (όλες οι σεζόν, οικογένειες και τύποι παραστατικών). Τελική αξία = αρχικές (ΠΑΡΑ) − ακυρώσεις (ΠΑΑ) + αντικαταστάσεις (ΠΑΡΝ)." + (state.isSample ? " Προσοχή: δείγμα δεδομένων." : "") }));
+    body.appendChild(el("div", { class: "beta-kpis", style: "margin:0" }, [
+      betaKpi("Αρχικές παραγγελίες", fmtCur(p.sales), "ΠΑΡΑ"),
+      betaKpi("Ακυρώσεις", fmtCur(p.returns), p.returnRate === null ? "ΠΑΑ" : "ΠΑΑ · " + fmtPct(p.returnRate) + " των αρχικών"),
+      betaKpi("Αντικαταστάσεις", fmtCur(p.repl), p.lossRate === null ? "ΠΑΡΝ" : "ΠΑΡΝ · πραγματική απώλεια " + fmtPct(p.lossRate)),
+      betaKpi("Τελική αξία", fmtCur(p.net), fmtInt(p.qty) + " τεμ. · " + fmtInt(p.lines) + " γραμμές"),
+      betaKpi("Πελάτες", fmtInt(p.customerCount), "με αρχικές παραγγελίες, όλο το ιστορικό"),
+      betaKpi("Μέση έκπτωση", fmtPct(p.discPct), "σταθμισμένη"),
+      betaKpi("Ενεργές σεζόν", fmtInt(p.activeSeasons), "με αρχικές παραγγελίες")
+    ]));
+    if (p.seasonList.length) {
+      body.appendChild(el("div", { class: "beta-subtitle", text: "Τελική αξία ανά σεζόν" }));
+      body.appendChild(renderCustomerSeasonChart(p.seasonList));
+      body.appendChild(el("div", { class: "beta-legend", html: '<span><i style="background:var(--bar-ss)"></i>S/S (…1)</span><span><i style="background:var(--bar-fw)"></i>F/W (…2)</span><span><i style="background:var(--terracotta)"></i>αρνητική</span>' }));
+      body.appendChild(betaTable(
+        [["Σεζόν", ""], ["Τύπος", ""], ["Αρχικές", "num"], ["Ακυρώσεις", "num"], ["Αντικατ.", "num"], ["Τελική", "num"], ["Πελάτες", "num"], ["Ανά πελάτη", "num"], ["Έκπτωση", "num"], ["Μεταβολή", "num"]],
+        p.seasonList.slice().reverse().map(function (s) {
+          var ch = s.changePct === null ? { text: s.prevSameType ? "—" : "πρώτη " + (s.type === "SS" ? "S/S" : s.type === "FW" ? "F/W" : ""), cls: "muted" }
+            : { text: fmtSignedPct(s.changePct) + " vs " + s.prevSameType, cls: s.changePct < 0 ? "neg" : "pos" };
+          return [s.season, s.type === "SS" ? "S/S" : s.type === "FW" ? "F/W" : "—", fmtCur(s.sales), s.returns ? { text: fmtCur(s.returns), cls: "neg" } : "—", s.repl ? fmtCur(s.repl) : "—",
+            fmtCur(s.net), fmtInt(s.customerCount), s.customerCount ? fmtCur(s.avgPerCustomer) : "—", fmtPct(s.discPct), ch];
+        }), "wide"
+      ));
+      body.appendChild(el("p", { class: "beta-note", style: "margin:0", text: "Η μεταβολή συγκρίνει με την προηγούμενη σεζόν του ΙΔΙΟΥ τύπου (S/S με S/S, F/W με F/W)." }));
+    }
+    if (p.latestSeason) {
+      var L = p.latestSeason, P = p.prevSeason;
+      if (p.flow) {
+        body.appendChild(el("div", { class: "beta-subtitle", text: "Πελάτες: " + L + " σε σχέση με " + P }));
+        body.appendChild(el("div", { class: "abc-chips", style: "margin:0" }, [
+          el("span", { class: "abc-chip", text: "Σταθεροί: " + fmtInt(p.flow.kept) }),
+          el("span", { class: "abc-chip abc-A", text: "Νέοι στην " + L + ": " + fmtInt(p.flow.fresh) + " · " + fmtCur(p.flow.freshValue) }),
+          el("span", { class: "abc-chip abc-C", text: "Είχαν στην " + P + ", όχι (ακόμα) στην " + L + ": " + fmtInt(p.flow.gone) + " · " + fmtCur(p.flow.goneValue) + " στην " + P })
+        ]));
+      }
+      function cmpRows(list, linkFn) {
+        return list.slice(0, 15).map(function (x) {
+          return [linkFn ? linkFn(x.key) : x.key, P ? fmtCur(x.prev) : "—", fmtCur(x.latest),
+            x.changePct === null ? { text: x.prev ? "—" : "νέος", cls: "muted" } : { text: fmtSignedPct(x.changePct), cls: x.changePct < 0 ? "neg" : "pos" }];
+        });
+      }
+      body.appendChild(el("div", { class: "beta-subtitle", text: "Κορυφαίοι πελάτες του τομέα (" + L + (P ? " σε σχέση με " + P : "") + ", τελική αξία)" }));
+      body.appendChild(betaTable([["Πελάτης", "name"], [P || "—", "num"], [L, "num"], ["Μεταβολή", "num"]],
+        cmpRows(p.topCustomers, function (c) { return c === "(χωρίς όνομα)" ? c : custLinkEl(c); })));
+      body.appendChild(el("div", { class: "beta-subtitle", text: "Νομοί (" + L + (P ? " σε σχέση με " + P : "") + ")" }));
+      body.appendChild(betaTable([["Νομός", "name"], [P || "—", "num"], [L, "num"], ["Μεταβολή", "num"]], cmpRows(p.topGeo, null).slice(0, 10)));
+    }
+    // Cross-selling για τον τομέα (με τα τρέχοντα φίλτρα της σελίδας)
+    var cx = currentCrossSell();
+    if (cx) {
+      var rel = cx.result.related[p.sector] || [], cand = cx.result.bySector[p.sector] || [];
+      body.appendChild(el("div", { class: "beta-subtitle", text: "Cross-selling · " + shortScopeLabel(cx.scope) + " · τρέχοντα φίλτρα" }));
+      if (rel.length) {
+        var chips = el("div", { class: "doc-chips", style: "margin:0" }, [el("span", { text: "Όσοι αγοράζουν αυτόν τον τομέα παίρνουν συχνά και:" })]);
+        rel.slice(0, 8).forEach(function (x) { var b = sectLinkEl(x.sector); b.textContent = x.sector + " (" + fmtPct(x.conf) + ")"; chips.appendChild(el("span", { class: "doc-chip" }, [b])); });
+        body.appendChild(chips);
+      }
+      if (cand.length) {
+        body.appendChild(el("div", { class: "beta-scope", text: "Πελάτες που ΔΕΝ αγοράζουν αυτόν τον τομέα αλλά μοιάζουν με όσους τον αγοράζουν:" }));
+        body.appendChild(betaTable([["Πελάτης · γιατί", "name wrap"], ["Ο πελάτης σήμερα", "num"]],
+          cand.slice(0, 10).map(function (o) { return [withReason(custLinkEl(o.customer), "αγοράζει " + o.fromSector + " · το " + fmtPct(o.conf) + " αυτών παίρνουν και αυτόν τον τομέα"), fmtCur(o.customerValue)]; })));
+      }
+      var selNow = state.mode === "single" ? [state.selectedSingle] : selectedFrom(state.selectedMulti || {});
+      if (!rel.length && !cand.length) body.appendChild(el("div", { class: "beta-empty", text: selNow.indexOf(p.sector) === -1
+        ? "Ο τομέας δεν είναι επιλεγμένος στα φίλτρα της σελίδας, οπότε δεν μπαίνει στο cross-selling. Διάλεξέ τον (ή «Επιλογή όλων») για να δεις προτάσεις."
+        : "Δεν βγαίνουν συσχετίσεις για αυτόν τον τομέα με τα τρέχοντα φίλτρα (λίγοι αγοραστές ή τίποτα σταθερό)." }));
+    }
+    var actions = el("div", { class: "cust-actions" });
+    var ask = el("button", { type: "button", class: "btn-primary", text: "🗣️ Ρώτα τον Τάκη για τον τομέα" });
+    ask.addEventListener("click", function () { takisAskAboutSector(p.sector); });
+    actions.appendChild(ask);
+    body.appendChild(actions);
+    document.getElementById("custOverlay").classList.remove("hidden");
+    body.scrollTop = 0;
+    document.getElementById("custCloseBtn").focus();
+  }
+
+  function rememberFocus() {
+    if (document.getElementById("custOverlay").classList.contains("hidden")) betaUi.lastFocus = document.activeElement;
+  }
+  function closeCustomerCard() {
+    var ov = document.getElementById("custOverlay");
+    var wasOpen = !ov.classList.contains("hidden");
+    ov.classList.add("hidden");
+    // Επιστροφή της εστίασης εκεί που ήταν (π.χ. στο πεδίο αναζήτησης), μόνο αν η καρτέλα ήταν όντως ανοιχτή.
+    var f = betaUi.lastFocus;
+    betaUi.lastFocus = null;
+    if (wasOpen && f && f.focus && document.body.contains(f) && f !== document.body) { try { f.focus({ preventScroll: true }); } catch (e) { /* - */ } }
+  }
+
+  /* ---------- Α1: αποθήκευση του τελευταίου αρχείου ΜΟΝΟ σε αυτή τη συσκευή (IndexedDB) ---------- */
+  var BETA_DB_NAME = "51nomoi-pro", BETA_DB_STORE = "files", BETA_DB_KEY = "last";
+
+  function betaDbOpen() {
+    return new Promise(function (resolve, reject) {
+      var req, finished = false;
+      var timer = setTimeout(function () { if (!finished) { finished = true; reject(new Error("idb timeout")); } }, 15000);
+      function ok(v) { if (finished) { try { v.close(); } catch (e) { /* - */ } return; } finished = true; clearTimeout(timer); resolve(v); }
+      function fail(e) { if (finished) return; finished = true; clearTimeout(timer); reject(e); }
+      try {
+        if (typeof indexedDB === "undefined" || !indexedDB) { fail(new Error("no indexedDB")); return; }
+        req = indexedDB.open(BETA_DB_NAME, 1);
+      } catch (e) { fail(e); return; }
+      req.onupgradeneeded = function () { try { if (!req.result.objectStoreNames.contains(BETA_DB_STORE)) req.result.createObjectStore(BETA_DB_STORE); } catch (e) { /* - */ } };
+      req.onsuccess = function () { ok(req.result); };
+      req.onerror = function () { fail(req.error || new Error("idb open failed")); };
+      req.onblocked = function () { fail(new Error("idb blocked")); };
+    });
+  }
+
+  function betaDbRun(mode, fn) {
+    return betaDbOpen().then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var tx, req;
+        try { tx = db.transaction(BETA_DB_STORE, mode); req = fn(tx.objectStore(BETA_DB_STORE)); }
+        catch (e) { try { db.close(); } catch (e2) { /* - */ } reject(e); return; }
+        tx.oncomplete = function () { try { db.close(); } catch (e) { /* - */ } resolve(req ? req.result : undefined); };
+        tx.onerror = function () { try { db.close(); } catch (e) { /* - */ } reject(tx.error || (req && req.error) || new Error("idb error")); };
+        tx.onabort = function () { try { db.close(); } catch (e) { /* - */ } reject(tx.error || new Error("idb abort")); };
+      });
+    });
+  }
+
+  function betaFmtDateTime(ms) {
+    var d = new Date(ms);
+    if (isNaN(d.getTime())) return "";
+    var hh = String(d.getHours()), mi = String(d.getMinutes());
+    return fmtDateShort(d) + " " + (hh.length < 2 ? "0" + hh : hh) + ":" + (mi.length < 2 ? "0" + mi : mi);
+  }
+
+  function setStoreStatus(kind, meta) {
+    var t = document.getElementById("storeStatus");
+    var btn = document.getElementById("storeDeleteBtn");
+    btn.classList.toggle("hidden", kind === "unavailable");
+    btn.disabled = !(kind === "saved" || kind === "error-save");
+    resetDeleteBtn();
+    if (kind === "checking") t.textContent = "💾 Έλεγχος για αποθηκευμένο αρχείο σε αυτή τη συσκευή…";
+    else if (kind === "none") t.textContent = "💾 Δεν υπάρχει αποθηκευμένο αρχείο σε αυτή τη συσκευή. Μόλις ανεβάσεις αρχείο θα το θυμάμαι εδώ (μόνο τοπικά, δεν στέλνεται πουθενά).";
+    else if (kind === "saving") t.textContent = "💾 Αποθήκευση στη συσκευή…";
+    else if (kind === "saved") t.textContent = "💾 Αποθηκευμένο σε αυτή τη συσκευή: «" + (meta.fileName || "αρχείο") + "» · " + fmtInt(meta.rowCount) + " γραμμές · " + betaFmtDateTime(meta.savedAt) + ". Θα ανοίγει αυτόματα την επόμενη φορά.";
+    else if (kind === "error-save") t.textContent = "⚠️ Τα δεδομένα φαίνονται κανονικά, αλλά δεν μπόρεσαν να αποθηκευτούν στη συσκευή (π.χ. δεν υπάρχει χώρος ή ιδιωτική περιήγηση).";
+    else if (kind === "deleted") t.textContent = "🗑 Τα αποθηκευμένα δεδομένα διαγράφηκαν από αυτή τη συσκευή. Η σελίδα γύρισε στο δείγμα.";
+    else t.textContent = "💾 Η αποθήκευση στη συσκευή δεν είναι διαθέσιμη σε αυτή την προβολή — ανέβασε το αρχείο κάθε φορά.";
+  }
+
+  var deleteArmTimer = null;
+  function resetDeleteBtn() {
+    var btn = document.getElementById("storeDeleteBtn");
+    btn.textContent = "🗑 Διαγραφή αποθηκευμένων δεδομένων";
+    btn.removeAttribute("data-armed");
+    if (deleteArmTimer) { clearTimeout(deleteArmTimer); deleteArmTimer = null; }
+  }
+
+  function betaSaveCurrent(fileName, rows, seq) {
+    if (betaUi.storageUnavailable) { setStoreStatus("unavailable"); return Promise.resolve(false); }
+    setStoreStatus("saving");
+    var meta = { fileName: fileName || "", rowCount: rows.length, savedAt: Date.now() };
+    return encodeRowsCompactAsync(rows).then(function (data) {
+      if (seq !== betaUi.loadSeq) return false; // στο μεταξύ φορτώθηκε/διαγράφηκε κάτι άλλο
+      return betaDbRun("readwrite", function (s) { return s.put({ meta: meta, data: data }, BETA_DB_KEY); }).then(function () {
+        if (seq === betaUi.loadSeq) setStoreStatus("saved", meta);
+        return true;
+      });
+    }).catch(function (e) {
+      console.warn("Beta: αποτυχία αποθήκευσης στη συσκευή", e);
+      if (seq !== betaUi.loadSeq) return false;
+      setStoreStatus("error-save");
+      // Μην αφήσεις παλιά εγγραφή να ανοίξει την επόμενη φορά με λάθος (παλιότερο) αρχείο.
+      betaDbRun("readwrite", function (s) { if (seq === betaUi.loadSeq) return s.delete(BETA_DB_KEY); return null; }).catch(function () { /* - */ });
+      return false;
+    });
+  }
+
+  function betaRestoreOnBoot() {
+    var seq = ++betaUi.loadSeq;
+    setStoreStatus("checking");
+    betaDbRun("readonly", function (s) { return s.get(BETA_DB_KEY); }).then(function (rec) {
+      if (seq !== betaUi.loadSeq) return; // στο μεταξύ ανέβηκε άλλο αρχείο
+      if (!rec || !rec.data) { setStoreStatus("none"); return; }
+      var dot = document.getElementById("statusDot"), text = document.getElementById("statusText");
+      if (state.isSample) { dot.className = "status-dot loading"; text.textContent = "Άνοιγμα του αποθηκευμένου αρχείου από τη συσκευή…"; }
+      return decodeRowsCompactAsync(rec.data).then(function (rows) {
+        if (seq !== betaUi.loadSeq) return;
+        if (!rows.length) { renderStatus(); setStoreStatus("none"); return; }
+        state.fileName = (rec.meta && rec.meta.fileName) || "";
+        state.dataSource = "device";
+        state.savedAt = rec.meta && rec.meta.savedAt;
+        loadRows(rows, false);
+        // Αν στο μεταξύ ξεκίνησε ανέβασμα άλλου αρχείου, κράτα το μήνυμα «Φόρτωση…» μέχρι να τελειώσει.
+        if (document.getElementById("dropZone").classList.contains("disabled")) setLoadingState(true);
+        setStoreStatus("saved", rec.meta || { fileName: "", rowCount: rows.length, savedAt: Date.now() });
+      }, function (e) {
+        console.warn("Beta: μη αναγνώσιμα αποθηκευμένα δεδομένα — διαγράφονται", e);
+        if (seq !== betaUi.loadSeq) return;
+        betaDbRun("readwrite", function (s) { return s.delete(BETA_DB_KEY); }).catch(function () { /* - */ });
+        renderStatus();
+        setStoreStatus("none");
+      });
+    }, function (e) {
+      // Μόνο αποτυχία της ίδιας της βάσης σημαίνει «δεν υπάρχει αποθήκευση» — όχι ένα σφάλμα πιο κάτω.
+      console.warn("Beta: η αποθήκευση στη συσκευή δεν είναι διαθέσιμη", e);
+      if (!(e && e.message === "idb timeout")) betaUi.storageUnavailable = true; // αργή συσκευή: ξαναδοκιμάζουμε στο επόμενο ανέβασμα
+      if (seq === betaUi.loadSeq) setStoreStatus("unavailable");
+    }).catch(function (e) { console.error("Beta: σφάλμα κατά την επαναφορά", e); });
+  }
+
+  function betaDeleteSaved() {
+    var btn = document.getElementById("storeDeleteBtn");
+    if (!btn.getAttribute("data-armed")) {
+      // Δύο βήματα αντί για confirm() (που μπλοκάρει τη σελίδα): πρώτο πάτημα = «σίγουρα;».
+      btn.setAttribute("data-armed", "1");
+      btn.textContent = "Σίγουρα; Πάτα ξανά για διαγραφή";
+      deleteArmTimer = setTimeout(resetDeleteBtn, 5000);
+      return;
+    }
+    resetDeleteBtn();
+    btn.disabled = true;
+    var seq = ++betaUi.loadSeq;
+    betaDbRun("readwrite", function (s) { return s.delete(BETA_DB_KEY); }).then(function () {
+      if (seq !== betaUi.loadSeq) return;
+      state.fileName = ""; state.dataSource = "sample"; state.savedAt = null;
+      loadRows(buildSampleRows(), true);
+      if (!takisBusy) {
+        takisHistory = []; takisLastSignature = null;
+        document.getElementById("takisMessages").innerHTML = "";
+        takisWelcomed = false;
+      }
+      closeCustomerCard();
+      setStoreStatus("deleted");
+    }).catch(function (e) {
+      console.warn("Beta: αποτυχία διαγραφής", e);
+      btn.disabled = false;
+      document.getElementById("storeStatus").textContent = "⚠️ Η διαγραφή δεν ολοκληρώθηκε — δοκίμασε ξανά.";
     });
   }
 
   /* ============================= Events ============================= */
 
   function loadRows(rows, isSample) {
+    closeCustomerCard(); hideCustSuggest();
     state.rows = rows;
     state.isSample = isSample;
     state.sectors = uniqueSectors(rows);
     state.seasons = sortSeasons(uniqueValues(rows, "season"));
     state.families = uniqueValues(rows, "family").sort(function (a, b) { return a.localeCompare(b, "el"); });
     state.doctypes = uniqueValues(rows, "doctype").sort(function (a, b) { return a.localeCompare(b, "el"); });
-    state.selectedSingle = state.sectors.length ? state.sectors[0] : null;
+    state.selectedSingle = state.sectors.length ? topSectorByValue(rows, state.sectors) : null;
     // Default to ΟΛΟΙ οι Εμπορικοί Τομείς επιλεγμένοι (multi mode), όχι μόνο ο πρώτος αλφαβητικά.
     // Με μόνο έναν τομέα επιλεγμένο εξ ορισμού (π.χ. τον κενό "(χωρίς τομέα)"), η Κύπρος/το Διεθνώς
     // μπορεί να φαίνονται 0 απλά επειδή εκείνος ο συγκεκριμένος τομέας δεν έχει πωλήσεις εκτός Ελλάδας
@@ -4078,6 +6401,7 @@ self.onmessage = function (e) {
   function handleFile(file) {
     if (!file) return;
     clearError();
+    var mySeq = ++betaUi.uploadSeq; // αν ανέβει κι άλλο αρχείο στο μεταξύ, αυτό εδώ αγνοείται όταν τελειώσει
     if (typeof Worker === "undefined") {
       showError("Ο browser σου δεν υποστηρίζει επεξεργασία αρχείων σε background (Web Worker). Δοκίμασε μια πιο πρόσφατη έκδοση browser.");
       return;
@@ -4093,19 +6417,25 @@ self.onmessage = function (e) {
     }
     var settled = false;
     worker.onmessage = function (e) {
+      if (mySeq !== betaUi.uploadSeq) { settled = true; worker.terminate(); return; }
       settled = true;
       setLoadingState(false);
       worker.terminate();
       var data = e.data || {};
       if (data.ok) {
         if (!data.rows || !data.rows.length) { showError("Το αρχείο φορτώθηκε αλλά δεν βρέθηκαν γραμμές δεδομένων."); return; }
+        var seq = ++betaUi.loadSeq; // μόνο ένα ΕΠΙΤΥΧΗΜΕΝΟ ανέβασμα ακυρώνει επαναφορά/αποθήκευση σε εξέλιξη
+        state.fileName = file.name || ""; state.dataSource = "upload"; state.savedAt = null;
         loadRows(data.rows, false);
+        var rowsToSave = data.rows;
+        setTimeout(function () { if (seq === betaUi.loadSeq) betaSaveCurrent(file.name, rowsToSave, seq); }, 60);
       } else {
         showError(data.message || "Δεν ήταν δυνατή η ανάγνωση του αρχείου .xlsx.");
       }
     };
     worker.onerror = function (err) {
       if (settled) return;
+      if (mySeq !== betaUi.uploadSeq) { settled = true; worker.terminate(); return; }
       settled = true;
       setLoadingState(false);
       worker.terminate();
@@ -4177,6 +6507,7 @@ self.onmessage = function (e) {
     renderTable(computeAggregate());
   });
   document.getElementById("intlRow").addEventListener("click", function (e) {
+    if (e.target.closest(".cust-link")) return; // το όνομα πελάτη ανοίγει την καρτέλα, δεν κλείνει την κάρτα
     var card = e.target.closest(".intl-card");
     if (!card) return;
     var geoType = card.getAttribute("data-geo-type");
@@ -4201,6 +6532,7 @@ self.onmessage = function (e) {
     if (e.key !== "Escape") return;
     if (!document.getElementById("takisOverlay").classList.contains("hidden")) takisCloseDialog();
     if (!document.getElementById("bonusOverlay").classList.contains("hidden")) bonusCloseDialog();
+    if (!document.getElementById("custOverlay").classList.contains("hidden")) closeCustomerCard();
   });
   document.getElementById("takisForm").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -4217,9 +6549,76 @@ self.onmessage = function (e) {
     takisCopyText(bonusLastRequestText, document.getElementById("bonusCopyBtn"));
   });
 
+
+  /* ---------- Beta v3: συμβάντα ---------- */
+  document.addEventListener("click", function (e) {
+    var link = e.target && e.target.closest ? e.target.closest(".cust-link") : null;
+    if (!link) return;
+    e.preventDefault();
+    if (link.hasAttribute("data-sector")) openSectorCard(link.getAttribute("data-sector"));
+    else openCustomerCard(link.getAttribute("data-customer"));
+  });
+  (function () {
+    var input = document.getElementById("custSearchInput");
+    var box = document.getElementById("custSuggest");
+    var timer = null;
+    input.addEventListener("input", function () {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(function () { renderCustSuggest(input.value); }, 120);
+    });
+    input.addEventListener("focus", function () { if (input.value) renderCustSuggest(input.value); });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown") { e.preventDefault(); if (box.classList.contains("hidden")) renderCustSuggest(input.value); else moveCustSuggest(1); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); moveCustSuggest(-1); }
+      else if (e.key === "Enter") {
+        e.preventDefault();
+        if (timer) { clearTimeout(timer); timer = null; renderCustSuggest(input.value); }
+        var hit = betaUi.suggestList[betaUi.suggestActive];
+        if (hit) openSuggestion(hit.kind, hit.name);
+      } else if (e.key === "Escape") { hideCustSuggest(); }
+    });
+    input.addEventListener("blur", function () { setTimeout(hideCustSuggest, 180); });
+    // mousedown αντί για click: αλλιώς το blur κρύβει τη λίστα πριν "πιάσει" το πάτημα.
+    box.addEventListener("mousedown", function (e) {
+      var b = e.target.closest("button[data-kind]");
+      if (!b) return;
+      e.preventDefault();
+      openSuggestion(b.getAttribute("data-kind"), b.getAttribute("data-name"));
+    });
+  })();
+  document.getElementById("custCloseBtn").addEventListener("click", closeCustomerCard);
+  document.getElementById("custOverlay").addEventListener("click", function (e) {
+    if (e.target.id === "custOverlay") closeCustomerCard();
+  });
+  // Επιλογή σεζόν μέσα σε κάθε πάνελ (Συγκέντρωση / Εκπτώσεις / Ακυρώσεις): ξαναζωγραφίζει μόνο εκείνο το πάνελ.
+  ["paretoBody", "discountBody", "crossBody"].forEach(function (id) {
+    document.getElementById(id).addEventListener("click", function (e) {
+      var z = e.target.closest("button[data-season]");
+      if (!z) return;
+      var panel = z.getAttribute("data-panel");
+      betaUi.seasonChoice[panel] = z.getAttribute("data-season");
+      renderBetaPanel(panel);
+    });
+  });
+  document.getElementById("returnsBody").addEventListener("click", function (e) {
+    var t = e.target.closest("button[data-rtab]");
+    var s = e.target.closest("button[data-rsort]");
+    var z = e.target.closest("button[data-season]");
+    if (!t && !s && !z) return;
+    if (t) betaUi.returnsTab = t.getAttribute("data-rtab");
+    if (s) betaUi.returnsSort = s.getAttribute("data-rsort");
+    if (z) betaUi.seasonChoice.returns = z.getAttribute("data-season");
+    renderBetaPanel("returns");
+  });
+  document.getElementById("storeDeleteBtn").addEventListener("click", betaDeleteSaved);
+  document.getElementById("takisStopBtn").addEventListener("click", takisStop);
+  document.getElementById("takisBriefBtn").addEventListener("click", takisSendBrief);
+  document.getElementById("betaBriefShortcut").addEventListener("click", takisSendBrief);
+
   /* ============================= Boot ============================= */
 
   loadRows(buildSampleRows(), true);
+  betaRestoreOnBoot(); // Α1: αν υπάρχει αποθηκευμένο αρχείο σε αυτή τη συσκευή, ανοίγει αυτόματα
 })();
 </script>
 </body>
